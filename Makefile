@@ -3,6 +3,7 @@ FILES:= $(wildcard *.c)
 NAME=cub3d
 
 # FLAGS= -Wall -Wextra -Werror 
+FLAGS= -fsanitize=address -g
 MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm
 
 INCLUDES= $(wildcard: *.h)
@@ -16,7 +17,7 @@ all : $(NAME)
 $(NAME) : $(OFILES)
 	cc $(FLAGS) $(OFILES) -o $(NAME) $(MLX) $(MlX_FLAGS)
 
-%.o: %.c $(INCLUDES)
+%.o: %.c $(INCLUDES) Makefile
 	$(CC) $(FLAGS) $< -c -o $@ 
 
 clean :
