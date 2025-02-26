@@ -73,56 +73,94 @@ void hook_handler(mlx_key_data_t keydata, void *param)
 
 	if ( keydata.key == MLX_KEY_ESCAPE)
 		exit(0);
-	if ( keydata.key ==  MLX_KEY_UP && keydata.action == MLX_RELEASE)
+	if ( keydata.key ==  MLX_KEY_UP )
 	{
-		if (data->map[(int)((data->player_y - 8)  / TILE_SIZE)][(int)(data->player_x / TILE_SIZE)]!= '1')
-			data->player_y -= 8;
-		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  - 8)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
+		if (data->map[(int)((data->player_y - 7)  / TILE_SIZE)][(int)(data->player_x / TILE_SIZE)]!= '1')
+			data->player_y -= 7;
+		printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  - 7)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
 		
 	}
-	if ( keydata.key ==  MLX_KEY_DOWN && keydata.action == MLX_RELEASE)
+	if ( keydata.key ==  MLX_KEY_DOWN )
 	{
 		if (data->map[(int)((data->player_y + 7)  / TILE_SIZE)][(int)(data->player_x / TILE_SIZE)]!= '1')
-			data->player_y += 8;
+			data->player_y += 7;
 		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  + 7)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
 	}
-	if ( keydata.key ==  MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
+	if ( keydata.key ==  MLX_KEY_LEFT )
 	{
-		if (data->map[(int)((data->player_y)  / TILE_SIZE)][(int)((data->player_x - 8) / TILE_SIZE)]!= '1')
-			data->player_x -= 8;
-		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x - 8) / TILE_SIZE);
+		if (data->map[(int)((data->player_y)  / TILE_SIZE)][(int)((data->player_x - 7) / TILE_SIZE)]!= '1')
+			data->player_x -= 7;
+		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x - 7) / TILE_SIZE);
 	}
-	if ( keydata.key ==  MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
+	if ( keydata.key ==  MLX_KEY_RIGHT )
 	{
 		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x + 7) / TILE_SIZE);
 		if (data->map[(int)((data->player_y)  / TILE_SIZE)][(int)((data->player_x + 7) / TILE_SIZE)]!= '1')
-			data->player_x += 8;
+			data->player_x += 7;
 	}
 	minimap(data, data->mlx_data);
 }
 
 
+// int shoot_horizontal(data_t *data, double ray_angle)
+// {
+// 	int wall_hit;
+// 	int hit_x;
+// 	int hit_y;
+// 	int direction;
+// 	double direction_x;
+// 	double direction_y;
+// 	int map_y;
+// 	int step;
 
-int *shoot_rays(data_t *data)
-{
-	int i;
+// 	direction_x = cos(ray_angle);
+// 	direction_y = sin(ray_angle);
+	
+// 	wall_hit = 0;
+// 	if (direction_y < 0)
+// 		step = -1;
+// 	else 
+// 		step = 1;
+	
+// 	while(!wall_hit)
+// 	{
+		
+// 	}
+// }
 
-	i = 0;
-	double ray_angle;
-	while(i < NUMBER_OF_RAYS)
-	{
-		ray_angle = (data->view_angle - (FOV / 2)) + (i * (FOV / NUMBER_OF_RAYS));
-		i++;
-	}
-}
+
+
+// int *shoot_rays(data_t *data)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	double ray_angle;
+// 	double horizontal;
+// 	double vertical;
+// 	while(i < NUMBER_OF_RAYS)
+// 	{
+// 		ray_angle = (data->view_angle - (FOV / 2)) + (i * (FOV / NUMBER_OF_RAYS));
+// 		horizontal = shoot_horizontal(data);
+// 		vertical = shoot_vertical(data);
+// 		if (horizontal < vertical)
+// 			data->rays[i] = horizontal;
+// 		else
+// 			data->rays[i] = vertical;
+// 		i++;
+// 	}
+// }
 
 
 
-int main(){
+int main(int argc, char **argv){
+	parsing(argc , argv);
 	data_t data;
 
 	mlx_data_t mlx_data;
 	data.mlx_data = &mlx_data;
+	data.rays = malloc(sizeof(int) * NUMBER_OF_RAYS);
+	bzero(data.rays, sizeof(int) * NUMBER_OF_RAYS);
 
 	mlx_data.mlx = mlx_init(WIDTH, HEIGHT, "Minimap", true);
 	mlx_data.view = mlx_new_image(mlx_data.mlx, WIDTH, HEIGHT);

@@ -3,7 +3,7 @@ FILES:= $(wildcard *.c)
 NAME=cub3d
 
 # FLAGS= -Wall -Wextra -Werror 
-FLAGS= -fsanitize=address -g
+# FLAGS= -fsanitize=address -
 MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm
 
 INCLUDES= $(wildcard: *.h)
