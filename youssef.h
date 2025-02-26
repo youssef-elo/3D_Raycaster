@@ -1,7 +1,7 @@
 #ifndef YOUSSEF_H
  # define YOUSSEF_H
 
-#include "./MLX42/include/MLX42/MLX42.h"
+#include "./MLX/include/MLX42/MLX42.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>

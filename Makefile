@@ -8,7 +8,7 @@ MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm
 
 INCLUDES= $(wildcard: *.h)
 
-MLX=MLX42/build/libmlx42.a
+MLX=MLX/build/libmlx42.a
 
 OFILES= $(FILES:.c=.o)
 
