@@ -15,12 +15,16 @@ typedef struct map_context_s
     char *south;
     char *west;
     char *east;
+    char *array;
 
     char *flor_s;
     char *sky_s;
 
+    int count;
+
     int sky[3];
     int flor[3];
+    int read_map;
 
 } map_context_h;
 

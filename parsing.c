@@ -4,6 +4,61 @@ void ft_display_error(char *s)
     printf("%s\n", s);
     exit(1);
 }
+char *ft_strdup_n(char *str, int a)
+{
+	char	*array;
+	int		x;
+	int		size;
+
+	x = 0;
+	size = ft_strlen(str) + 1;
+	array = malloc(size);
+	if (!array)
+		ft_display_error("Error");
+	while (str[x])
+	{
+		if(str[x] != '\n' && a == 1)
+			array[x] = str[x];
+		else if (a == 1)
+			array[x] = 0;
+		if(a == 0)
+			array[x] = str[x];
+		x++;
+	}
+	array[x] = '\0';
+	return array;
+}
+char	*ft_strjoin_n(char *s1, char *s2)
+{
+	int		x;
+	int		y;
+	char	*array;
+	int		size;
+
+	x = 0;
+	y = 0;
+	if (!s1 && !s2)
+		return (0);
+	if (!s1)
+		return (ft_strdup_n(s2 , 0));
+	if (!s2)
+		return (ft_strdup_n(s1, 0));
+	size = (ft_strlen(s1) + ft_strlen(s2));
+	array = malloc(size + 1);
+	if (!array)
+		return (0);
+	while (s1[x])
+	{
+		array[x] = s1[x];
+		x++;
+	}
+	while (s2[y])
+		array[x++] = s2[y++];
+	array[size] = '\0';
+	free(s1);
+	return (array);
+}
+
 long	ft_atoi(const char *str)
 {
 	int					x;
@@ -69,26 +124,7 @@ void	ft_look_cub(char *s)
 		y--;
 	}
 }
-char *ft_strdup_n(char *str)
-{
-	char	*array;
-	int		x;
-	int		size;
 
-	x = 0;
-	size = ft_strlen(str) + 1;
-	array = malloc(size);
-	if (!array)
-		ft_display_error("Error");
-	while (str[x])
-	{
-		if(str[x] != '\n')
-			array[x] = str[x];
-		x++;
-	}
-	array[x] = '\0';
-	return array;
-}
 int size_of_line(char **str)
 {
 	int x;
@@ -102,41 +138,55 @@ int size_of_line(char **str)
 void ft_fill_struct(map_context_h *map, char **str, int s)
 {
 	if(s == 0)
-		map->nort = ft_strdup_n(str[1]);
+		map->nort = ft_strdup_n(str[1] , 1);
 	else if(s == 1)
-		map->south = ft_strdup_n(str[1]);
+		map->south = ft_strdup_n(str[1] , 1);
 	else if(s == 2)
-		map->west = ft_strdup_n(str[1]);
+		map->west = ft_strdup_n(str[1] , 1);
 	else if(s == 3)
-		map->east = ft_strdup_n(str[1]);
+		map->east = ft_strdup_n(str[1] , 1);
 	else if(s == 4)
-		map->flor_s = ft_strdup_n(str[1]);
+		map->flor_s = ft_strdup_n(str[1] , 1);
 	else if(s == 5)
-		map->sky_s = ft_strdup_n(str[1]);
+		map->sky_s = ft_strdup_n(str[1] , 1);
+}
+
+void ft_read_map(map_context_h *map, char * line)
+{
+	printf("%s", line);
 }
 
 void  ft_test(char *line, map_context_h *map)
 {
 	char **str;
-	static int check[6] = {0,0,0,0,0,0};
-	static int count;
-	char *identifier[] = {"NO","SO","WE","EA","F","C",NULL};
-	
+	static int check[6] = {0, 0, 0, 0, 0, 0};
+	char *identifier[] = {"NO", "SO", "WE", "EA", "F", "C", NULL};
+
+	if (map->count == 6)
+		map->array = ft_strjoin_n(map->array, line);
+	str=NULL;
 	str = ft_split(line, 32);
-	if (size_of_line(str) >= 3 && count < 6)
+	if (size_of_line(str) >= 3 && map->count < 6)
 	{
 		if (size_of_line(str) != 3 || ft_strlen(str[2]) != 1 || *str[2] != '\n')
 			ft_display_error("Error");
 	}
 	int s = ft_strcmp(identifier, *str);
-	if(check[s] == 0 && s != -1 &&  count < 6)
+	if(check[s] == 0 && s != -1 &&  map->count < 6)
 	{
 		ft_fill_struct(map, str, s);
-		count++;
+		map->count++;
 		check[s] = 1;
 	}
-	else if (count != 6)
+	else if (map->count != 6)
 		ft_display_error("Error");
+	
+	int x = 0;
+	while (str[x])
+	{
+		free(str[x++]);
+	}
+	free(str);
 }
 void ft_check_for_error(char *str)
 {
@@ -149,7 +199,7 @@ void ft_check_for_error(char *str)
 	{
 		if((str[x] ==  ',' && str[x] && str[x + 1] == ','))
 			ft_display_error("Error");
-		if((str[x] < '0' || str[x] > '9') && str[x]!= ',')
+		if((str[x] < '0' || str[x] > '9') && str[x]!= ',' && str[x])
 			ft_display_error("Error");
 		if(str[x] ==  ',')
 			cont++;
@@ -162,22 +212,23 @@ void ft_check_for_error(char *str)
 
 void print_map(map_context_h map)
 {
-	printf("%s\n", map.east);
-	printf("%s\n", map.nort);
-	printf("%s\n", map.south);
-	printf("%s\n", map.west);
-	printf("%s\n", map.flor_s);
-	printf("%s\n", map.sky_s);
-	for (int i = 0; i < 3; i++)
-	{
-		printf("%d \t", map.flor[i]);
-	}
-	puts("\n");
-	for (int i = 0; i < 3; i++)
-	{
-		printf("%d \t", map.sky[i]);
-	}
-	
+	// printf("%s\n", map.east);
+	// printf("%s\n", map.nort);
+	// printf("%s\n", map.south);
+	// printf("%s\n", map.west);
+	// printf("%s\n", map.flor_s);
+	// printf("%s\n", map.sky_s);
+	// for (int i = 0; i < 3; i++)
+	// {
+	// 	printf("%d \t", map.flor[i]);
+	// }
+	// puts("\n");
+	// for (int i = 0; i < 3; i++)
+	// {
+	// 	printf("%d \t\n", map.sky[i]);
+	// }
+	// puts("\n");
+	// printf("%s", map.array);
 }
 void ft_fill_color_array(map_context_h *map,char **array,int i)
 {
@@ -217,7 +268,25 @@ void ft_convert_color(map_context_h *map, char *str, int i)
 		x++;
 	}
 	ft_fill_color_array(map, array,i);
+	x=0;
+	while (array[x])
+		free(array[x++]);
+	free(array);
+	
 
+}
+void ft_set_map(map_context_h *map)
+{
+	map->array = NULL;
+	map->west = NULL;
+	map->nort = NULL;
+	map->east = NULL;
+	map->south= NULL;
+	map->sky_s = NULL;
+	map->flor_s = NULL;
+	map->read_map=0;
+	map->count = 0;
+	map->map=NULL;
 }
 
 void parsing(int argc, char **argv)
@@ -228,6 +297,7 @@ void parsing(int argc, char **argv)
 	map_context_h map;
 
 	i = 0;
+	ft_set_map(&map);
 	if(argc != 2)
 		ft_display_error("Error");
 	ft_look_cub(argv[1]);
@@ -237,10 +307,17 @@ void parsing(int argc, char **argv)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if(*line != '\n')
+		if(*line != '\n' && map.count < 6)
 			ft_test(line, &map);
+		else if(map.count == 6)
+		{
+			ft_read_map(&map, line);
+		}
+		
+		free(line);
 		line = get_next_line(fd);
 	}
+	
 	ft_convert_color(&map, map.flor_s, 1);
 	ft_convert_color(&map, map.sky_s, 0);
 	print_map(map);
