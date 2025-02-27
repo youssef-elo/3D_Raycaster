@@ -1,0 +1,7 @@
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/mlx42.dir
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/edit_cache.dir
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/rebuild_cache.dir
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/list_install_components.dir
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/install.dir
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/install/local.dir
+/home/yel-ouaz/Desktop/FUCK_GIT/MLX/build/CMakeFiles/install/strip.dir
