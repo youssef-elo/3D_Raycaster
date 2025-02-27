@@ -1,12 +1,16 @@
-FILES:= $(wildcard *.c)
+SRC_FILES := $(wildcard *.c)
+GNL_FILES := $(wildcard get_next_line/*.c)
+
+FILES := $(SRC_FILES) $(GNL_FILES)
 
 NAME=cub3d
+
 
 # FLAGS= -Wall -Wextra -Werror 
 # FLAGS= -fsanitize=address -
 MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm
 
-INCLUDES= $(wildcard: *.h)
+INCLUDES= $(wildcard *.h) $(wildcard get_next_line/*.h)
 
 MLX=MLX/build/libmlx42.a
 
