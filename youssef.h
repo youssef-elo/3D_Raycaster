@@ -12,7 +12,7 @@
 
 #define PI 3.141592653589793
 #define FOV 1.1519
-#define NUMBER_OF_RAYS 2320
+#define NUMBER_OF_RAYS 2560
 #define CUBE3D 0
 #define CUBE3D 1
 
@@ -20,8 +20,8 @@
 // 8 21
 #define TILE_SIZE 80
 
-#define WIDTH_3D 2320
-#define HEIGHT_3D 1360
+#define WIDTH_3D 2560
+#define HEIGHT_3D 1280
 
 #define WIDTH 29 * TILE_SIZE
 #define HEIGHT 8 * TILE_SIZE
@@ -45,6 +45,8 @@ typedef struct data_s{
 	double player_y;
 	double view_angle;
 	char **map;
+	int width;
+	int height;
     int *rays;
 } data_t;
 
@@ -52,4 +54,4 @@ void draw_3d(data_t *data);
 
 #endif
 
-// map checking when 
+// map checking wh

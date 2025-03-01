@@ -128,7 +128,7 @@ double shoot_horizontal(data_t *data, double ray_angle, double *horizontal_x, do
 		// printf("scaling factor: %lf\n", scaling_factor);
 		// printf("dy : %lf dx: %lf scaling factor: %lf\n", fabs(hit_y - data->player_y),fabs(direction_y - data->player_y),scaling_factor);
 		hit_x = data->player_x + (scaling_factor * direction_x);
-		if (hit_x < TILE_SIZE || hit_x > (WIDTH - TILE_SIZE))
+		if (hit_x < TILE_SIZE || hit_x > ((data->width * TILE_SIZE)  - TILE_SIZE))
 			return(2147483647);
 		// printf("hit_x: %lf hit_y: %lf\n", hit_y , hit_x);
 		// draw_filled_disk(data->mlx_data->view, hit_x, hit_y, 3, rgb(255, 0  ,0, 255));
@@ -147,7 +147,7 @@ double shoot_horizontal(data_t *data, double ray_angle, double *horizontal_x, do
 			return (sqrt(pow(hit_x - data->player_x, 2) + pow(hit_y - data->player_y, 2)));
 		}
 		hit_y += step;
-		if (hit_y < TILE_SIZE || hit_y > (HEIGHT - TILE_SIZE))
+		if (hit_y < TILE_SIZE || hit_y > ((data->height * TILE_SIZE) - TILE_SIZE))
 			return(2147483647);
 	}
 	return (-1);
@@ -188,7 +188,7 @@ double shoot_vertical(data_t *data, double ray_angle, double *vertical_x, double
 	{
 		scaling_factor = (data->player_x - hit_x) / direction_x;
 		hit_y = data->player_y + (scaling_factor * direction_y);
-		if (hit_y < TILE_SIZE || hit_y > (HEIGHT - TILE_SIZE))
+		if (hit_y < TILE_SIZE || hit_y > ((data->height * TILE_SIZE)))
 			return(2147483647);
 		if (data->map[(int)(hit_y / TILE_SIZE)][((int)(hit_x + offset) / TILE_SIZE) ] == '1')
 		{
@@ -206,7 +206,7 @@ double shoot_vertical(data_t *data, double ray_angle, double *vertical_x, double
 
 		}
 		hit_x += step;
-		if (hit_x < 0 || hit_x > (WIDTH))
+		if (hit_x < 0 || hit_x > (data->width * TILE_SIZE))
 			return(2147483647);
 	}
 	return (2147483647);
@@ -261,10 +261,10 @@ void draw_minimap(data_t *data)
 
 	i = 0;
 	j = 0;
-	while(i < HEIGHT)
+	while(i < data->height * TILE_SIZE)
 	{
 		j = 0;
-		while (j < WIDTH)
+		while (j < data->width * TILE_SIZE)
 		{
 			if ((j != 0 && j % TILE_SIZE == 0 || (i != 0 && i % TILE_SIZE == 0)) )
 			{
@@ -397,7 +397,7 @@ void hook_handler( void *param)
 
 	}
 
-	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
+	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
 	{
 
 		data->view_angle -= (M_PI / 36);
@@ -411,7 +411,7 @@ void hook_handler( void *param)
 		// data->view_angle = fmod(data->view_angle - (PI / 36), 2 * PI);
 	// printf("view_angle %lf\n", data->view_angle);
 	}
-	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
+	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
 	    // data->view_angle = fmod(data->view_angle + (PI / 36) + 2 * PI, 2 * PI);
 		data->view_angle += (M_PI / 36);
@@ -463,21 +463,21 @@ void draw_3d(data_t *data)
 		// printf("verti: %f horizontal: %f\n", vertical, horizontal);
 		if (vertical < horizontal)
 		{
-			wall_height =  (HEIGHT_3D * 70 / (vertical * cos(ray_angle - data->view_angle))) ;
+			wall_height =  (HEIGHT_3D * 100 / (vertical * cos(ray_angle - data->view_angle))) ;
 			start_y = half_height - (wall_height  / 2);
 			end_y = half_height + (wall_height  / 2);
 			// printf("start_y: %d end %d\n", start_y, end_y);
-			draw_line_2(data->mlx_data->view_3d, i, start_y, i, end_y, vertical_color);
+			draw_line_2(data->mlx_data->view_3d, NUMBER_OF_RAYS - i , start_y,NUMBER_OF_RAYS - i, end_y, vertical_color);
 		}
 		else 
 		{
-			wall_height = (HEIGHT_3D * 70 / (horizontal * cos(ray_angle - data->view_angle))) ;
+			wall_height = (HEIGHT_3D * 100 / (horizontal * cos(ray_angle - data->view_angle))) ;
 			start_y = half_height - (wall_height  / 2);
 			end_y = half_height + (wall_height  / 2);
 			// printf("start_y: %d\n", wall_height);
 			// printf("start_y: %d end %d\n", start_y, end_y);
 
-			draw_line_2(data->mlx_data->view_3d, i, start_y, i, end_y, horizontal_color);
+			draw_line_2(data->mlx_data->view_3d, NUMBER_OF_RAYS - i, start_y, NUMBER_OF_RAYS - i, end_y, horizontal_color);
 			
 		}
 		i++;
@@ -497,11 +497,11 @@ void floor_ceiling(data_t *data)
 	while(i < HEIGHT_3D)
 	{
 		j = 0;
-		// if (i == HEIGHT_3D / 2)			
-		// 	color = rgb(139, 69, 19, 255);
+		if (i == HEIGHT_3D / 2)			
+			color = rgb(139, 69, 19, 255);
 		while(j < WIDTH_3D)
 		{
-			put_pixel(data->mlx_data->floor_ceiling, j, i, color);
+			put_pixel(data->mlx_data->floor_ceiling, j, i, rgb(0, 0, 0, 255));
 			j++;
 		}
 		i++;
@@ -519,11 +519,56 @@ int main(int argc, char **argv){
 	data.rays = malloc(sizeof(int) * NUMBER_OF_RAYS);
 	bzero(data.rays, sizeof(int) * NUMBER_OF_RAYS);
 
+	data.map = (char*[]){
+"1111111111111111111",
+"1001001001001001001",
+"1001001001001001001",
+"1001001001001001001",
+"1001001000001001001",
+"1000000000P00000001",
+"1000011111111000001",
+"1111000000000001111",
+"1000000101010000001",
+"1111111111111111111"};
+	// {
+						// "1111111111111111111111111111111",
+						// "1000000000001001000000000000001",
+						// "1000000000001001000000000000001",
+						// "10P0101000000000101000000000001",
+						// "10000000000P0000000000000000001",
+						// "1000101000000000101000000000001",
+						// "1000000000000000000000000000001",
+						// "1000000000000010010000000000001",
+						// "1000000000000010010000000000001",
+						// "1000001000000000000000000000001",
+						// "1000000000000000000000000000001",
+						// "1000001000000000000000000000001",
+						// "1000000000000000000000000000001",
+						// "1111111111111111111111111111111"};
+
+	data.width = 0;
+	data.height =  10;
+	for ( int i =0; data.map[0][i];i++, data.width++);
+	int found = 0;
+	for ( int i = 0;  ; i++)
+	{
+		for(int j =  0; data.map[i][j]; j++)
+		{
+			if (data.map[i][j] == 'P')
+			{
+				data.player_y = (i * TILE_SIZE) + (TILE_SIZE / 2);
+				data.player_x = (j * TILE_SIZE) + (TILE_SIZE / 2);
+				found = 1;
+			}
+		}
+			if (found  == 1)
+				break;
+	}
 	if (!CUBE3D)
 	{
-		mlx_data.mlx = mlx_init(WIDTH, HEIGHT, "Minimap", true);
-		mlx_data.view = mlx_new_image(mlx_data.mlx, WIDTH, HEIGHT);
-		mlx_data.rays_image = mlx_new_image(mlx_data.mlx, WIDTH, HEIGHT);
+		mlx_data.mlx = mlx_init(data.width * TILE_SIZE, data.height * TILE_SIZE, "Minimap", true);
+		mlx_data.view = mlx_new_image(mlx_data.mlx, data.width * TILE_SIZE, data.height * TILE_SIZE);
+		mlx_data.rays_image = mlx_new_image(mlx_data.mlx, data.width * TILE_SIZE, data.height * TILE_SIZE);
 	}
 	else 
 	{
@@ -535,27 +580,6 @@ int main(int argc, char **argv){
 
 	data.view_angle = (M_PI / 2);
 	// printf("%lf\n", data.view_angle);
-	data.map = (char*[]){
-						"11111111111111111111111111111",
-						"10000000000010010000000000001",
-						"10P01010000000001010000000001",
-						"10000000000000000000000000001",
-						"10000000000000101100000000001",
-						"10000010000000000000000000001",
-						"10000000000000000000000000001",
-						"11111111111111111111111111111"};
-
-	for ( int i = 0; i < HEIGHT / TILE_SIZE; i++)
-	{
-		for(int j =  0; j < WIDTH / TILE_SIZE; j++)
-		{
-			if (data.map[i][j] == 'P')
-			{
-				data.player_y = (i * TILE_SIZE) + (TILE_SIZE / 2);
-				data.player_x = (j * TILE_SIZE) + (TILE_SIZE / 2);
-			}
-		}
-	}
 	// printf("%lf %lf\n", data.player_x, data.player_y);
 	if (!CUBE3D)
 	{
