@@ -7,8 +7,8 @@ NAME=cub3d
 
 
 # FLAGS= -Wall -Wextra -Werror 
-# FLAGS= -fsanitize=address -
-MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm
+# FLAGS= -fsanitize=address 
+MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm -O3
 
 INCLUDES= $(wildcard *.h) $(wildcard get_next_line/*.h)
 
