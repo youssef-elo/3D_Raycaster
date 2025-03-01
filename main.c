@@ -463,7 +463,7 @@ void draw_3d(data_t *data)
 		// printf("verti: %f horizontal: %f\n", vertical, horizontal);
 		if (vertical < horizontal)
 		{
-			wall_height =  (HEIGHT_3D * 50 / vertical)  ;
+			wall_height =  (HEIGHT_3D * 70 / (vertical * cos(ray_angle - data->view_angle))) ;
 			start_y = half_height - (wall_height  / 2);
 			end_y = half_height + (wall_height  / 2);
 			// printf("start_y: %d end %d\n", start_y, end_y);
@@ -471,7 +471,7 @@ void draw_3d(data_t *data)
 		}
 		else 
 		{
-			wall_height = (HEIGHT_3D * 50 / horizontal) ;
+			wall_height = (HEIGHT_3D * 70 / (horizontal * cos(ray_angle - data->view_angle))) ;
 			start_y = half_height - (wall_height  / 2);
 			end_y = half_height + (wall_height  / 2);
 			// printf("start_y: %d\n", wall_height);
