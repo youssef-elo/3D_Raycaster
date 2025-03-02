@@ -150,10 +150,34 @@ void ft_fill_struct(map_context_h *map, char **str, int s)
 	else if(s == 5)
 		map->sky_s = ft_strdup_n(str[1] , 1);
 }
+void	ft_check_line(char *line)
+{
+	int x;
+
+	x = 0;
+	while (line[x])
+	{
+		if(*line == '\n')
+			ft_display_error("Error");
+		if (line[x] != '1' && line[x] != '0' && line[x] != 'N' && line[x] != 'W' && line[x] != 'E' && line[x] != 'S' && line[x] != ' ' && line[x] != '\n')
+			ft_display_error("Error");
+		x++;
+	}
+	
+}
 
 void ft_read_map(map_context_h *map, char * line)
 {
-	printf("%s", line);
+	static int check;
+
+	if (*line != '\n')
+		check = 1;
+	if(check == 1)
+	{
+		// printf("%s", line);
+		ft_check_line(line);
+		map->array = ft_strjoin_n(map->array, line);
+	}
 }
 
 void  ft_test(char *line, map_context_h *map)
@@ -162,8 +186,6 @@ void  ft_test(char *line, map_context_h *map)
 	static int check[6] = {0, 0, 0, 0, 0, 0};
 	char *identifier[] = {"NO", "SO", "WE", "EA", "F", "C", NULL};
 
-	if (map->count == 6)
-		map->array = ft_strjoin_n(map->array, line);
 	str=NULL;
 	str = ft_split(line, 32);
 	if (size_of_line(str) >= 3 && map->count < 6)
@@ -228,7 +250,7 @@ void print_map(map_context_h map)
 	// 	printf("%d \t\n", map.sky[i]);
 	// }
 	// puts("\n");
-	// printf("%s", map.array);
+	// printf("\n%s", map.array);
 }
 void ft_fill_color_array(map_context_h *map,char **array,int i)
 {
@@ -288,6 +310,153 @@ void ft_set_map(map_context_h *map)
 	map->count = 0;
 	map->map=NULL;
 }
+char *ft_get_string(int num)
+{
+	char *array;
+	int x;
+
+	x = 0;
+	array = malloc(num+1);
+	while (num > x)
+	{
+		array[x] = '$';
+		x++;
+	}
+	array[num] = '\0';
+	return array;
+}
+
+void	ft_adjust_map_size(map_context_h *map)
+{
+	int x;
+	int y;
+	int max;
+	char *array;
+
+	((1) && (x = 0, max = 0, y = 0));
+	while (map->map[x])
+	{
+		if (max < ft_strlen(map->map[x]))
+			max = ft_strlen(map->map[x]);
+		x++;
+	}
+	x = 0;
+	while (map->map[x])
+	{
+		if (max > ft_strlen(map->map[x]))
+		{
+			array = ft_get_string(max - ft_strlen(map->map[x]));
+			map->map[x] = ft_strjoin_n(map->map[x], array);
+			free(array);
+		}
+		while (map->map[x][y])
+		{
+			if(map->map[x][y] == ' ')
+				map->map[x][y] = '$';
+			y++;
+		}
+		x++;
+		y = 0;
+	}
+}
+void ft_check_first_Last_line(map_context_h *map)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+
+	while (map->map[x])
+		x++;
+	while (map->map[0][y])
+	{
+		if (map->map[0][y] != '1' && map->map[0][y] != '$')
+			ft_display_error("Error");
+		y++;
+	}
+	y = 0;
+	x--;
+	while (map->map[x][y])
+	{
+		if (map->map[x][y] != '1' && map->map[x][y] != '$')
+			ft_display_error("Error");
+		y++;
+	}
+		
+}
+void ft_check_player(map_context_h *map)
+{
+	int x;
+	int y;
+	int check;
+
+	check = 0;
+	x = 0;
+	y = 0;
+
+	while (map->map[x])
+	{
+		
+		while (map->map[x][y])
+		{
+			if (map->map[x][y] == 'N' || map->map[x][y] == 'W' || map->map[x][y] == 'E' || map->map[x][y] == 'S')
+				check ++;
+			y++;
+		}
+		x++;
+		y = 0;
+	}
+	if(check != 1)
+		ft_display_error("Error");
+}
+
+void ft_valid_path(map_context_h *map)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+
+	ft_check_first_Last_line(map);
+	ft_check_player(map);
+
+
+	while (map->map[x])
+	{
+		
+		while (map->map[x][y])
+		{
+			if (map->map[x][y] == 'N' || map->map[x][y] == 'W' || map->map[x][y] == 'E' || map->map[x][y] == 'S' || map->map[x][y] == '0')
+			{
+				if((map->map[x][y + 1] == '$'|| !map->map[x][y + 1])  || map->map[x][y - 1] == '$' || !map->map[x][y - 1])
+					ft_display_error("Error(8)");
+				else if((map->map[x + 1][y] == '$' ||  !map->map[x + 1][y]) || (map->map[x - 1][y] == '$' ||  !map->map[x - 1][y]))
+					ft_display_error("Error(9)");
+			}
+			y++;
+		}
+		x++;
+		y = 0;
+	}
+	
+}
+
+void ft_doubel_array(map_context_h *map)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	map->map = ft_split(map->array, 10);
+	if (!map->map)
+		ft_display_error("Error");
+	
+	ft_adjust_map_size(map);
+	ft_valid_path(map);
+}
 
 void parsing(int argc, char **argv)
 {
@@ -310,16 +479,13 @@ void parsing(int argc, char **argv)
 		if(*line != '\n' && map.count < 6)
 			ft_test(line, &map);
 		else if(map.count == 6)
-		{
 			ft_read_map(&map, line);
-		}
-		
 		free(line);
 		line = get_next_line(fd);
 	}
-	
 	ft_convert_color(&map, map.flor_s, 1);
 	ft_convert_color(&map, map.sky_s, 0);
+	ft_doubel_array(&map);
 	print_map(map);
 	exit(1);
 }
