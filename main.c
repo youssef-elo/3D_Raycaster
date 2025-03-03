@@ -235,7 +235,7 @@ int *shoot_rays(data_t *data)
 		// printf("%lf\n", ray_angle);
 		horizontal = shoot_horizontal(data, ray_angle, &horizontal_x, &horizontal_y);
 		vertical = shoot_vertical(data, ray_angle, &vertical_x, &vertical_y);
-		printf("vertical; %lf horizontal: %lf\n", vertical, horizontal);
+		// printf("vertical; %lf horizontal: %lf\n", vertical, horizontal);
 		if (horizontal < vertical)
 		{
 			data->rays[i] = horizontal;
@@ -309,22 +309,24 @@ void hook_handler( void *param)
 	double next_y;
 	double speed;
 
-	speed  = 8;
+	speed  = 5;
 
 	data = (data_t *) param;
 
 	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
 		exit(0);
+	// forward movement
 	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_W ))
-	{
-		if (data->map[(int)((data->player_y - 7)  / TILE_SIZE)][(int)(data->player_x / TILE_SIZE)]!= '1')
+	{ 
+		// if (data->map[(int)((data->player_y - 7)  / TILE_SIZE)][(int)(data->player_x / TILE_SIZE)]!= '1')
 		{
 			direction_x = cos(data->view_angle );
 			direction_y = sin(data->view_angle);
 
 			next_x = data->player_x + (direction_x * speed);
 			next_y = data->player_y - (direction_y * speed);
-			if (data->map[(int)((next_y)  / TILE_SIZE)][(int)(next_x / TILE_SIZE)]!= '1')
+			printf("next_y: %f %d next_x: %f %d\tmap: %c\n", next_y,(int)next_y / TILE_SIZE,  next_x, (int)next_x /TILE_SIZE, data->map[(int)next_y / TILE_SIZE][(int)next_x / TILE_SIZE]);
+			if ( data->map[(int)((next_y)  / TILE_SIZE)][(int)(next_x / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 			{
 				data->player_y = next_y;
 				data->player_x = next_x;
@@ -339,6 +341,7 @@ void hook_handler( void *param)
 		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  - 7)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
 		
 	}
+	// backwards movement
 	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_S ))
 	{
 		direction_x = cos(data->view_angle);
@@ -346,7 +349,7 @@ void hook_handler( void *param)
 
 		next_x = data->player_x - (direction_x * speed);
 		next_y = data->player_y + (direction_y * speed);
-		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)(next_x / TILE_SIZE)]!= '1')
+		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)(next_x / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 		{
 			data->player_y = next_y;
 			data->player_x = next_x;
@@ -359,13 +362,14 @@ void hook_handler( void *param)
 
 		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  + 7)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
 	}
+	// left movement
 	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_A ))
 	{
 		direction_x = cos(data->view_angle);
 		direction_y = sin(data->view_angle);
-		next_x = data->player_x + (-direction_y) * speed;
-		next_y = data->player_y + direction_x * speed;
-		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)]!= '1')
+		next_x = data->player_x - (direction_y) * speed;
+		next_y = data->player_y - direction_x * speed;
+		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 		{
 			data->player_x = next_x;
 			data->player_y = next_y;
@@ -378,14 +382,15 @@ void hook_handler( void *param)
 
 		// ("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x - 7) / TILE_SIZE);
 	}
+	// right movement
 	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_D ))
 	{
 		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x + 7) / TILE_SIZE);
 		direction_x = cos(data->view_angle);
 		direction_y = sin(data->view_angle);
 		next_x = data->player_x + direction_y * speed;
-		next_y = data->player_y + (-direction_x) * speed;
-		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)]!= '1')
+		next_y = data->player_y + (direction_x) * speed;
+		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)]!= '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 		{
 			data->player_x = next_x;
 			data->player_y = next_y;
@@ -520,16 +525,16 @@ int main(int argc, char **argv){
 	bzero(data.rays, sizeof(int) * NUMBER_OF_RAYS);
 
 	data.map = (char*[]){
-"1111111111111111111",
-"1001001001001001001",
-"1001001001001001001",
-"1001001001001001001",
-"1001001000001001001",
-"1000000000P00000001",
-"1000011111111000001",
-"1111000000000001111",
-"1000000101010000001",
-"1111111111111111111"};
+"11111111111111111111111 ",
+"      100100100100001001",
+"111111101001001001001   ",
+"100100100100100100001 11 ",
+"100100100000100100000101 ",
+"1000000000P0000000000001 ",
+"100001111111100000001111",
+"111100000000000111001   ",
+"100000010101000000111   ",
+"1111111111111111111     "};
 	// {
 						// "1111111111111111111111111111111",
 						// "1000000000001001000000000000001",
