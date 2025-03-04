@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 #include "cub3d.h"
 
 double fabs(double n)
@@ -12,7 +19,7 @@ void put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
     {
         int index = (y * img->width + x) * 4; 
         img->pixels[index + 0] = (color >> 24) & 0xFF; 
-        img->pixels[index + 1] = (color >> 16) & 0xFF; 
+        img->pixels[index + 1] = (color >> 16) & 0xFF;
         img->pixels[index + 2] = (color >> 8) & 0xFF;  
         img->pixels[index + 3] = (color) & 0xFF;       
     }
@@ -95,8 +102,10 @@ double shoot_horizontal(data_t *data, double ray_angle, double *horizontal_x, do
 	double direction_y;
 	double scaling_factor;
 	int map_y;
+	int map_x;
 	int step;
 	int offset;
+	
 
 	direction_x = cos(ray_angle);
 	direction_y = sin(ray_angle);
@@ -128,11 +137,14 @@ double shoot_horizontal(data_t *data, double ray_angle, double *horizontal_x, do
 		// printf("scaling factor: %lf\n", scaling_factor);
 		// printf("dy : %lf dx: %lf scaling factor: %lf\n", fabs(hit_y - data->player_y),fabs(direction_y - data->player_y),scaling_factor);
 		hit_x = data->player_x + (scaling_factor * direction_x);
+
+		map_y = (hit_y + offset) / TILE_SIZE;
+		map_x = hit_x / TILE_SIZE;
 		if (hit_x < TILE_SIZE || hit_x > ((data->width * TILE_SIZE)  - TILE_SIZE))
 			return(2147483647);
 		// printf("hit_x: %lf hit_y: %lf\n", hit_y , hit_x);
 		// draw_filled_disk(data->mlx_data->view, hit_x, hit_y, 3, rgb(255, 0  ,0, 255));
-		if (data->map[(int)((hit_y + (step/ TILE_SIZE)) / TILE_SIZE)][(int)hit_x / TILE_SIZE ] == '1')
+		if (data->map[map_y][map_x] == '1')
 		{
 			// draw_line_2(data, data->player_x, data->player_y, hit_x , hit_y, rgb(255, 0  ,0, 255));
 			// printf("we have a hit: y : %lf x : %lf char : %c\n", hit_y , hit_x , data->map[(int)(hit_y / TILE_SIZE)][(int)hit_x /TILE_SIZE]);
@@ -144,7 +156,7 @@ double shoot_horizontal(data_t *data, double ray_angle, double *horizontal_x, do
 			}
 			// printf("x length: %lf y length: %lf magni: %lf\n", hit_x - data->player_x, hit_y - data->player_y, sqrt(pow(hit_x - data->player_x, 2) + pow(hit_y - data->player_y, 2)));
 			// return (fabs(hit_y - data->player_y));
-			return (sqrt(pow(hit_x - data->player_x, 2) + pow(hit_y - data->player_y, 2)));
+			return (sqrt((hit_x - data->player_x) * (hit_x - data->player_x) + (hit_y - data->player_y) * (hit_y - data->player_y)));
 		}
 		hit_y += step;
 		if (hit_y < TILE_SIZE || hit_y > ((data->height * TILE_SIZE) - TILE_SIZE))
@@ -163,13 +175,14 @@ double shoot_vertical(data_t *data, double ray_angle, double *vertical_x, double
 	double direction_x;
 	double direction_y;
 	double scaling_factor;
-	int map_y;
 	int step;
 	int offset;
 
 	direction_x = cos(ray_angle);
 	direction_y = sin(ray_angle);
-	
+	int map_y;
+	int map_x;
+
 	wall_hit = 0;
 	if (direction_x < 0)
 	{
@@ -190,7 +203,9 @@ double shoot_vertical(data_t *data, double ray_angle, double *vertical_x, double
 		hit_y = data->player_y + (scaling_factor * direction_y);
 		if (hit_y < TILE_SIZE || hit_y > ((data->height * TILE_SIZE)))
 			return(2147483647);
-		if (data->map[(int)(hit_y / TILE_SIZE)][((int)(hit_x + offset) / TILE_SIZE) ] == '1')
+		map_y = hit_y / TILE_SIZE; 
+		map_x = (hit_x + offset) / TILE_SIZE;
+		if (data->map[map_y][map_x] == '1')
 		{
 			// printf("hit_x: %lf hit_y: %lf map_y: %d map_x : %d step : %d\n", hit_x, hit_y, ((int)hit_y / TILE_SIZE), ((int)hit_x / TILE_SIZE) + (step / TILE_SIZE), step);
 			// draw_line_2(data, data->player_x, data->player_y, hit_x , hit_y, rgb(0, 0  ,255, 255));
@@ -202,7 +217,7 @@ double shoot_vertical(data_t *data, double ray_angle, double *vertical_x, double
 			}
 			// printf("x length: %lf y length: %lf magni: %lf\n", hit_x - data->player_x, hit_y - data->player_y, sqrt(pow(hit_x - data->player_x, 2) + pow(hit_y - data->player_y, 2)));
 			// return (fabs(hit_x - data->player_x));
-			return (sqrt(pow(hit_x - data->player_x, 2) + pow(hit_y - data->player_y, 2)));
+			return (sqrt((hit_x - data->player_x) * (hit_x - data->player_x) + (hit_y - data->player_y) * (hit_y - data->player_y)));
 
 		}
 		hit_x += step;
@@ -253,6 +268,8 @@ int *shoot_rays(data_t *data)
 	return (NULL);
 }
 
+// uint32_t color1 = rgb(180, 180, 180, 255); 
+// uint32_t color2 = rgb(245, 245, 240, 255); 
 
 void draw_minimap(data_t *data)
 {
@@ -288,13 +305,13 @@ void draw_minimap(data_t *data)
 }
 void minimap(data_t *data, mlx_data_t *mlx_data)
 {
+
 	if (CUBE3D == 0)
 	{
 		memset(mlx_data->rays_image->pixels, 0, mlx_data->rays_image->width * mlx_data->rays_image->height * BPP);
 		draw_filled_disk(mlx_data->rays_image, data->player_x, data->player_y, 4, rgb(255, 0 , 0 , 255));
 		shoot_rays(data);
 		// draw_rays(data);
-		mlx_image_to_window(mlx_data->mlx, mlx_data->rays_image, 0 , 0);
 	}
 }
 
@@ -303,135 +320,156 @@ void minimap(data_t *data, mlx_data_t *mlx_data)
 void hook_handler( void *param)
 {
 	data_t *data;
-	double direction_x;
-	double direction_y;
+
 	double next_x;
 	double next_y;
 	double speed;
 
-	speed  = 5;
+	speed  = 3;
 
 	data = (data_t *) param;
 
-	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
+	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
 		exit(0);
-	// forward movement
-	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_W ))
-	{ 
-		// if (data->map[(int)((data->player_y - 7)  / TILE_SIZE)][(int)(data->player_x / TILE_SIZE)]!= '1')
-		{
-			direction_x = cos(data->view_angle );
-			direction_y = sin(data->view_angle);
 
-			next_x = data->player_x + (direction_x * speed);
-			next_y = data->player_y - (direction_y * speed);
-			printf("next_y: %f %d next_x: %f %d\tmap: %c\n", next_y,(int)next_y / TILE_SIZE,  next_x, (int)next_x /TILE_SIZE, data->map[(int)next_y / TILE_SIZE][(int)next_x / TILE_SIZE]);
+	// forward movement
+	if (mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_W ))
+	{ 
+			next_x = data->player_x + (data->dir_x * speed);
+			next_y = data->player_y - (data->dir_y * speed);
+			// printf("next_y: %f %d next_x: %f %d\tmap: %c\n", next_y,(int)next_y / TILE_SIZE,  next_x, (int)next_x /TILE_SIZE, data->map[(int)next_y / TILE_SIZE][(int)next_x / TILE_SIZE]);
 			if ( data->map[(int)((next_y)  / TILE_SIZE)][(int)(next_x / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 			{
 				data->player_y = next_y;
 				data->player_x = next_x;
+				if (!CUBE3D)
+					minimap(data, data->mlx_data);
+				else
+					draw_3d(data);
 			}
-
-		}
-		if (!CUBE3D)
-			minimap(data, data->mlx_data);
-		else
-			draw_3d(data);
-
-		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  - 7)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
-		
 	}
-	// backwards movement
-	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_S ))
-	{
-		direction_x = cos(data->view_angle);
-		direction_y = sin(data->view_angle );
 
-		next_x = data->player_x - (direction_x * speed);
-		next_y = data->player_y + (direction_y * speed);
+	// backwards movement
+	if (mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_S ))
+	{
+		next_x = data->player_x - (data->dir_x * speed);
+		next_y = data->player_y + (data->dir_y * speed);
 		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)(next_x / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 		{
 			data->player_y = next_y;
 			data->player_x = next_x;
+			if (!CUBE3D)
+				minimap(data, data->mlx_data);
+			else
+				draw_3d(data);
 		}
-
-		if (!CUBE3D)
-			minimap(data, data->mlx_data);
-		else
-			draw_3d(data);
-
-		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y  + 7)  / TILE_SIZE), (int)(data->player_x) / TILE_SIZE);
 	}
+
 	// left movement
-	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_A ))
+	if (mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_A ))
 	{
-		direction_x = cos(data->view_angle);
-		direction_y = sin(data->view_angle);
-		next_x = data->player_x - (direction_y) * speed;
-		next_y = data->player_y - direction_x * speed;
+		next_x = data->player_x - (data->dir_y * speed);
+		next_y = data->player_y - (data->dir_x * speed);
 		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 		{
 			data->player_x = next_x;
 			data->player_y = next_y;
+			if (!CUBE3D)
+				minimap(data, data->mlx_data);
+			else
+				draw_3d(data);
 		}
-
-		if (!CUBE3D)
-			minimap(data, data->mlx_data);
-		else
-			draw_3d(data);
-
-		// ("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x - 7) / TILE_SIZE);
 	}
+
 	// right movement
-	if ( mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_D ))
+	if (mlx_is_key_down(data->mlx_data->mlx,  MLX_KEY_D ))
 	{
-		// printf("%lf %lf mapx: %d map_y: %d\n", data->player_x, data->player_y ,(int)((data->player_y)  / TILE_SIZE), (int)(data->player_x + 7) / TILE_SIZE);
-		direction_x = cos(data->view_angle);
-		direction_y = sin(data->view_angle);
-		next_x = data->player_x + direction_y * speed;
-		next_y = data->player_y + (direction_x) * speed;
-		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)]!= '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
+		next_x = data->player_x + (data->dir_y * speed);
+		next_y = data->player_y + (data->dir_x * speed);
+		if (data->map[(int)((next_y)  / TILE_SIZE)][(int)((next_x) / TILE_SIZE)] == '0' || data->map[(int)next_y / TILE_SIZE][(int)next_x  / TILE_SIZE] == 'P')
 		{
 			data->player_x = next_x;
 			data->player_y = next_y;
+			if (!CUBE3D)
+				minimap(data, data->mlx_data);
+			else
+				draw_3d(data);
 		}
-		if (!CUBE3D)
-			minimap(data, data->mlx_data);
-		else
-			draw_3d(data);
-
 	}
 
-	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
 	{
 
-		data->view_angle -= (M_PI / 36);
+		data->view_angle -= (M_PI / 52);
 		if (data->view_angle < 0)
 			data->view_angle += (2 * M_PI);
+		data->dir_x = cos(data->view_angle);
+		data->dir_y = sin(data->view_angle);
 		if (!CUBE3D)
 			minimap(data, data->mlx_data);
 		else
 			draw_3d(data);
-
-		// data->view_angle = fmod(data->view_angle - (PI / 36), 2 * PI);
-	// printf("view_angle %lf\n", data->view_angle);
 	}
-	if ( mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
+
+
+	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
-	    // data->view_angle = fmod(data->view_angle + (PI / 36) + 2 * PI, 2 * PI);
-		data->view_angle += (M_PI / 36);
+		data->view_angle += (M_PI / 52);
 		if (data->view_angle > ((double)2 * M_PI))
 			data->view_angle -= (2 * M_PI);
+		data->dir_x = cos(data->view_angle);
+		data->dir_y = sin(data->view_angle);
 		if (!CUBE3D)
 			minimap(data, data->mlx_data);
 		else
 			draw_3d(data);
-		// printf("view_angle %lf\n", data->view_angle);
 	}
 }
 
 
-
+void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
+{
+	int index = (x0) * 4;
+	int step = data->mlx_data->view_3d->width * 4;
+	int ceiling;
+	
+	ceiling = 0;
+	while(ceiling < y0)
+	{
+		// put_pixel(data->mlx_data->view_3d, x0, ceiling, data->ceiling);
+		index = (ceiling * data->mlx_data->view_3d->width + x0) * 4;
+        data->mlx_data->view_3d->pixels[index + 0] = (data->ceiling >> 24) & 0xFF; 
+        data->mlx_data->view_3d->pixels[index + 1] = (data->ceiling >> 16) & 0xFF;
+        data->mlx_data->view_3d->pixels[index + 2] = (data->ceiling >> 8) & 0xFF;  
+        data->mlx_data->view_3d->pixels[index + 3] = (data->ceiling) & 0xFF;
+		// index += step;
+		ceiling++;
+	}
+	// puts("out1");
+	// printf("start %d\tend %d\n", y0 , y1);
+	while(y0 < y1)
+	{
+		index = (y0 * data->mlx_data->view_3d->width + x0) * 4;
+        data->mlx_data->view_3d->pixels[index + 0] = (color >> 24) & 0xFF; 
+        data->mlx_data->view_3d->pixels[index + 1] = (color >> 16) & 0xFF;
+        data->mlx_data->view_3d->pixels[index + 2] = (color >> 8) & 0xFF;  
+        data->mlx_data->view_3d->pixels[index + 3] = (color) & 0xFF;
+		// index += step;
+		y0++;
+	}
+	// puts("out2");
+	while(y0 < data->mlx_data->view_3d->height - 1)
+	{
+		index = (y0 * data->mlx_data->view_3d->width + x0) * 4;
+		data->mlx_data->view_3d->pixels[index + 0] = (data->floor >> 24) & 0xFF; 
+		data->mlx_data->view_3d->pixels[index + 1] = (data->floor >> 16) & 0xFF;
+		data->mlx_data->view_3d->pixels[index + 2] = (data->floor >> 8) & 0xFF;  
+		data->mlx_data->view_3d->pixels[index + 3] = (data->floor) & 0xFF;
+		// index += step;
+		y0++;
+	}
+	// puts("out3");
+}
 
 
 
@@ -451,6 +489,10 @@ void draw_3d(data_t *data)
 	uint32_t vertical_color;
 	uint32_t horizontal_color;
 	int half_height = HEIGHT_3D / 2;
+	int wall_half;
+	int scaler;
+
+	scaler  = HEIGHT_3D * 100;
 
 	vertical_color = rgb(27, 96, 157, 255);
 	horizontal_color = rgb(15, 76, 129, 255);
@@ -459,7 +501,13 @@ void draw_3d(data_t *data)
 	i = 0 ;
 	fov_half = FOV / 2;
 	angle_slice = FOV / NUMBER_OF_RAYS;
-	memset(data->mlx_data->view_3d->pixels, 0, data->mlx_data->view_3d->width * data->mlx_data->view_3d->height * BPP);
+// 	uint32_t *pixels = (uint32_t *)data->mlx_data->view_3d->pixels;
+// size_t total_pixels = data->mlx_data->view_3d->width * data->mlx_data->view_3d->height;
+
+// for (size_t i = 0; i < total_pixels; i++)
+//     pixels[i] = 0x00000000;
+	// for ( int k = 0; k < data->mlx_data->view_3d->width * data->mlx_data->view_3d->height * BPP;k++)data->mlx_data->view_3d->pixels[k] = 0;
+	// memset(data->mlx_data->view_3d->pixels, 0, data->mlx_data->view_3d->width * data->mlx_data->view_3d->height * BPP);
 	while (i < NUMBER_OF_RAYS)
 	{
 		ray_angle = (data->view_angle - fov_half) + (i * angle_slice);
@@ -468,26 +516,37 @@ void draw_3d(data_t *data)
 		// printf("verti: %f horizontal: %f\n", vertical, horizontal);
 		if (vertical < horizontal)
 		{
-			wall_height =  (HEIGHT_3D * 100 / (vertical * cos(ray_angle - data->view_angle))) ;
-			start_y = half_height - (wall_height  / 2);
-			end_y = half_height + (wall_height  / 2);
+			wall_height =  (scaler / (vertical * cos(ray_angle - data->view_angle))) ;
+			wall_half = wall_height / 2;
+			start_y = half_height - (wall_half);
+			end_y = half_height + (wall_half);
 			// printf("start_y: %d end %d\n", start_y, end_y);
-			draw_line_2(data->mlx_data->view_3d, NUMBER_OF_RAYS - i , start_y,NUMBER_OF_RAYS - i, end_y, vertical_color);
+			if (start_y < 0)
+				start_y = 0;
+			if (end_y > HEIGHT_3D)
+				end_y = HEIGHT_3D - 1;
+			draw_line_3d(data, NUMBER_OF_RAYS - i , start_y,end_y, vertical_color);
 		}
 		else 
 		{
-			wall_height = (HEIGHT_3D * 100 / (horizontal * cos(ray_angle - data->view_angle))) ;
-			start_y = half_height - (wall_height  / 2);
-			end_y = half_height + (wall_height  / 2);
-			// printf("start_y: %d\n", wall_height);
+			wall_height = (scaler / (horizontal * cos(ray_angle - data->view_angle))) ;
+			wall_half = wall_height / 2;
+			start_y = half_height - (wall_half);
+			end_y = half_height + (wall_half);
+			// printf("wall_height: %d\t", wall_height);
 			// printf("start_y: %d end %d\n", start_y, end_y);
-
-			draw_line_2(data->mlx_data->view_3d, NUMBER_OF_RAYS - i, start_y, NUMBER_OF_RAYS - i, end_y, horizontal_color);
+			// printf("ray number: %d\n", NUMBER_OF_RAYS - i);
+			if (start_y < 0)
+				start_y = 0;
+			if (end_y > HEIGHT_3D)
+				end_y = HEIGHT_3D - 1;
+			// printf("start_y: %d\tend_y: %d max : %d\n", start_y, end_y, data->mlx_data->view_3d->height);
+			draw_line_3d(data, NUMBER_OF_RAYS - i, start_y, end_y, horizontal_color);
 			
 		}
 		i++;
 	}
-	mlx_image_to_window(data->mlx_data->mlx, data->mlx_data->view_3d, 0 ,0);
+	// mlx_image_to_window(data->mlx_data->mlx, data->mlx_data->view_3d, 0 ,0);
 }
 
 void floor_ceiling(data_t *data)
@@ -515,6 +574,7 @@ void floor_ceiling(data_t *data)
 }
 
 
+
 int main(int argc, char **argv){
 	// parsing(argc , argv);
 	data_t data;
@@ -523,18 +583,19 @@ int main(int argc, char **argv){
 	data.mlx_data = &mlx_data;
 	data.rays = malloc(sizeof(int) * NUMBER_OF_RAYS);
 	bzero(data.rays, sizeof(int) * NUMBER_OF_RAYS);
-
+	data.floor = rgb(0, 0, 0, 255);
+	data.ceiling = rgb(0, 0, 0, 255);
 	data.map = (char*[]){
-"11111111111111111111111 ",
-"      100100100100001001",
-"111111101001001001001   ",
+"11111111111111111111111  ",
+"      100100100100001001 ",
+"111111101001001001001    ",
 "100100100100100100001 11 ",
 "100100100000100100000101 ",
-"1000000000P0000000000001 ",
-"100001111111100000001111",
-"111100000000000111001   ",
-"100000010101000000111   ",
-"1111111111111111111     "};
+"1000000P00P0000000000001 ",
+"100001111111100000001111 ",
+"111100000000000111001    ",
+"100000010101000000111    ",
+"1111111111111111111      "};
 	// {
 						// "1111111111111111111111111111111",
 						// "1000000000001001000000000000001",
@@ -579,11 +640,17 @@ int main(int argc, char **argv){
 	{
 		mlx_data.mlx = mlx_init(WIDTH_3D, HEIGHT_3D, "Cub3d", true);
 		mlx_data.view_3d = mlx_new_image(mlx_data.mlx, WIDTH_3D, HEIGHT_3D);
-		mlx_data.floor_ceiling = mlx_new_image(mlx_data.mlx, WIDTH_3D, HEIGHT_3D);
-		floor_ceiling(&data);
+		// mlx_data.floor_ceiling = mlx_new_image(mlx_data.mlx, WIDTH_3D, HEIGHT_3D);
+		// floor_ceiling(&data);
 	}
 
-	data.view_angle = (M_PI / 2);
+	data.view_angle = 3 * (M_PI / 2);
+
+	// important
+	data.dir_x = cos(data.view_angle);
+	data.dir_y = sin(data.view_angle);
+	
+	
 	// printf("%lf\n", data.view_angle);
 	// printf("%lf %lf\n", data.player_x, data.player_y);
 	if (!CUBE3D)
@@ -591,9 +658,11 @@ int main(int argc, char **argv){
 		draw_minimap(&data);
 		mlx_image_to_window(mlx_data.mlx, mlx_data.view, 0 ,  0);
 		minimap(&data, &mlx_data);
+		mlx_image_to_window(mlx_data.mlx, mlx_data.rays_image, 0 , 0);
 	}
 	else{
 		draw_3d(&data);
+		mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d,  0, 0);
 	}
 	mlx_loop_hook(mlx_data.mlx, hook_handler, &data);
 	mlx_loop(mlx_data.mlx);

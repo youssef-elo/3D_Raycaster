@@ -7,8 +7,9 @@ NAME=cub3d
 
 
 # FLAGS= -Wall -Wextra -Werror 
-# FLAGS= -fsanitize=address 
-MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm -O3
+# FLAGS= -fsanitize=address -g 
+opti =-funroll-loops -O3 -ffast-math
+MlX_FLAGS=-Iinclude -ldl -lglfw -pthread -lm 
 
 INCLUDES= $(wildcard *.h) $(wildcard get_next_line/*.h)
 
@@ -19,10 +20,10 @@ OFILES= $(FILES:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OFILES)
-	cc $(FLAGS) $(OFILES) -o $(NAME) $(MLX) $(MlX_FLAGS)
+	cc $(FLAGS) $(OFILES) -o $(NAME) $(MLX) $(MlX_FLAGS) 
 
 %.o: %.c $(INCLUDES) Makefile
-	$(CC) $(FLAGS) $< -c -o $@ 
+	$(CC) $(FLAGS) $< -c -o $@ $(opti)
 
 clean :
 	rm -f $(OFILES) 

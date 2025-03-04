@@ -45,9 +45,13 @@ typedef struct data_s{
 	double player_y;
 	double view_angle;
 	char **map;
+	uint32_t ceiling;
+	uint32_t floor;
 	int width;
 	int height;
     int *rays;
+	double dir_x;
+	double dir_y;
 } data_t;
 
 void draw_3d(data_t *data);
