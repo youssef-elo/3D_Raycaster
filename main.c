@@ -436,13 +436,11 @@ void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
 	ceiling = 0;
 	while(ceiling < y0)
 	{
-		// put_pixel(data->mlx_data->view_3d, x0, ceiling, data->ceiling);
 		index = (ceiling * data->mlx_data->view_3d->width + x0) * 4;
         data->mlx_data->view_3d->pixels[index + 0] = (data->ceiling >> 24) & 0xFF; 
         data->mlx_data->view_3d->pixels[index + 1] = (data->ceiling >> 16) & 0xFF;
         data->mlx_data->view_3d->pixels[index + 2] = (data->ceiling >> 8) & 0xFF;  
         data->mlx_data->view_3d->pixels[index + 3] = (data->ceiling) & 0xFF;
-		// index += step;
 		ceiling++;
 	}
 	// puts("out1");
@@ -454,7 +452,6 @@ void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
         data->mlx_data->view_3d->pixels[index + 1] = (color >> 16) & 0xFF;
         data->mlx_data->view_3d->pixels[index + 2] = (color >> 8) & 0xFF;  
         data->mlx_data->view_3d->pixels[index + 3] = (color) & 0xFF;
-		// index += step;
 		y0++;
 	}
 	// puts("out2");
@@ -465,6 +462,7 @@ void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
 		data->mlx_data->view_3d->pixels[index + 1] = (data->floor >> 16) & 0xFF;
 		data->mlx_data->view_3d->pixels[index + 2] = (data->floor >> 8) & 0xFF;  
 		data->mlx_data->view_3d->pixels[index + 3] = (data->floor) & 0xFF;
+		// mlx_put_pixel(data->mlx_data->view_3d, x0, y0, data->floor);
 		// index += step;
 		y0++;
 	}
@@ -514,7 +512,7 @@ void draw_3d(data_t *data)
 		horizontal = shoot_horizontal(data, ray_angle, NULL, NULL) ;
 		vertical = shoot_vertical(data, ray_angle, NULL, NULL);
 		// printf("verti: %f horizontal: %f\n", vertical, horizontal);
-		if (vertical < horizontal)
+		if (vertical <= horizontal)
 		{
 			wall_height =  (scaler / (vertical * cos(ray_angle - data->view_angle))) ;
 			wall_half = wall_height / 2;

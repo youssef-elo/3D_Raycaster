@@ -52,6 +52,7 @@ typedef struct data_s{
     int *rays;
 	double dir_x;
 	double dir_y;
+	mlx_image_t *wall_texture;
 } data_t;
 
 void draw_3d(data_t *data);
