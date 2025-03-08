@@ -317,11 +317,11 @@ struct LodePNGDecompressSettings {
   unsigned ignore_nlen; /*ignore complement of len checksum in uncompressed blocks*/
 
   /*Maximum decompressed size, beyond this the decoder may (and is encouraged to) stop decoding,
-  return an error, output a data size > max_output_size and all the data up to that point. This is
+  return an error, output a data size > max_outpuTILE and all the data up to that point. This is
   not hard limit nor a guarantee, but can prevent excessive memory usage. This setting is
   ignored by the PNG decoder, but is used by the deflate/zlib decoder and can be used by custom ones.
   Set to 0 to impose no limit (the default).*/
-  size_t max_output_size;
+  size_t max_outpuTILE;
 
   /*use custom zlib decoder instead of built in one (default: null).
   Should return 0 if success, any non-0 if error (numeric value not exposed).*/
@@ -750,7 +750,7 @@ typedef struct LodePNGDecoderSettings {
   /* maximum size for decompressed text chunks. If a text chunk's text is larger than this, an error is returned,
   unless reading text chunks is disabled or this limit is set higher or disabled. Set to 0 to allow any size.
   By default it is a value that prevents unreasonably large strings from hogging memory. */
-  size_t max_text_size;
+  size_t max_texTILE;
 
   /* maximum size for compressed ICC chunks. If the ICC profile is larger than this, an error will be returned. Set to
   0 to allow any size. By default this is a value that prevents ICC profiles that would be much larger than any

@@ -1,0 +1,141 @@
+#include "cub3d.h"
+
+void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data)
+{
+	ray_d->direction_x = cos(angle);
+	ray_d->direction_y = sin(angle);
+	if (ray_d->direction_y < 0)
+	{
+		ray_d->step = TILE;
+		ray_d->offset = 1;
+		ray_d->hit_y = ((int)(data->player_y / TILE) + 1) * TILE;
+	}
+	else
+	{
+		ray_d->step = -TILE;
+		ray_d->offset = -1;
+		ray_d->hit_y = (int)(data->player_y / TILE) * TILE;
+	}
+}
+
+double	shoot_horizontal(data_t *d, double angle)
+{
+	raycaster_t	r_d;
+
+	pre_horizontal(&r_d, angle, d);
+	while (1)
+	{
+		r_d.scaling_factor = (d->player_y - r_d.hit_y) / r_d.direction_y;
+		r_d.hit_x = d->player_x + (r_d.scaling_factor * r_d.direction_x);
+		r_d.map_y = (r_d.hit_y + r_d. offset) / TILE;
+		r_d.map_x = r_d.hit_x / TILE;
+		if (r_d.hit_x < TILE
+			|| r_d.hit_x > ((d->width * TILE) - TILE))
+			return (OUT_OF_RANGE);
+		if (d->map[r_d.map_y][r_d.map_x] == '1')
+			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
+					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
+		r_d.hit_y += r_d.step;
+		if (r_d.hit_y < TILE
+			|| r_d.hit_y > ((d->height * TILE) - TILE))
+			return (OUT_OF_RANGE);
+	}
+	return (OUT_OF_RANGE);
+}
+
+double	shoot_horizontal_2d(data_t *d, double angle, double *h_x, double *h_y)
+{
+	raycaster_t	r_d;
+
+	pre_horizontal(&r_d, angle, d);
+	while (1)
+	{
+		r_d.scaling_factor = (d->player_y - r_d.hit_y) / r_d.direction_y;
+		r_d.hit_x = d->player_x + (r_d.scaling_factor * r_d.direction_x);
+		r_d.map_y = (r_d.hit_y + r_d. offset) / TILE;
+		r_d.map_x = r_d.hit_x / TILE;
+		if (r_d.hit_x < TILE
+			|| r_d.hit_x > ((d->width * TILE) - TILE))
+			return (OUT_OF_RANGE);
+		if (d->map[r_d.map_y][r_d.map_x] == '1')
+		{
+			*h_x = r_d.hit_x;
+			*h_y = r_d.hit_y;
+			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
+					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
+		}
+		r_d.hit_y += r_d.step;
+		if (r_d.hit_y < TILE
+			|| r_d.hit_y > ((d->height * TILE) - TILE))
+			return (OUT_OF_RANGE);
+	}
+	return (OUT_OF_RANGE);
+}
+
+void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data)
+{
+	ray_d->direction_x = cos(angle);
+	ray_d->direction_y = sin(angle);
+	if (ray_d->direction_x < 0)
+	{
+		ray_d->step = -TILE;
+		ray_d->offset = -1;
+		ray_d->hit_x = (int)(data->player_x / TILE) * TILE;
+	}
+	else
+	{
+		ray_d->step = TILE;
+		ray_d->offset = 1;
+		ray_d->hit_x = ((int)(data->player_x / TILE) + 1) * TILE;
+	}
+}
+
+double	shoot_vertical(data_t *d, double angle)
+{
+	raycaster_t	r_d;
+
+	pre_vertical(&r_d, angle, d);
+	while (1)
+	{
+		r_d.scaling_factor = (d->player_x - r_d.hit_x) / r_d.direction_x;
+		r_d.hit_y = d->player_y + (r_d.scaling_factor * r_d.direction_y);
+		if (r_d.hit_y < TILE || r_d.hit_y > ((d->height * TILE)))
+			return (OUT_OF_RANGE);
+		r_d.map_y = r_d.hit_y / TILE;
+		r_d.map_x = (r_d.hit_x + r_d.offset) / TILE;
+		if (d->map[r_d.map_y][r_d.map_x] == '1')
+			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
+					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
+		r_d.hit_x += r_d.step;
+		if (r_d.hit_x < 0 || r_d.hit_x > (d->width * TILE))
+			return (OUT_OF_RANGE);
+	}
+	return (OUT_OF_RANGE);
+}
+
+double	shoot_vertical_2d(data_t *d, double angle, double *v_x, double *v_y)
+{
+	raycaster_t	r_d;
+
+	pre_vertical(&r_d, angle, d);
+	while (1)
+	{
+		r_d.scaling_factor = (d->player_x - r_d.hit_x) / r_d.direction_x;
+		r_d.hit_y = d->player_y + (r_d.scaling_factor * r_d.direction_y);
+		if (r_d.hit_y < TILE || r_d.hit_y > ((d->height * TILE)))
+			return (OUT_OF_RANGE);
+		r_d.map_y = r_d.hit_y / TILE;
+		r_d.map_x = (r_d.hit_x + r_d.offset) / TILE;
+		if (d->map[r_d.map_y][r_d.map_x] == '1')
+		{
+			*v_x = r_d.hit_x;
+			*v_y = r_d.hit_y;
+			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
+					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
+		}
+		r_d.hit_x += r_d.step;
+		if (r_d.hit_x < 0 || r_d.hit_x > (d->width * TILE))
+			return (OUT_OF_RANGE);
+	}
+	return (OUT_OF_RANGE);
+}

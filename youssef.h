@@ -10,21 +10,27 @@
 #include "hamza.h"
 #include <strings.h>
 
+
+#define CUBE3D 01
+
+
 #define PI 3.141592653589793
 #define FOV 1.1519
 #define NUMBER_OF_RAYS 2560
-#define CUBE3D 0
-#define CUBE3D 1
-
+// #define CUBE3D 0
+#define OUT_OF_RANGE 2147483647
+#define SPEED 4
 
 // 8 21
-#define TILE_SIZE 80
+#define TILE 80
 
 #define WIDTH_3D 2560
 #define HEIGHT_3D 1280
+#define RIGHT 1
+#define LEFT 0
 
-#define WIDTH 29 * TILE_SIZE
-#define HEIGHT 8 * TILE_SIZE
+#define WIDTH 29 * TILE
+#define HEIGHT 8 * TILE
 #define BPP sizeof(int32_t)
 
 typedef struct mlx_data_s{
@@ -39,24 +45,80 @@ typedef struct mlx_data_s{
 
 } mlx_data_t;
 
+typedef struct raycaster_s{
+	double hit_x;
+	double hit_y;
+	double direction_x;
+	double direction_y;
+	double scaling_factor;
+	int map_y;
+	int map_x;
+	int step;
+	int offset;
+}	raycaster_t;
+
 typedef struct data_s{
-	mlx_data_t *mlx_data;
 	double player_x;
 	double player_y;
 	double view_angle;
-	char **map;
-	uint32_t ceiling;
-	uint32_t floor;
+	double dir_x;
+	double dir_y;
 	int width;
 	int height;
     int *rays;
-	double dir_x;
-	double dir_y;
+	char **map;
+	uint32_t ceiling;
+	uint32_t floor;
+	uint32_t v_color;
+	uint32_t h_color;
+	mlx_data_t *mlx_data;
 	mlx_image_t *wall_texture;
 } data_t;
 
-void draw_3d(data_t *data);
+typedef struct view_3d_s{
+	double hor;
+	double ver;
+	double fov_half;
+	double ray_angle;
+	double angle_slice;
+	int		w_height;
+	int half_window;
+	int s_y;
+	int e_y;
+	int wall_half;
+	int scaler;
+}	view_3d_t;
 
+
+
+typedef struct moves_s{
+    int update;
+    double next_y;
+    double next_x;
+    double speed;
+}   moves_t;
+
+void draw_3d(data_t *data);
+double shoot_horizontal(data_t *d, double ray_angle);
+double shoot_vertical(data_t *data, double angle);
+double shoot_horizontal_2d(data_t *d, double angle, double *h_x, double *h_y);
+double shoot_vertical_2d(data_t *data, double angle, double *v_x, double *v_y);
+void hook_handler(void *param);
+void draw_3d(data_t *data);
+void minimap(data_t *data, mlx_data_t *mlx_data);
+void put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void draw_filled_disk(mlx_image_t *img, int xc, int yc, int r);
+uint32_t rgb(int r, int g, int b, int a);
+
+
+
+// 2D view
+int *shoot_rays(data_t *data);
+void draw_minimap(data_t *data);
+void minimap(data_t *data, mlx_data_t *mlx_data);
+void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
+
+//3D view
+void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color);
 #endif
 
-// map checking wh

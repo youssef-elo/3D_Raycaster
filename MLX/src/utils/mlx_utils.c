@@ -21,14 +21,14 @@
  * Getline can't be used directly since it's not standard and therefore not available on all platforms.
  *
  * @param out Pointer to store output string.
- * @param out_size Pointer to store output strings length.
+ * @param ouTILE Pointer to store output strings length.
  * @param file File stream to read from.
  * @return True if line was read, false if EOF was reached or an error occurred.
  */
-bool mlx_getline(char** out, size_t* out_size, FILE* file)
+bool mlx_getline(char** out, size_t* ouTILE, FILE* file)
 {
 	MLX_NONNULL(out);
-	MLX_NONNULL(out_size);
+	MLX_NONNULL(ouTILE);
 	MLX_NONNULL(file);
 
 	size_t size = 0;
@@ -47,7 +47,7 @@ bool mlx_getline(char** out, size_t* out_size, FILE* file)
 		temp[size] = '\0';
 
 		*out = temp;
-		*out_size = size;
+		*ouTILE = size;
 
 		strncat(*out, BUFF, size);
 		if (strrchr(BUFF, '\n'))
