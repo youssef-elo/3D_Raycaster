@@ -18,7 +18,7 @@ void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data)
 	}
 }
 
-double	shoot_horizontal(data_t *d, double angle)
+double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 {
 	raycaster_t	r_d;
 
@@ -33,8 +33,13 @@ double	shoot_horizontal(data_t *d, double angle)
 			|| r_d.hit_x > ((d->width * TILE) - TILE))
 			return (OUT_OF_RANGE);
 		if (d->map[r_d.map_y][r_d.map_x] == '1')
+		{
+			d_3d->hor_x = r_d.hit_x;
+			d_3d->ver_y = r_d.hit_y;
+
 			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
 					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
+		}
 		r_d.hit_y += r_d.step;
 		if (r_d.hit_y < TILE
 			|| r_d.hit_y > ((d->height * TILE) - TILE))
@@ -90,7 +95,7 @@ void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data)
 	}
 }
 
-double	shoot_vertical(data_t *d, double angle)
+double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
 {
 	raycaster_t	r_d;
 

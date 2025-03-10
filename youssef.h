@@ -26,6 +26,8 @@
 
 #define WIDTH_3D 2560
 #define HEIGHT_3D 1280
+#define MAX_VIEW 1500
+
 #define RIGHT 1
 #define LEFT 0
 
@@ -41,8 +43,10 @@ typedef struct mlx_data_s{
 	mlx_image_t *empty;
 	mlx_image_t *wall;
 	mlx_image_t *rays_image;
-	
-
+	mlx_image_t *north;
+	mlx_image_t *south;
+	mlx_image_t *east;
+	mlx_image_t *west;
 } mlx_data_t;
 
 typedef struct raycaster_s{
@@ -72,23 +76,33 @@ typedef struct data_s{
 	uint32_t v_color;
 	uint32_t h_color;
 	mlx_data_t *mlx_data;
-	mlx_image_t *wall_texture;
 } data_t;
 
 typedef struct view_3d_s{
-	double hor;
-	double ver;
-	double fov_half;
-	double ray_angle;
-	double angle_slice;
-	int		w_height;
+	int	w_height;
 	int half_window;
 	int s_y;
 	int e_y;
 	int wall_half;
 	int scaler;
+	double hor;
+	double ver;
+	double fov_half;
+	double ray_angle;
+	double angle_slice;
+	double hor_x;
+	double hor_y;
+	double ver_x;
+	double ver_y;
+	int ver_ray;
 }	view_3d_t;
 
+
+typedef struct line_s{
+	int x0;
+	int y0;
+	int y1;
+}	line_t;
 
 
 typedef struct moves_s{
@@ -99,8 +113,8 @@ typedef struct moves_s{
 }   moves_t;
 
 void draw_3d(data_t *data);
-double shoot_horizontal(data_t *d, double ray_angle);
-double shoot_vertical(data_t *data, double angle);
+double shoot_horizontal(data_t *d, double ray_angle, view_3d_t *d_3d);
+double shoot_vertical(data_t *data, double angle, view_3d_t *d_3d);
 double shoot_horizontal_2d(data_t *d, double angle, double *h_x, double *h_y);
 double shoot_vertical_2d(data_t *data, double angle, double *v_x, double *v_y);
 void hook_handler(void *param);
@@ -120,5 +134,6 @@ void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
 
 //3D view
 void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color);
+void	map_refresh(data_t *d, moves_t *m);
 #endif
 

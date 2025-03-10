@@ -9,7 +9,10 @@ void	move_angle(data_t *data, moves_t *moves)
 			data->view_angle += (2 * M_PI);
 		data->dir_x = cos(data->view_angle);
 		data->dir_y = sin(data->view_angle);
-		moves->update = 1;
+		if (!CUBE3D)
+			minimap(data, data->mlx_data);
+		else
+			draw_3d(data);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
@@ -18,7 +21,10 @@ void	move_angle(data_t *data, moves_t *moves)
 			data->view_angle -= (2 * M_PI);
 		data->dir_x = cos(data->view_angle);
 		data->dir_y = sin(data->view_angle);
-		moves->update = 1;
+		if (!CUBE3D)
+			minimap(data, data->mlx_data);
+		else
+			draw_3d(data);
 	}
 }
 
@@ -28,47 +34,43 @@ void	player_movement(data_t *data, moves_t *m_d)
 	{
 		m_d->next_x = data->player_x + (data->dir_x * m_d->speed);
 		m_d->next_y = data->player_y - (data->dir_y * m_d->speed);
-		m_d->update = 2;
+		map_refresh(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_S))
 	{
 		m_d->next_x = data->player_x - (data->dir_x * m_d->speed);
 		m_d->next_y = data->player_y + (data->dir_y * m_d->speed);
-		m_d->update = 2;
+		map_refresh(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_A))
 	{
 		m_d->next_x = data->player_x - (data->dir_y * m_d->speed);
 		m_d->next_y = data->player_y - (data->dir_x * m_d->speed);
-		m_d->update = 2;
+		map_refresh(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_D))
 	{
 		m_d->next_x = data->player_x + (data->dir_y * m_d->speed);
 		m_d->next_y = data->player_y + (data->dir_x * m_d->speed);
-		m_d->update = 2;
+		map_refresh(data, m_d);
 	}
 }
 
 void	map_refresh(data_t *d, moves_t *m)
 {
-	if (m->update == 2)
+	if (d->map[(int)((m->next_y) / TILE)][(int)(m->next_x) / TILE] == '0'
+		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'P')
 	{
-		if (d->map[(int)((m->next_y) / TILE)][(int)(m->next_x) / TILE] == '0'
-			|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'P')
-		{
-			d->player_y = m->next_y;
-			d->player_x = m->next_x;
-		}
-	}
-	if (m->update)
-	{
+		d->player_y = m->next_y;
+		d->player_x = m->next_x;
+
+			// remove for push
 		if (!CUBE3D)
 			minimap(d, d->mlx_data);
 		else
 			draw_3d(d);
-		// remove for push
 	}
+		
 }
 
 void	hook_handler(void *param)
@@ -77,7 +79,7 @@ void	hook_handler(void *param)
 	moves_t	moves;
 
 	moves.update = 0;
-	moves.speed = 3;
+	moves.speed = 4;
 	data = (data_t *)param;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT_SHIFT))
 		moves.speed = 9;
@@ -85,5 +87,5 @@ void	hook_handler(void *param)
 		exit(0);
 	player_movement(data, &moves);
 	move_angle(data, &moves);
-	map_refresh(data, &moves);
+	// map_refresh(data, &moves);
 }

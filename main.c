@@ -11,6 +11,7 @@ int main(int argc, char **argv){
 	bzero(data.rays, sizeof(int) * NUMBER_OF_RAYS);
 	data.floor = rgb(0, 0, 0, 255);
 	data.ceiling = rgb(0, 0, 0, 255);
+
 	data.map = (char*[]){
 "11111111111111111111111  ",
 "      100100100100001001 ",
@@ -53,7 +54,7 @@ int main(int argc, char **argv){
 				found = 1;
 			}
 		}
-			if (found  == 1)
+			if (found == 1)
 				break;
 	}
 	if (!CUBE3D)
@@ -69,6 +70,16 @@ int main(int argc, char **argv){
 		// mlx_data.floor_ceiling = mlx_new_image(mlx_data.mlx, WIDTH_3D, HEIGHT_3D);
 		// floor_ceiling(&data);
 	}
+
+	data.mlx_data->south = mlx_texture_to_image(data.mlx_data->mlx, mlx_load_png("./assets/south.png"));
+	data.mlx_data->east = mlx_texture_to_image(data.mlx_data->mlx, mlx_load_png("./assets/east.png"));
+	data.mlx_data->west= mlx_texture_to_image(data.mlx_data->mlx, mlx_load_png("./assets/west.png"));
+	data.mlx_data->north = mlx_texture_to_image(data.mlx_data->mlx, mlx_load_png("./assets/north.png"));
+
+	mlx_resize_image(data.mlx_data->south, HEIGHT_3D, HEIGHT_3D);
+	mlx_resize_image(data.mlx_data->north, HEIGHT_3D, HEIGHT_3D);
+	mlx_resize_image(data.mlx_data->east, HEIGHT_3D, HEIGHT_3D);
+	mlx_resize_image(data.mlx_data->west, HEIGHT_3D, HEIGHT_3D);
 
 	data.view_angle = M_PI / 2;
 

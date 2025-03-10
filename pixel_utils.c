@@ -38,8 +38,7 @@ void	draw_filled_disk(mlx_image_t *img, int xc, int yc, int r)
 
 uint32_t	rgb(int r, int g, int b, int a)
 {
-	return (((r & 0xFF) << 24) | ((g & 0xFF) << 16)
-		| ((b & 0xFF) << 8) | (a & 0xFF));
+	return ((r  << 24) | (g  << 16)| (b  << 8) | a );
 }
 
 // REMOVE LATER
