@@ -13,6 +13,19 @@ void	put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 		img->pixels[index + 3] = (color) & 0xFF;
 	}
 }
+void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
+{
+	int	index;
+
+	if (x >= 0 && x < (int)img->width && y >= 0 && y < (int)img->height)
+	{
+		index = (y * img->width + x) * 4;
+		img->pixels[index + 3] = (color >> 24) & 0xFF; // b
+		img->pixels[index + 2] = (color >> 16) & 0xFF; // g	
+		img->pixels[index + 1] = (color >> 8) & 0xFF; // r
+		img->pixels[index + 0] = (color) & 0xFF;
+	}
+}
 
 void	draw_filled_disk(mlx_image_t *img, int xc, int yc, int r)
 {

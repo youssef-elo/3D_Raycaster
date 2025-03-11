@@ -48,7 +48,7 @@ void	draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
 
 void pre_3d(data_t *data, view_3d_t *d_3d, uint32_t *v_color, uint32_t *h_color)
 {
-	d_3d->scaler  = HEIGHT_3D * 100;
+	d_3d->scaler  = HEIGHT_3D * 125;
 	*v_color = rgb(27, 96, 157, 255);
 	*h_color = rgb(15, 76, 129, 255);
 	d_3d->fov_half = FOV / 2;
@@ -68,26 +68,33 @@ void	textured_line(data_t *data, view_3d_t *d_3d, line_t *line)
 	ceiling = 0;
 	texture_index = 0;
 	view_index = line->y0; 
-	step = HEIGHT_3D / d_3d->w_height;
-	printf("step : %f start: %d\n", step, line->y0);
+	step = (double)HEIGHT_3D / (double)d_3d->w_height;
+	// printf("step : %f start: %d\n", step, line->y0);
 
 	while(ceiling < line->y0)
 	{
 		put_pixel(data->mlx_data->view_3d, line->x0, ceiling, data->ceiling);
 		ceiling++;
 	}
+	if (view_index < 0)
+	{
+		texture_index = -(view_index * step);
+		view_index  = 0;
+	}
 	while(view_index <= line->y1 && view_index < HEIGHT_3D)
 	{
 		
-		if (view_index >= 0 && view_index < HEIGHT_3D && (int)texture_index < HEIGHT_3D && d_3d->ver_ray)
-			mlx_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
-			(uint32_t)data->mlx_data->west->pixels[(((int)texture_index* data->mlx_data->west->width) + ((int)d_3d->ver_y % TILE))]);
-		if (view_index >= 0 && view_index < HEIGHT_3D && (int)texture_index < HEIGHT_3D && !d_3d->ver_ray)
-			mlx_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
-			(uint32_t)data->mlx_data->west->pixels[(((int)texture_index* data->mlx_data->west->width) + ((int)d_3d->hor_x % TILE))]);
-		// printf("view_index : %d texture_index : %f wall_height %d\n", view_index, texture_index, d_3d->w_height);
-		view_index++;
+		
+		if (view_index >= 0 && view_index < HEIGHT_3D && texture_index < (double)HEIGHT_3D && d_3d->ver_ray)
+			re_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
+		 	((uint32_t *)data->mlx_data->south->pixels)[(((int)texture_index * data->mlx_data->south->width) + (((int)d_3d->ver_y % TILE) * 16))]);
+		if (view_index >= 0 && view_index < HEIGHT_3D && texture_index < (double)HEIGHT_3D && !d_3d->ver_ray)
+			re_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
+			((uint32_t *)data->mlx_data->south->pixels)[(((int)texture_index * data->mlx_data->south->width) + (((int)d_3d->hor_x % TILE)) * 16)]);
 		texture_index += step;
+		view_index++;
+		// printf("view_index : %d texture_index : %f wall_height %d\n", view_index, texture_index, d_3d->w_height);
+		
 	}
 	while(view_index < HEIGHT_3D -1)
 	{

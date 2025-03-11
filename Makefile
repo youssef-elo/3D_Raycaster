@@ -7,7 +7,7 @@ NAME=cub3d
 
 
 # FLAGS= -Wall -Wextra -Werror 
-FLAGS= -fsanitize=address -g
+# FLAGS= -fsanitize=address -g
 opti =-funroll-loops -O3 -ffast-math
 MlX_FLAGS= -Iinclude -ldl -lglfw -pthread -lm 
 

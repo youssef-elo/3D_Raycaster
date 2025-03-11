@@ -35,7 +35,7 @@ double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 		if (d->map[r_d.map_y][r_d.map_x] == '1')
 		{
 			d_3d->hor_x = r_d.hit_x;
-			d_3d->ver_y = r_d.hit_y;
+			d_3d->hor_y = r_d.hit_y;
 
 			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
 					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
@@ -109,8 +109,12 @@ double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
 		r_d.map_y = r_d.hit_y / TILE;
 		r_d.map_x = (r_d.hit_x + r_d.offset) / TILE;
 		if (d->map[r_d.map_y][r_d.map_x] == '1')
+		{
+			d_3d->ver_x = r_d.hit_x;
+			d_3d->ver_y = r_d.hit_y;
 			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
 					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
+		}
 		r_d.hit_x += r_d.step;
 		if (r_d.hit_x < 0 || r_d.hit_x > (d->width * TILE))
 			return (OUT_OF_RANGE);

@@ -135,5 +135,6 @@ void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
 //3D view
 void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color);
 void	map_refresh(data_t *d, moves_t *m);
+void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 #endif
 
