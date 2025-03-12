@@ -68,7 +68,8 @@ void	textured_line(data_t *data, view_3d_t *d_3d, line_t *line)
 	ceiling = 0;
 	texture_index = 0;
 	view_index = line->y0; 
-	step = (double)HEIGHT_3D / (double)d_3d->w_height;
+	step = (double)data->mlx_data->south->height / (double)d_3d->w_height;
+	// step = (double)HEIGHT_3D / (double)d_3d->w_height;
 	// printf("step : %f start: %d\n", step, line->y0);
 
 	while(ceiling < line->y0)
@@ -87,10 +88,10 @@ void	textured_line(data_t *data, view_3d_t *d_3d, line_t *line)
 		
 		if (view_index >= 0 && view_index < HEIGHT_3D && texture_index < (double)HEIGHT_3D && d_3d->ver_ray)
 			re_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
-		 	((uint32_t *)data->mlx_data->south->pixels)[(((int)texture_index * data->mlx_data->south->width) + (((int)d_3d->ver_y % TILE) * 16))]);
+		 	((uint32_t *)data->mlx_data->south->pixels)[(((int)(texture_index) * data->mlx_data->south->width) + (((int)d_3d->ver_y % TILE)) * (data->mlx_data->south->width / TILE))]);
 		if (view_index >= 0 && view_index < HEIGHT_3D && texture_index < (double)HEIGHT_3D && !d_3d->ver_ray)
 			re_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
-			((uint32_t *)data->mlx_data->south->pixels)[(((int)texture_index * data->mlx_data->south->width) + (((int)d_3d->hor_x % TILE)) * 16)]);
+			((uint32_t *)data->mlx_data->south->pixels)[(((int)(texture_index) * data->mlx_data->south->width) + (((int)d_3d->hor_x % TILE)) * (data->mlx_data->south->width / TILE))]);
 		texture_index += step;
 		view_index++;
 		// printf("view_index : %d texture_index : %f wall_height %d\n", view_index, texture_index, d_3d->w_height);

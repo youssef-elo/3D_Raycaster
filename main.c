@@ -76,11 +76,9 @@ int main(int argc, char **argv){
 	data.mlx_data->west= mlx_texture_to_image(data.mlx_data->mlx, mlx_load_png("./assets/west.png"));
 	data.mlx_data->north = mlx_texture_to_image(data.mlx_data->mlx, mlx_load_png("./assets/north.png"));
 
-	mlx_resize_image(data.mlx_data->south, HEIGHT_3D, HEIGHT_3D);
-	mlx_resize_image(data.mlx_data->north, HEIGHT_3D, HEIGHT_3D);
-	mlx_resize_image(data.mlx_data->east, HEIGHT_3D, HEIGHT_3D);
-	mlx_resize_image(data.mlx_data->west, HEIGHT_3D, HEIGHT_3D);
+	// mlx_resize_image(data.mlx_data->south, data.mlx_data->south->width, HEIGHT`
 
+	// mlx_image_to_window(data.mlx_data->mlx, data.mlx_data->south,0, 0);
 	data.view_angle = M_PI / 2;
 
 	// important
