@@ -48,7 +48,7 @@ void	draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
 
 void pre_3d(data_t *data, view_3d_t *d_3d, uint32_t *v_color, uint32_t *h_color)
 {
-	d_3d->scaler  = HEIGHT_3D * 125;
+	d_3d->scaler  = HEIGHT_3D * 700;
 	*v_color = rgb(27, 96, 157, 255);
 	*h_color = rgb(15, 76, 129, 255);
 	d_3d->fov_half = FOV / 2;
@@ -88,7 +88,7 @@ void	textured_line(data_t *data, view_3d_t *d_3d, line_t *line)
 		
 		if (view_index >= 0 && view_index < HEIGHT_3D && texture_index < (double)HEIGHT_3D && d_3d->ver_ray)
 			re_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
-		 	((uint32_t *)data->mlx_data->south->pixels)[(((int)(texture_index) * data->mlx_data->south->width) + (((int)d_3d->ver_y % TILE)) * (data->mlx_data->south->width / TILE))]);
+		 	((uint32_t *)data->mlx_data->south->pixels)[(((int)(texture_index) * data->mlx_data->south->width) + (TILE - ((int)d_3d->ver_y % TILE)) * (data->mlx_data->south->width / TILE))]);
 		if (view_index >= 0 && view_index < HEIGHT_3D && texture_index < (double)HEIGHT_3D && !d_3d->ver_ray)
 			re_put_pixel(data->mlx_data->view_3d, line->x0, view_index, 
 			((uint32_t *)data->mlx_data->south->pixels)[(((int)(texture_index) * data->mlx_data->south->width) + (((int)d_3d->hor_x % TILE)) * (data->mlx_data->south->width / TILE))]);

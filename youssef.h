@@ -22,9 +22,9 @@
 #define SPEED 4
 
 // 8 21
-#define TILE 80
+#define TILE 512
 
-#define WIDTH_3D 2560
+#define WIDTH_3D 2000
 #define HEIGHT_3D 1280
 #define MAX_VIEW 1500
 
@@ -84,7 +84,7 @@ typedef struct view_3d_s{
 	int s_y;
 	int e_y;
 	int wall_half;
-	int scaler;
+	double scaler;
 	double hor;
 	double ver;
 	double fov_half;
