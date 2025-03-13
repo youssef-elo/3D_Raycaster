@@ -138,7 +138,7 @@ int size_of_line(char **str)
 void ft_fill_struct(map_context_h *map, char **str, int s)
 {
 	if(s == 0)
-		map->nort = ft_strdup_n(str[1] , 1);
+		map->north = ft_strdup_n(str[1] , 1);
 	else if(s == 1)
 		map->south = ft_strdup_n(str[1] , 1);
 	else if(s == 2)
@@ -146,7 +146,7 @@ void ft_fill_struct(map_context_h *map, char **str, int s)
 	else if(s == 3)
 		map->east = ft_strdup_n(str[1] , 1);
 	else if(s == 4)
-		map->flor_s = ft_strdup_n(str[1] , 1);
+		map->floor_s = ft_strdup_n(str[1] , 1);
 	else if(s == 5)
 		map->sky_s = ft_strdup_n(str[1] , 1);
 }
@@ -186,7 +186,7 @@ void  ft_test(char *line, map_context_h *map)
 	static int check[6] = {0, 0, 0, 0, 0, 0};
 	char *identifier[] = {"NO", "SO", "WE", "EA", "F", "C", NULL};
 
-	str=NULL;
+	str = NULL;
 	str = ft_split(line, 32);
 	if (size_of_line(str) >= 3 && map->count < 6)
 	{
@@ -238,11 +238,11 @@ void print_map(map_context_h map)
 	// printf("%s\n", map.nort);
 	// printf("%s\n", map.south);
 	// printf("%s\n", map.west);
-	// printf("%s\n", map.flor_s);
+	// printf("%s\n", map.floor_s);
 	// printf("%s\n", map.sky_s);
 	// for (int i = 0; i < 3; i++)
 	// {
-	// 	printf("%d \t", map.flor[i]);
+	// 	printf("%d \t", map.floor[i]);
 	// }
 	// puts("\n");
 	// for (int i = 0; i < 3; i++)
@@ -260,7 +260,7 @@ void ft_fill_color_array(map_context_h *map,char **array,int i)
 	{
 		while (array[x])
 		{
-			map->flor[x] = ft_atoi(array[x]);
+			map->floor[x] = ft_atoi(array[x]);
 			x++;
 		}
 	}
@@ -301,11 +301,11 @@ void ft_set_map(map_context_h *map)
 {
 	map->array = NULL;
 	map->west = NULL;
-	map->nort = NULL;
+	map->north = NULL;
 	map->east = NULL;
 	map->south= NULL;
 	map->sky_s = NULL;
-	map->flor_s = NULL;
+	map->floor_s = NULL;
 	map->read_map=0;
 	map->count = 0;
 	map->map=NULL;
@@ -443,7 +443,7 @@ void ft_valid_path(map_context_h *map)
 	
 }
 
-void ft_doubel_array(map_context_h *map)
+void ft_double_array(map_context_h *map)
 {
 	int x;
 	int y;
@@ -458,34 +458,34 @@ void ft_doubel_array(map_context_h *map)
 	ft_valid_path(map);
 }
 
-void parsing(int argc, char **argv)
+
+void parsing(int argc, char **argv, map_context_h *map)
 {
 	int i;
 	int fd;
 	char *line;
-	map_context_h map;
 
 	i = 0;
-	ft_set_map(&map);
+	ft_set_map(map);
 	if(argc != 2)
-		ft_display_error("Error");
+		ft_display_error("Error\nRequired arguments : ./cub3d map_name");
 	ft_look_cub(argv[1]);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		ft_display_error("Error");
+		ft_display_error("Error\ncant open file");
 	line = get_next_line(fd);
+	int k = 0;
 	while (line)
 	{
-		if(*line != '\n' && map.count < 6)
-			ft_test(line, &map);
-		else if(map.count == 6)
-			ft_read_map(&map, line);
+		if(*line != '\n' && map->count < 6)
+			ft_test(line, map);
+		else if(map->count == 6)
+			ft_read_map(map, line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	ft_convert_color(&map, map.flor_s, 1);
-	ft_convert_color(&map, map.sky_s, 0);
-	ft_doubel_array(&map);
-	print_map(map);
-	exit(1);
+	ft_convert_color(map, map->floor_s, 1);
+	ft_convert_color(map, map->sky_s, 0);
+	ft_double_array(map);
+	print_map(*map);
 }

@@ -79,10 +79,10 @@ void	hook_handler(void *param)
 	moves_t	moves;
 
 	moves.update = 0;
-	moves.speed = 66;
+	moves.speed = 66 * 2;
 	data = (data_t *)param;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT_SHIFT))
-		moves.speed = 80;
+		moves.speed = 80 * 2;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
 		exit(0);
 	player_movement(data, &moves);

@@ -22,13 +22,11 @@ int *shoot_rays(data_t *data)
 		vertical = shoot_vertical_2d(data, ray_angle, &vertical_x, &vertical_y);
 		if (horizontal < vertical)
 		{
-			data->rays[i] = horizontal;
 			draw_line_2(data->mlx_data->rays_image, data->player_x, data->player_y, horizontal_x , horizontal_y, rgb(255, 0  ,0, 255));
 
 		}
 		else
 		{
-			data->rays[i] = vertical;
 			draw_line_2(data->mlx_data->rays_image, data->player_x, data->player_y, vertical_x , vertical_y, rgb(255, 0  ,0, 255));
 		}
 		i++;

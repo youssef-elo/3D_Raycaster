@@ -48,7 +48,7 @@ void	draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color)
 
 void pre_3d(data_t *data, view_3d_t *d_3d, uint32_t *v_color, uint32_t *h_color)
 {
-	d_3d->scaler  = HEIGHT_3D * 700;
+	d_3d->scaler  = HEIGHT_3D * 850 * 2;
 	*v_color = rgb(27, 96, 157, 255);
 	*h_color = rgb(15, 76, 129, 255);
 	d_3d->fov_half = FOV / 2;
@@ -82,7 +82,7 @@ void	textured_line(data_t *data, view_3d_t *d_3d, line_t *line)
 		texture_index = -(view_index * step);
 		view_index  = 0;
 	}
-	while(view_index <= line->y1 && view_index < HEIGHT_3D)
+	while(view_index < line->y1 && view_index < HEIGHT_3D -1)
 	{
 		
 		

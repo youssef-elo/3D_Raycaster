@@ -11,7 +11,7 @@
 #include <strings.h>
 
 
-#define CUBE3D 01
+#define CUBE3D 1
 
 
 #define PI 3.141592653589793
@@ -22,7 +22,7 @@
 #define SPEED 4
 
 // 8 21
-#define TILE 512
+#define TILE 1024
 
 #define WIDTH_3D 2000
 #define HEIGHT_3D 1280
@@ -69,7 +69,6 @@ typedef struct data_s{
 	double dir_y;
 	int width;
 	int height;
-    int *rays;
 	char **map;
 	uint32_t ceiling;
 	uint32_t floor;
