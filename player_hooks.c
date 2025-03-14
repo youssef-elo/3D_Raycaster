@@ -59,7 +59,10 @@ void	player_movement(data_t *data, moves_t *m_d)
 void	map_refresh(data_t *d, moves_t *m)
 {
 	if (d->map[(int)((m->next_y) / TILE)][(int)(m->next_x) / TILE] == '0'
-		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'P')
+		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'S'
+		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'W'
+		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'E'
+		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'N')
 	{
 		d->player_y = m->next_y;
 		d->player_x = m->next_x;

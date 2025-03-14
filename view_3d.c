@@ -99,7 +99,7 @@ void	textured_line(data_t *data, view_3d_t *d_3d, line_t *line)
 	}
 	while(view_index < HEIGHT_3D -1)
 	{
-		put_pixel(data->mlx_data->view_3d, line->x0, view_index, data->ceiling);
+		put_pixel(data->mlx_data->view_3d, line->x0, view_index, rgb(136, 152, 178, 255));
 		view_index++;
 	}
 }

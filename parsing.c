@@ -319,7 +319,7 @@ char *ft_get_string(int num)
 	array = malloc(num+1);
 	while (num > x)
 	{
-		array[x] = '$';
+		array[x] = ' ';
 		x++;
 	}
 	array[num] = '\0';
@@ -352,7 +352,7 @@ void	ft_adjust_map_size(map_context_h *map)
 		while (map->map[x][y])
 		{
 			if(map->map[x][y] == ' ')
-				map->map[x][y] = '$';
+				map->map[x][y] = ' ';
 			y++;
 		}
 		x++;
@@ -371,7 +371,7 @@ void ft_check_first_Last_line(map_context_h *map)
 		x++;
 	while (map->map[0][y])
 	{
-		if (map->map[0][y] != '1' && map->map[0][y] != '$')
+		if (map->map[0][y] != '1' && map->map[0][y] != ' ')
 			ft_display_error("Error");
 		y++;
 	}
@@ -379,7 +379,7 @@ void ft_check_first_Last_line(map_context_h *map)
 	x--;
 	while (map->map[x][y])
 	{
-		if (map->map[x][y] != '1' && map->map[x][y] != '$')
+		if (map->map[x][y] != '1' && map->map[x][y] != ' ')
 			ft_display_error("Error");
 		y++;
 	}
@@ -430,9 +430,9 @@ void ft_valid_path(map_context_h *map)
 		{
 			if (map->map[x][y] == 'N' || map->map[x][y] == 'W' || map->map[x][y] == 'E' || map->map[x][y] == 'S' || map->map[x][y] == '0')
 			{
-				if((map->map[x][y + 1] == '$'|| !map->map[x][y + 1])  || map->map[x][y - 1] == '$' || !map->map[x][y - 1])
+				if((map->map[x][y + 1] == ' '|| !map->map[x][y + 1])  || map->map[x][y - 1] == ' ' || !map->map[x][y - 1])
 					ft_display_error("Error(8)");
-				else if((map->map[x + 1][y] == '$' ||  !map->map[x + 1][y]) || (map->map[x - 1][y] == '$' ||  !map->map[x - 1][y]))
+				else if((map->map[x + 1][y] == ' ' ||  !map->map[x + 1][y]) || (map->map[x - 1][y] == ' ' ||  !map->map[x - 1][y]))
 					ft_display_error("Error(9)");
 			}
 			y++;
