@@ -22,7 +22,7 @@
 #define SPEED 4
 
 // 8 21
-#define TILE 1024
+#define TILE 1280
 
 #define WIDTH_3D 2560
 #define HEIGHT_3D 1280
@@ -103,7 +103,6 @@ typedef struct line_s{
 	int y0;
 	int y1;
 }	line_t;
-
 
 typedef struct moves_s{
     int update;

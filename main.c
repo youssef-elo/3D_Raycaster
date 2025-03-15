@@ -48,6 +48,10 @@ void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
 	d->mlx_data->east = mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->east));
 	d->mlx_data->west= mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->west));
 	d->mlx_data->north = mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->north));
+	mlx_resize_image(d->mlx_data->south, HEIGHT_3D, HEIGHT_3D);
+	mlx_resize_image(d->mlx_data->north, HEIGHT_3D, HEIGHT_3D);
+	mlx_resize_image(d->mlx_data->east, HEIGHT_3D, HEIGHT_3D);
+	mlx_resize_image(d->mlx_data->west, HEIGHT_3D, HEIGHT_3D);
 	d->dir_x = cos(d->view_angle);
 	d->dir_y = sin(d->view_angle);
 }
