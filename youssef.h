@@ -36,6 +36,17 @@
 #define HEIGHT 8 * TILE
 #define BPP sizeof(int32_t)
 
+
+typedef struct offset_s
+{
+	double e_offset;
+	double s_offset;
+	double w_offset;
+	double n_offset;
+
+}	offset_t;
+
+
 typedef struct mlx_data_s{
 	mlx_t *mlx;
 	mlx_image_t *view;
@@ -65,12 +76,13 @@ typedef struct raycaster_s{
 typedef struct data_s{
 	double player_x;
 	double player_y;
-	double view_angle;
+	double p_angle;
 	double dir_x;
 	double dir_y;
 	int width;
 	int height;
 	char **map;
+	offset_t offset;
 	uint32_t ceiling;
 	uint32_t floor;
 	uint32_t v_color;
@@ -88,8 +100,8 @@ typedef struct view_3d_s{
 	double hor;
 	double ver;
 	double fov_half;
-	double ray_angle;
-	double angle_slice;
+	double r_angle;
+	double angle_i;
 	double hor_x;
 	double hor_y;
 	double ver_x;
@@ -115,11 +127,13 @@ typedef struct moves_s{
 typedef struct wall_3d_s
 {
 	int i;
-	int v_index;
+	int	v_i;
 	int tex_x;
 	double step;
-	double t_index;
+	double tex_i;
+	int col_i;
 	uint32_t col;
+	mlx_image_t *tx;
 } wall_3d_t;
 
 void draw_3d(data_t *data);
@@ -146,5 +160,7 @@ void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
 void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color);
 void	map_refresh(data_t *d, moves_t *m);
 void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d);
+void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d);
 #endif
 

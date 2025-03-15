@@ -3,13 +3,13 @@
 void update_position(data_t *data, char c, int i, int j)
 {
 	if (c == 'N')
-		data->view_angle = M_PI / 2;
+		data->p_angle = M_PI / 2;
 	if (c == 'S')
-		data->view_angle = 3 * (M_PI / 2);
+		data->p_angle = 3 * (M_PI / 2);
 	if (c == 'E')
-		data->view_angle = 0;
+		data->p_angle = 0;
 	if (c == 'W')
-		data->view_angle = M_PI;
+		data->p_angle = M_PI;
 	data->player_y = (i * TILE) + (TILE / 2);
 	data->player_x = (j * TILE) + (TILE / 2);
 }
@@ -52,8 +52,12 @@ void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
 	mlx_resize_image(d->mlx_data->north, HEIGHT_3D, HEIGHT_3D);
 	mlx_resize_image(d->mlx_data->east, HEIGHT_3D, HEIGHT_3D);
 	mlx_resize_image(d->mlx_data->west, HEIGHT_3D, HEIGHT_3D);
-	d->dir_x = cos(d->view_angle);
-	d->dir_y = sin(d->view_angle);
+	d->dir_x = cos(d->p_angle);
+	d->dir_y = sin(d->p_angle);
+	d->offset.n_offset = d->mlx_data->north->width / TILE;
+	d->offset.s_offset = d->mlx_data->south->width / TILE;
+	d->offset.e_offset = d->mlx_data->east->width / TILE;
+	d->offset.w_offset = d->mlx_data->west->width / TILE;
 }
 
 int	main(int argc, char **argv){

@@ -16,7 +16,7 @@ int *shoot_rays(data_t *data)
 	i = 0;
 	while(i < NUMBER_OF_RAYS)
 	{
-		ray_angle = (data->view_angle - fov_half) + (i * angle_slice);
+		ray_angle = (data->p_angle - fov_half) + (i * angle_slice);
 
 		horizontal = shoot_horizontal_2d(data, ray_angle, &horizontal_x, &horizontal_y);
 		vertical = shoot_vertical_2d(data, ray_angle, &vertical_x, &vertical_y);

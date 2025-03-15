@@ -4,20 +4,20 @@ void	move_angle(data_t *data, moves_t *moves)
 {
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
 	{
-		data->view_angle -= (M_PI / 55);
-		if (data->view_angle < 0)
-			data->view_angle += (2 * M_PI);
-		data->dir_x = cos(data->view_angle);
-		data->dir_y = sin(data->view_angle);
+		data->p_angle -= 0.05f;
+		if (data->p_angle < 0)
+			data->p_angle += (2 * M_PI);
+		data->dir_x = cos(data->p_angle);
+		data->dir_y = sin(data->p_angle);
 		draw_3d(data);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
-		data->view_angle += (M_PI / 55);
-		if (data->view_angle > ((double)2 * M_PI))
-			data->view_angle -= (2 * M_PI);
-		data->dir_x = cos(data->view_angle);
-		data->dir_y = sin(data->view_angle);
+		data->p_angle += 0.05f;
+		if (data->p_angle > ((double)2 * M_PI))
+			data->p_angle -= (2 * M_PI);
+		data->dir_x = cos(data->p_angle);
+		data->dir_y = sin(data->p_angle);
 		draw_3d(data);
 	}
 }
@@ -67,10 +67,10 @@ void	hook_handler(void *param)
 	moves_t	moves;
 
 	moves.update = 0;
-	moves.speed = 66 * 2;
+	moves.speed = 66 * 4;
 	data = (data_t *)param;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT_SHIFT))
-		moves.speed = 80 * 2;
+		moves.speed = 80 * 4;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
 		exit(0);
 	player_movement(data, &moves);
