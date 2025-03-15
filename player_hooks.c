@@ -4,27 +4,21 @@ void	move_angle(data_t *data, moves_t *moves)
 {
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
 	{
-		data->view_angle -= (M_PI / 44);
+		data->view_angle -= (M_PI / 55);
 		if (data->view_angle < 0)
 			data->view_angle += (2 * M_PI);
 		data->dir_x = cos(data->view_angle);
 		data->dir_y = sin(data->view_angle);
-		if (!CUBE3D)
-			minimap(data, data->mlx_data);
-		else
-			draw_3d(data);
+		draw_3d(data);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
-		data->view_angle += (M_PI / 44);
+		data->view_angle += (M_PI / 55);
 		if (data->view_angle > ((double)2 * M_PI))
 			data->view_angle -= (2 * M_PI);
 		data->dir_x = cos(data->view_angle);
 		data->dir_y = sin(data->view_angle);
-		if (!CUBE3D)
-			minimap(data, data->mlx_data);
-		else
-			draw_3d(data);
+		draw_3d(data);
 	}
 }
 
@@ -58,22 +52,13 @@ void	player_movement(data_t *data, moves_t *m_d)
 
 void	map_refresh(data_t *d, moves_t *m)
 {
-	if (d->map[(int)((m->next_y) / TILE)][(int)(m->next_x) / TILE] == '0'
-		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'S'
-		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'W'
-		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'E'
-		|| d->map[(int)m->next_y / TILE][(int)m->next_x / TILE] == 'N')
+	if (d->map[(int)((m->next_y) / TILE)][(int)(m->next_x) / TILE] != '1' &&
+		d->map[(int)((m->next_y) / TILE)][(int)(m->next_x) / TILE] != ' ')
 	{
 		d->player_y = m->next_y;
 		d->player_x = m->next_x;
-
-			// remove for push
-		if (!CUBE3D)
-			minimap(d, d->mlx_data);
-		else
-			draw_3d(d);
-	}
-		
+		draw_3d(d);
+	}	
 }
 
 void	hook_handler(void *param)
@@ -90,5 +75,4 @@ void	hook_handler(void *param)
 		exit(0);
 	player_movement(data, &moves);
 	move_angle(data, &moves);
-	// map_refresh(data, &moves);
 }

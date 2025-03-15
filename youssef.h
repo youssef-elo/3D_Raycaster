@@ -24,12 +24,13 @@
 // 8 21
 #define TILE 1024
 
-#define WIDTH_3D 2000
+#define WIDTH_3D 2560
 #define HEIGHT_3D 1280
 #define MAX_VIEW 1500
 
 #define RIGHT 1
 #define LEFT 0
+
 
 #define WIDTH 29 * TILE
 #define HEIGHT 8 * TILE
@@ -110,6 +111,17 @@ typedef struct moves_s{
     double next_x;
     double speed;
 }   moves_t;
+
+
+typedef struct wall_3d_s
+{
+	int i;
+	int v_index;
+	int tex_x;
+	double step;
+	double t_index;
+	uint32_t col;
+} wall_3d_t;
 
 void draw_3d(data_t *data);
 double shoot_horizontal(data_t *d, double ray_angle, view_3d_t *d_3d);
