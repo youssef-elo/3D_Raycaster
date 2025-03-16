@@ -1,11 +1,9 @@
+NO textures/bricks.png
+SO textures/bricks.png
+WE textures/bricks.png
+EA textures/bricks.png
 F 139,99,58
-C 171,154,137
-
-NO textures/wall2.png
-SO textures/texture2.png
-WE textures/sky.png
-EA textures/texture2.png
-
+C 0,0,0
 1111111111111111111111111
 1000001001000000100100001
 1000001001000000100100001
@@ -31,4 +29,3 @@ EA textures/texture2.png
 1000000000100010000000001
 1000000000100010000000001
 1111111111111111111111111
-

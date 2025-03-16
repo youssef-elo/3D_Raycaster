@@ -7,6 +7,7 @@ void	move_angle(data_t *data, moves_t *moves)
 		data->p_angle -= 0.05f;
 		if (data->p_angle < 0)
 			data->p_angle += (2 * M_PI);
+		
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
 		draw_3d(data);
@@ -67,10 +68,10 @@ void	hook_handler(void *param)
 	moves_t	moves;
 
 	moves.update = 0;
-	moves.speed = 66 * 4;
+	moves.speed = 150;
 	data = (data_t *)param;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT_SHIFT))
-		moves.speed = 80 * 4;
+		moves.speed = 200;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
 		exit(0);
 	player_movement(data, &moves);

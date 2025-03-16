@@ -26,7 +26,8 @@
 
 #define WIDTH_3D 2560
 #define HEIGHT_3D 1280
-#define MAX_VIEW 1500
+#define MAX_VIEW TILE * 17
+#define FOG_START 8960
 
 #define RIGHT 1
 #define LEFT 0
@@ -82,6 +83,7 @@ typedef struct data_s{
 	int width;
 	int height;
 	char **map;
+	float *cos;
 	offset_t offset;
 	uint32_t ceiling;
 	uint32_t floor;
@@ -123,7 +125,6 @@ typedef struct moves_s{
     double speed;
 }   moves_t;
 
-
 typedef struct wall_3d_s
 {
 	int i;
@@ -155,11 +156,13 @@ int *shoot_rays(data_t *data);
 void draw_minimap(data_t *data);
 void minimap(data_t *data, mlx_data_t *mlx_data);
 void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
+void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data);
+void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data);
 
 //3D view
-void draw_line_3d(data_t *data, int x0, int y0, int y1, uint32_t color);
 void	map_refresh(data_t *d, moves_t *m);
 void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void	draw_ceiling(data_t *d, int x0, int y0);
 void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d);
 void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d);
 #endif

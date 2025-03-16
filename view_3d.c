@@ -1,22 +1,5 @@
 #include "cub3d.h"
 
-void	draw_ceiling(data_t *d, int x0, int y0)
-{
-	int	ceiling;
-	int	index;
-
-	ceiling = 0;
-	while (ceiling < y0)
-	{
-		index = (ceiling * d->mlx_data->view_3d->width + x0) * 4;
-		d->mlx_data->view_3d->pixels[index + 0] = (d->ceiling >> 24) & 0xFF;
-		d->mlx_data->view_3d->pixels[index + 1] = (d->ceiling >> 16) & 0xFF;
-		d->mlx_data->view_3d->pixels[index + 2] = (d->ceiling >> 8) & 0xFF;
-		d->mlx_data->view_3d->pixels[index + 3] = (d->ceiling) & 0xFF;
-		ceiling++;
-	}
-}
-
 void	pre_3d(data_t *data, view_3d_t *d_3d)
 {
 	int	p;
@@ -51,9 +34,6 @@ void	draw_ceiling_3d(data_t *data, line_t *line)
 	}
 }
 
-
-
-
 void	draw_floor_3d(data_t *d, line_t *line)
 {
 	int	index;
@@ -78,19 +58,18 @@ void	draw_floor_3d(data_t *d, line_t *line)
 
 void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i)
 {
-	int tmp;
+	int	tmp;
 
 	if (d_3d->ver_ray)
 	{
-		tmp = d_3d->ver * cos(d_3d->r_angle - d->p_angle);
-		d_3d->w_height =  (d_3d->scaler / (tmp));
+		tmp = d_3d->ver * d->cos[i];
+		d_3d->w_height = (d_3d->scaler / (tmp));
 	}
 	else if (!d_3d->ver_ray)
 	{
-		tmp  = d_3d->hor * cos(d_3d->r_angle - d->p_angle);
+		tmp = d_3d->hor * d->cos[i];
 		d_3d->w_height = (d_3d->scaler / (tmp));
 	}
-	
 	d_3d->wall_half = d_3d->w_height / 2;
 	line->y0 = d_3d->half_window - (d_3d->wall_half);
 	line->y1 = d_3d->half_window + (d_3d->wall_half);
@@ -115,7 +94,7 @@ void	draw_3d(data_t *data)
 	{
 		d_3d.ver_ray = 0;
 		d_3d.r_angle = (data->p_angle - d_3d.fov_half) + (i * d_3d.angle_i);
-		d_3d.hor = shoot_horizontal(data, d_3d.r_angle, &d_3d) ;
+		d_3d.hor = shoot_horizontal(data, d_3d.r_angle, &d_3d);
 		d_3d.ver = shoot_vertical(data, d_3d.r_angle, &d_3d);
 		if (d_3d.ver < d_3d.hor)
 			d_3d.ver_ray = 1;
@@ -124,6 +103,3 @@ void	draw_3d(data_t *data)
 	}
 }
 
-// double fog_intensity = 1.0 - ((d_3d.hor - 280) / (MAX_VIEW - 280));
-// if (fog_intensity > 1.0) fog_intensity = 1.0; // Clamp max
-// if (fog_intensity < 0.0) fog_intensity = 0.0;

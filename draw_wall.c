@@ -1,5 +1,22 @@
 #include "cub3d.h"
 
+void	draw_ceiling(data_t *d, int x0, int y0)
+{
+	int	ceiling;
+	int	index;
+
+	ceiling = 0;
+	while (ceiling < y0)
+	{
+		index = (ceiling * d->mlx_data->view_3d->width + x0) * 4;
+		d->mlx_data->view_3d->pixels[index + 0] = (d->ceiling >> 24) & 0xFF;
+		d->mlx_data->view_3d->pixels[index + 1] = (d->ceiling >> 16) & 0xFF;
+		d->mlx_data->view_3d->pixels[index + 2] = (d->ceiling >> 8) & 0xFF;
+		d->mlx_data->view_3d->pixels[index + 3] = (d->ceiling) & 0xFF;
+		ceiling++;
+	}
+}
+
 void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 {
 	if ((data->player_y - d_3d->hor_y) > 0)
@@ -22,6 +39,34 @@ void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	}
 }
 
+
+uint32_t apply_fog(uint32_t original_color, float distance) {
+    // 1. Extract RGB components
+    uint8_t a = (original_color >> 24) & 0xFF;
+    uint8_t b = (original_color >> 16) & 0xFF;
+    uint8_t g = (original_color >> 8)  & 0xFF;
+    uint8_t r = original_color & 0xFF;
+
+	uint32_t fog_color =  0x000000FF ;
+    // 2. Extract fog color components
+    uint8_t fog_r = (fog_color >> 24) & 0xFF;
+    uint8_t fog_g = (fog_color >> 16) & 0xFF;
+    uint8_t fog_b = (fog_color >> 8)  & 0xFF;
+
+    // 3. Calculate fog intensity (0.0 = no fog, 1.0 = full fog)
+    float fog_intensity = (distance - FOG_START) / (MAX_VIEW - FOG_START);
+    fog_intensity = fog_intensity < 0.0f ? 0.0f : (fog_intensity > 1.0f ? 1.0f : fog_intensity);
+
+    // 4. Lerp between original color and fog color
+    r = r * (1 - fog_intensity) + fog_r * fog_intensity;
+    g = g * (1 - fog_intensity) + fog_g * fog_intensity;
+    b = b * (1 - fog_intensity) + fog_b * fog_intensity;
+
+    // 5. Rebuild 32-bit color
+    return r | (g << 8) | (b << 16) | (a << 24);
+}
+
+
 void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 {
 	wall_3d_t	v;
@@ -31,8 +76,16 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 	{
 		if (v.v_i >= 0 && v.v_i < HEIGHT_3D && v.tex_i < (double)HEIGHT_3D)
 		{
+			double fog_intensity = 1.0 - ((d_3d->hor - 280) / (MAX_VIEW - 280));
+			if (fog_intensity > 1.0) fog_intensity = 1.0; // Clamp max
+			if (fog_intensity < 0.0) fog_intensity = 0.0;
+
+
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
+
+			v.col = apply_fog(v.col, d_3d->hor);
+			
 			if (line->x0 >= 0
 				&& line->x0 < (int)data->mlx_data->view_3d->width && v.v_i >= 0
 				&& v.v_i < (int)data->mlx_data->view_3d->height)
@@ -68,7 +121,7 @@ void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	{
 		v->tex_i = -(v->v_i * v->step);
 		v->v_i = 0;
-	}  
+	}
 }
 
 void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
@@ -83,6 +136,9 @@ void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 		{
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
+
+v.col = apply_fog(v.col, d_3d->ver);
+
 			if (line->x0 >= 0 && line->x0 < (int)data->mlx_data->view_3d->width
 				&& v.v_i >= 0 && v.v_i < (int)data->mlx_data->view_3d->height)
 			{

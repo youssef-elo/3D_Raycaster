@@ -13,6 +13,7 @@ void	put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 		img->pixels[index + 3] = (color) & 0xFF;
 	}
 }
+
 void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 {
 	int	index;
@@ -20,9 +21,9 @@ void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color)
 	if (x >= 0 && x < (int)img->width && y >= 0 && y < (int)img->height)
 	{
 		index = (y * img->width + x) * 4;
-		img->pixels[index + 3] = (color >> 24) & 0xFF; // b
-		img->pixels[index + 2] = (color >> 16) & 0xFF; // g	
-		img->pixels[index + 1] = (color >> 8) & 0xFF; // r
+		img->pixels[index + 3] = (color >> 24) & 0xFF;
+		img->pixels[index + 2] = (color >> 16) & 0xFF;
+		img->pixels[index + 1] = (color >> 8) & 0xFF;
 		img->pixels[index + 0] = (color) & 0xFF;
 	}
 }
@@ -51,34 +52,5 @@ void	draw_filled_disk(mlx_image_t *img, int xc, int yc, int r)
 
 uint32_t	rgb(int r, int g, int b, int a)
 {
-	return ((r  << 24) | (g  << 16)| (b  << 8) | a );
-}
-
-// REMOVE LATER
-void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color)
-{
-	int dx = abs(x1 - x0);
-	int dy = abs(y1 - y0);
-	int sx = (x0 < x1) ? 1 : -1;
-	int sy = (y0 < y1) ? 1 : -1;
-	int err = dx - dy;
-
-	while (1)
-	{
-		put_pixel(img, x0, y0, color);
-
-		if (x0 == x1 && y0 == y1)
-			break;
-		int e2 = 2 * err;
-		if (e2 > -dy)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (e2 < dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
-	}
+	return ((r << 24) | (g << 16) | (b << 8) | a);
 }
