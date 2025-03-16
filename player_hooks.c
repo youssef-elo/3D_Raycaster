@@ -2,24 +2,53 @@
 
 void	move_angle(data_t *data, moves_t *moves)
 {
+	// if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
+	// {
+	// 	data->p_angle -= 0.05f;
+	// 	if (data->p_angle < 0)
+	// 		data->p_angle += (2 * M_PI);
+	// 	data->dir_x = cos(data->p_angle);
+	// 	data->dir_y = sin(data->p_angle);
+	// 	// draw_3d(data);
+	// }
+	// if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
+	// {
+	// 	data->p_angle += 0.05f;
+	// 	if (data->p_angle > ((double)2 * M_PI))
+	// 		data->p_angle -= (2 * M_PI);
+	// 	data->dir_x = cos(data->p_angle);
+	// 	data->dir_y = sin(data->p_angle);
+	// 	// draw_3d(data);
+	// }
+	int i;
+	i = 0;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
 	{
-		data->p_angle -= 0.05f;
-		if (data->p_angle < 0)
-			data->p_angle += (2 * M_PI);
-		
+		while( i < 500)
+		{
+
+			data->p_angle -= 0.0001f;
+			if (data->p_angle < 0)
+				data->p_angle += (2 * M_PI);
+			// draw_3d(data);
+			i++;
+		}
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
-		draw_3d(data);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
-		data->p_angle += 0.05f;
-		if (data->p_angle > ((double)2 * M_PI))
-			data->p_angle -= (2 * M_PI);
+		i = 0;
+		while( i < 500)
+		{
+			data->p_angle += 0.0001f;
+			if (data->p_angle > ((double)2 * M_PI))
+				data->p_angle -= (2 * M_PI);
+			// draw_3d(data);
+			i++;
+		}
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
-		draw_3d(data);
 	}
 }
 
@@ -58,7 +87,7 @@ void	map_refresh(data_t *d, moves_t *m)
 	{
 		d->player_y = m->next_y;
 		d->player_x = m->next_x;
-		draw_3d(d);
+		// draw_3d(d);
 	}	
 }
 
@@ -68,12 +97,13 @@ void	hook_handler(void *param)
 	moves_t	moves;
 
 	moves.update = 0;
-	moves.speed = 150;
+	moves.speed = 200;
 	data = (data_t *)param;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT_SHIFT))
-		moves.speed = 200;
+		moves.speed = 280;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_ESCAPE))
 		exit(0);
 	player_movement(data, &moves);
 	move_angle(data, &moves);
+	// draw_3d(data);
 }

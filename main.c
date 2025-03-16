@@ -69,12 +69,15 @@ void pre_compute(data_t *data)
 	double angle_i;
 
 	i = 0;
-	fov_half = FOV / 2;
-	angle_i = FOV / NUMBER_OF_RAYS;
+	data->consts.angle_i = FOV / NUMBER_OF_RAYS;
+	data->consts.p = (WIDTH_3D / 2) / tan(FOV / 2);
+	data->consts.scaler = data->consts.p * TILE;
+	data->consts.fov_half = FOV / 2;
+	data->consts.half_window = HEIGHT_3D / 2;
 	data->cos = malloc( sizeof(double) * NUMBER_OF_RAYS);
 	while(i < NUMBER_OF_RAYS)
 	{
-		r_angle = (data->p_angle - fov_half) + (i * angle_i);
+		r_angle = (data->p_angle - data->consts.fov_half) + (i * data->consts.angle_i);
 		data->cos[i] = cos(r_angle - data->p_angle);
 		i++;
 	}
@@ -87,8 +90,9 @@ int	main(int argc, char **argv){
 	parsing(argc , argv, &p_data);
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);
-	draw_3d(&data);
+	// draw_3d(&data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d,  0, 0);
 	mlx_loop_hook(mlx_data.mlx, hook_handler, &data);
+	mlx_loop_hook(mlx_data.mlx, draw_3d, &data);
 	mlx_loop(mlx_data.mlx);
 }

@@ -137,7 +137,7 @@ void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
 
-v.col = apply_fog(v.col, d_3d->ver);
+			v.col = apply_fog(v.col, d_3d->ver);
 
 			if (line->x0 >= 0 && line->x0 < (int)data->mlx_data->view_3d->width
 				&& v.v_i >= 0 && v.v_i < (int)data->mlx_data->view_3d->height)

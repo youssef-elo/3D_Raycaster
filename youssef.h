@@ -9,14 +9,15 @@
 #include <string.h>
 #include "hamza.h"
 #include <strings.h>
-
+#include <time.h>
+#include <sys/time.h>
 
 #define CUBE3D 1
 
 
 #define PI 3.141592653589793
 #define FOV 1.1519
-#define NUMBER_OF_RAYS 2560
+#define NUMBER_OF_RAYS 2040
 // #define CUBE3D 0
 #define OUT_OF_RANGE 2147483647
 #define SPEED 4
@@ -24,7 +25,7 @@
 // 8 21
 #define TILE 1280
 
-#define WIDTH_3D 2560
+#define WIDTH_3D 2040
 #define HEIGHT_3D 1280
 #define MAX_VIEW TILE * 17
 #define FOG_START 8960
@@ -47,6 +48,15 @@ typedef struct offset_s
 
 }	offset_t;
 
+
+typedef struct constant_s
+{
+	int p;
+	double scaler;
+	double fov_half;
+	double angle_i;
+	int half_window;
+} constant_t;
 
 typedef struct mlx_data_s{
 	mlx_t *mlx;
@@ -84,6 +94,7 @@ typedef struct data_s{
 	int height;
 	char **map;
 	float *cos;
+	constant_t consts;
 	offset_t offset;
 	uint32_t ceiling;
 	uint32_t floor;
@@ -94,16 +105,16 @@ typedef struct data_s{
 
 typedef struct view_3d_s{
 	int	w_height;
-	int half_window;
+	// int half_window;
 	int s_y;
 	int e_y;
 	int wall_half;
-	double scaler;
+	// double scaler;
 	double hor;
 	double ver;
-	double fov_half;
+	// double fov_half;
 	double r_angle;
-	double angle_i;
+	// double angle_i;
 	double hor_x;
 	double hor_y;
 	double ver_x;
@@ -137,13 +148,16 @@ typedef struct wall_3d_s
 	mlx_image_t *tx;
 } wall_3d_t;
 
-void draw_3d(data_t *data);
+
+
+char	*ft_itoa(int n);
+// void draw_3d(data_t *data);
 double shoot_horizontal(data_t *d, double ray_angle, view_3d_t *d_3d);
 double shoot_vertical(data_t *data, double angle, view_3d_t *d_3d);
 double shoot_horizontal_2d(data_t *d, double angle, double *h_x, double *h_y);
 double shoot_vertical_2d(data_t *data, double angle, double *v_x, double *v_y);
 void hook_handler(void *param);
-void draw_3d(data_t *data);
+void draw_3d(void *data);
 void minimap(data_t *data, mlx_data_t *mlx_data);
 void put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 void draw_filled_disk(mlx_image_t *img, int xc, int yc, int r);
