@@ -8,7 +8,7 @@ NAME=cub3d
 
 # FLAGS= -Wall -Wextra -Werror 
 # FLAGS= -fsanitize=address -g
-opti =  -O3 -ffast-math 
+opti =  -funroll-loops -O3 -ffast-math -mavx2
 MlX_FLAGS= -Iinclude -ldl -lglfw -pthread -lm 
 
 INCLUDES= $(wildcard *.h) $(wildcard get_next_line/*.h)

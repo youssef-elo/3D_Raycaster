@@ -70,8 +70,11 @@ uint32_t apply_fog(uint32_t original_color, float distance) {
 void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 {
 	wall_3d_t	v;
+	int width;
 
 	pre_hor(data, line, d_3d, &v);
+	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
+	width = data->mlx_data->view_3d->width * 4;
 	while (v.v_i < line->y1 && v.v_i < HEIGHT_3D -1)
 	{
 		if (v.v_i >= 0 && v.v_i < HEIGHT_3D && v.tex_i < (double)HEIGHT_3D)
@@ -79,8 +82,6 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 			double fog_intensity = 1.0 - ((d_3d->hor - 280) / (MAX_VIEW - 280));
 			if (fog_intensity > 1.0) fog_intensity = 1.0; // Clamp max
 			if (fog_intensity < 0.0) fog_intensity = 0.0;
-
-
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
 
@@ -90,7 +91,7 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 				&& line->x0 < (int)data->mlx_data->view_3d->width && v.v_i >= 0
 				&& v.v_i < (int)data->mlx_data->view_3d->height)
 			{
-				v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
+				// v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
 				data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
 				data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
 				data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
@@ -99,6 +100,7 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 		}
 		v.tex_i += v.step;
 		v.v_i++;
+		v.i += width;
 	}
 }
 
@@ -127,29 +129,28 @@ void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 {
 	wall_3d_t	v;
+	int width;
 
 	pre_ver(data, line, d_3d, &v);
+	// if (line->x0 >= 0 && line->x0 < (int)data->mlx_data->view_3d->width)
+	// 	return ;
+	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
+	width = data->mlx_data->view_3d->width * 4;
 	while (v.v_i < line->y1 && v.v_i < HEIGHT_3D -1)
 	{
-		if (v.v_i >= 0 && v.v_i < HEIGHT_3D
-			&& v.tex_i < (double)HEIGHT_3D)
-		{
+		// if (v.tex_i < (double)HEIGHT_3D)
+		// {
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
 
 			v.col = apply_fog(v.col, d_3d->ver);
-
-			if (line->x0 >= 0 && line->x0 < (int)data->mlx_data->view_3d->width
-				&& v.v_i >= 0 && v.v_i < (int)data->mlx_data->view_3d->height)
-			{
-				v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
-				data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
-				data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
-				data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
-				data->mlx_data->view_3d->pixels[v.i + 0] = (v.col) & 0xFF;
-			}
-		}
+			data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
+			data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
+			data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
+			data->mlx_data->view_3d->pixels[v.i + 0] = (v.col) & 0xFF;
+		// }
 		v.tex_i += v.step;
 		v.v_i++;
+		v.i += width;
 	}
 }

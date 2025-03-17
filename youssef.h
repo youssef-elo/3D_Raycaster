@@ -163,6 +163,7 @@ void put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 void draw_filled_disk(mlx_image_t *img, int xc, int yc, int r);
 uint32_t rgb(int r, int g, int b, int a);
 
+void end_game(data_t *d, char *message);
 
 
 // 2D view

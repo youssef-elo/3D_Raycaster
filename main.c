@@ -26,7 +26,10 @@ void find_player(data_t *data)
 		while (data->map[i][j])
 		{
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'S' || data->map[i][j] == 'E' || data->map[i][j] == 'W')
+			{
 				update_position(data, data->map[i][j], i, j);
+				data->map[i][j] = '0';
+			}
 			j++;
 		}
 		i++;
@@ -35,23 +38,79 @@ void find_player(data_t *data)
 	data->height = i;
 }
 
-void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
+void end_game(data_t *d, char *message)
 {
-	d->map = p_data->map;
-	d->ceiling = rgb(p_data->sky[0], p_data->sky[1], p_data->sky[2], 255);
-	d->floor = rgb(p_data->floor[0], p_data->floor[1], p_data->floor[2], 255);
-	d->mlx_data = mlx_data;
-	find_player(d);
-	d->mlx_data->mlx = mlx_init(WIDTH_3D, HEIGHT_3D, "Cub3d", false);
+	int i;
+
+	if (d->mlx_data->north)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->north);
+	if (d->mlx_data->south)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->south);
+	if (d->mlx_data->east)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->east);
+	if (d->mlx_data->west)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->west);
+	if (d->mlx_data->view_3d)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->view_3d);
+	free(d->cos);
+	i = 0;
+	while(i < d->height)
+		free(d->map[i++]);
+	free(d->map);
+	printf("%s", message);
+	exit(0);
+}
+
+void load_images(data_t *d, map_context_h *p_data)
+{
+	mlx_texture_t *tmp;
+
 	d->mlx_data->view_3d = mlx_new_image(d->mlx_data->mlx, WIDTH_3D, HEIGHT_3D);
-	d->mlx_data->south = mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->south));
-	d->mlx_data->east = mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->east));
-	d->mlx_data->west= mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->west));
-	d->mlx_data->north = mlx_texture_to_image(d->mlx_data->mlx,  mlx_load_png(p_data->north));
+	if (!d->mlx_data->view_3d)
+		end_game(d, "Error\nCant load images\n");
+	tmp = mlx_load_png(p_data->south);
+	if (!tmp)
+		end_game(d, "Error\nCant load images\n");
+	d->mlx_data->south = mlx_texture_to_image(d->mlx_data->mlx, tmp);
+	mlx_delete_texture(tmp);
+	tmp = mlx_load_png(p_data->east);
+	if (!tmp)
+		end_game(d, "Error\nCant load images\n");
+	d->mlx_data->east = mlx_texture_to_image(d->mlx_data->mlx, tmp);
+	mlx_delete_texture(tmp);
+	tmp = mlx_load_png(p_data->west);
+	if (!tmp)
+		end_game(d, "Error\nCant load images\n");
+	d->mlx_data->west= mlx_texture_to_image(d->mlx_data->mlx, tmp);
+	mlx_delete_texture(tmp);
+	tmp = mlx_load_png(p_data->north);
+	if (!tmp)
+		end_game(d, "Error\nCant load images\n");
+	d->mlx_data->north = mlx_texture_to_image(d->mlx_data->mlx, tmp);
+	mlx_delete_texture(tmp);
+}
+
+void start_mlx(data_t *d, map_context_h *p_data)
+{
+
+	d->mlx_data->mlx = mlx_init(WIDTH_3D, HEIGHT_3D, "Cub3d", false);
+	if (!d->mlx_data->mlx)
+		end_game(d, "Error\nCant establish connection with the mlx library\n");
+	load_images(d, p_data);
 	mlx_resize_image(d->mlx_data->south, HEIGHT_3D, HEIGHT_3D);
 	mlx_resize_image(d->mlx_data->north, HEIGHT_3D, HEIGHT_3D);
 	mlx_resize_image(d->mlx_data->east, HEIGHT_3D, HEIGHT_3D);
 	mlx_resize_image(d->mlx_data->west, HEIGHT_3D, HEIGHT_3D);
+
+}
+void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
+{
+	d->map = p_data->map;
+	d->mlx_data = mlx_data;
+	start_mlx(d, p_data);
+	d->ceiling = rgb(p_data->sky[0], p_data->sky[1], p_data->sky[2], 255);
+	d->floor = rgb(p_data->floor[0], p_data->floor[1], p_data->floor[2], 255);
+	find_player(d);
 	d->dir_x = cos(d->p_angle);
 	d->dir_y = sin(d->p_angle);
 	d->offset.n_offset = d->mlx_data->north->width / TILE;
@@ -88,6 +147,7 @@ int	main(int argc, char **argv){
 	map_context_h	p_data;
 
 	parsing(argc , argv, &p_data);
+	ft_bzero(&data, sizeof(data_t));
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);
 	// draw_3d(&data);

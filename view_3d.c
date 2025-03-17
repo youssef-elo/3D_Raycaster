@@ -32,6 +32,7 @@ void	draw_floor_3d(data_t *d, line_t *line)
 	while (view_i < HEIGHT_3D -1)
 	{
 		if (line->x0 >= 0 && line->x0 < (int)d->mlx_data->view_3d->width
+	
 			&& view_i >= 0
 			&& view_i < (int)d->mlx_data->view_3d->height)
 		{
@@ -93,6 +94,7 @@ void	draw_3d(void *param)
 	line_t		line;
 	view_3d_t	d_3d;
 	data_t *data;
+	char *str;
 	static mlx_image_t *pre;
 
 	data = (data_t *)param;
@@ -102,7 +104,9 @@ void	draw_3d(void *param)
 	{
 		mlx_delete_image(data->mlx_data->mlx, pre);
 	}
-	pre  = mlx_put_string(data->mlx_data->mlx, ft_itoa(1.0/ get_delta_time()), 30, 20);
+	str = ft_itoa(1.0/ get_delta_time());
+	pre  = mlx_put_string(data->mlx_data->mlx, str, 30, 20);
+	free(str);
 	// printf("%f\n", 1.0/ get_delta_time());
 	d_3d.r_angle = (data->p_angle - data->consts.fov_half);
 	while (i < NUMBER_OF_RAYS)
