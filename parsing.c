@@ -4,6 +4,19 @@ void ft_display_error(char *s)
     printf("%s\n", s);
     exit(1);
 }
+int ft_check_space(char *str)
+{
+	int x;
+
+	x = 0;
+	while(str[x])
+	{
+		if(str[x] != 32 && str[x] != '\n')
+			return 0;
+		x++;
+	}
+	return 1;
+}
 char *ft_strdup_n(char *str, int a)
 {
 	char	*array;
@@ -157,8 +170,6 @@ void	ft_check_line(char *line)
 	x = 0;
 	while (line[x])
 	{
-		if(*line == '\n')
-			ft_display_error("Error");
 		if (line[x] != '1' && line[x] != '0' && line[x] != 'N' && line[x] != 'W' && line[x] != 'E' && line[x] != 'S' && line[x] != ' ' && line[x] != '\n')
 			ft_display_error("Error");
 		x++;
@@ -166,18 +177,21 @@ void	ft_check_line(char *line)
 	
 }
 
-void ft_read_map(map_context_h *map, char * line)
+void ft_read_map(map_context_h *map, char *line)
 {
-	static int check;
+	static int start;
+	static int end;
 
-	if (*line != '\n')
-		check = 1;
-	if(check == 1)
+	if (ft_check_space(line) == 0) 
+		start = 1;
+	if(start == 1 && end == 0)
 	{
-		// printf("%s", line);
+		end = ft_check_space(line);
 		ft_check_line(line);
 		map->array = ft_strjoin_n(map->array, line);
 	}
+	if (end == 1 && ft_check_space(line) == 0)
+		ft_display_error("Error");
 }
 
 void  ft_test(char *line, map_context_h *map)
