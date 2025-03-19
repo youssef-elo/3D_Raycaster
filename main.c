@@ -141,6 +141,18 @@ void pre_compute(data_t *data)
 		i++;
 	}
 }
+
+void free_parsing(map_context_h *p_data)
+{
+	free(p_data->array);
+	free(p_data->south);
+	free(p_data->west);
+	free(p_data->north);
+	free(p_data->east);
+	free(p_data->sky_s);
+	free(p_data->floor_s);
+}
+
 int	main(int argc, char **argv){
 	data_t			data;
 	mlx_data_t		mlx_data;
@@ -150,7 +162,9 @@ int	main(int argc, char **argv){
 	ft_bzero(&data, sizeof(data_t));
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);
-	// draw_3d(&data);
+	free_parsing(&p_data);
+	printf("%f\n", data.player_y);
+	draw_3d(&data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d,  0, 0);
 	mlx_loop_hook(mlx_data.mlx, hook_handler, &data);
 	mlx_loop_hook(mlx_data.mlx, draw_3d, &data);
