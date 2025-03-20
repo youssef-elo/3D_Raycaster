@@ -33,6 +33,32 @@ void	move_angle(data_t *data, moves_t *moves)
 	}
 }
 
+void move_up(data_t *data, moves_t *m_d)
+{
+	int check;
+
+	check = 350;
+	if (data->p_angle <= M_PI)
+		check = -350;
+	if (data->map[m_d->map_next_y][data->map_x] == '1' || data->map[(int)(m_d->next_y + check) / TILE][data->map_x] == '1')
+	{
+		if ((data->p_angle <= M_PI))
+			m_d->next_y = (data->map_y * TILE) + 350;
+		else
+			m_d->next_y = ((data->map_y * TILE) + ((TILE - 350)));
+	}
+	check = -350;
+	if ((data->p_angle <= (M_PI / 2)) || (data->p_angle >= (3 * (M_PI / 2))))
+		check = 350;
+	if (data->map[data->map_y][m_d->map_next_x] == '1' || (data->map[data->map_y][(int)(m_d->next_x + check) / TILE] == '1'))
+	{
+		if ((data->p_angle < (M_PI / 2)) || (data->p_angle > (3 * (M_PI / 2))))
+			m_d->next_x = (data->map_x * TILE) + (TILE - 350);
+		else
+			m_d->next_x = (data->map_x * TILE) + 350;
+	}
+}
+
 void	player_movement(data_t *data, moves_t *m_d)
 {
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_SPACE))
@@ -41,29 +67,17 @@ void	player_movement(data_t *data, moves_t *m_d)
 	{
 		m_d->next_x = data->player_x + (data->dir_x * m_d->speed);
 		m_d->next_y = data->player_y - (data->dir_y * m_d->speed);
-
-		
-		if (data->map[(int)(m_d->next_y) / TILE][(int)(data->player_x) / TILE] == '1' || data->map[(int)(m_d->next_y + (350 * ((data->p_angle <= M_PI)? - 1 : 1))) / TILE][(int)(data->player_x) / TILE] == '1')
-		{
-			if ((data->p_angle < M_PI))
-				m_d->next_y = (((int)data->player_y / TILE) * TILE) + 350;
-			else
-				m_d->next_y = ((((int)data->player_y / TILE) * TILE) + ((TILE - 350)));
-		}
-		if (data->map[(int)(data->player_y) / TILE][(int)(m_d->next_x) / TILE] == '1' || (data->map[(int)(data->player_y ) / TILE][(int)(m_d->next_x + (350 * ((data->p_angle <= (M_PI / 2)) || (data->p_angle >= (3 * ( M_PI / 2)))? 1 : -1))) / TILE] == '1'))
-		{
-			printf("in\n");
-			if ((data->p_angle < (M_PI / 2)) || (data->p_angle > (3 * ( M_PI / 2))))
-				m_d->next_x = (((int)data->player_x / TILE) * TILE) + (TILE - 350); 
-			else
-				m_d->next_x = (((int)data->player_x / TILE) * TILE) + 350;
-		}
+		m_d->map_next_x = m_d->next_x / TILE;
+		m_d->map_next_y = m_d->next_y / TILE;
+		move_up(data, m_d);
 		map_refresh(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_S))
 	{
 		m_d->next_x = data->player_x - (data->dir_x * m_d->speed);
 		m_d->next_y = data->player_y + (data->dir_y * m_d->speed);
+		m_d->map_next_x = m_d->next_x / TILE;
+		m_d->map_next_y = m_d->next_y / TILE;
 		if (data->map[(int)(m_d->next_y) / TILE][(int)(data->player_x) / TILE] == '1' || data->map[(int)(m_d->next_y + (350 * ((data->p_angle < M_PI)? 1 : -1))) / TILE][(int)(data->player_x) / TILE] == '1')
 		{
 			if ((data->p_angle < M_PI))
@@ -86,6 +100,8 @@ void	player_movement(data_t *data, moves_t *m_d)
 	{
 		m_d->next_x = data->player_x - (data->dir_y * m_d->speed);
 		m_d->next_y = data->player_y - (data->dir_x * m_d->speed);
+		m_d->map_next_x = m_d->next_x / TILE;
+		m_d->map_next_y = m_d->next_y / TILE;
 		if (data->map[(int)(m_d->next_y) / TILE][(int)(data->player_x) / TILE] == '1' 
 			|| data->map[(int)(m_d->next_y + (350 * (((data->p_angle >= (M_PI / 2) && data->p_angle <= (3 * (M_PI / 2))))? 1 : -1))) / TILE][(int)(data->player_x) / TILE] == '1')
 		{
@@ -97,7 +113,6 @@ void	player_movement(data_t *data, moves_t *m_d)
 		if (data->map[(int)(data->player_y) / TILE][(int)(m_d->next_x) / TILE] == '1' 
 			|| (data->map[(int)(data->player_y ) / TILE][(int)(m_d->next_x + (350 * ((data->p_angle >= 0 && data->p_angle <= M_PI) ? -1 : 1))) / TILE] == '1'))
 		{
-			printf("in\n");
 			if (data->p_angle >= 0 && data->p_angle <= M_PI)
 				m_d->next_x = (((int)data->player_x / TILE) * TILE) + 350;
 			else
@@ -109,6 +124,8 @@ void	player_movement(data_t *data, moves_t *m_d)
 	{
 		m_d->next_x = data->player_x + (data->dir_y * m_d->speed);
 		m_d->next_y = data->player_y + (data->dir_x * m_d->speed);
+		m_d->map_next_x = m_d->next_x / TILE;
+		m_d->map_next_y = m_d->next_y / TILE;
 		if (data->map[(int)(m_d->next_y) / TILE][(int)(data->player_x) / TILE] == '1' || data->map[(int)(m_d->next_y + (350 * (((data->p_angle >= (M_PI / 2) && data->p_angle <= (3 * (M_PI / 2))))? -1 : 1))) / TILE][(int)(data->player_x) / TILE] == '1')
 		{
 			if ((data->p_angle >= (M_PI / 2) && data->p_angle <= (3 * (M_PI / 2))))
@@ -119,7 +136,6 @@ void	player_movement(data_t *data, moves_t *m_d)
 		if (data->map[(int)(data->player_y) / TILE][(int)(m_d->next_x) / TILE] == '1' 
 			|| (data->map[(int)(data->player_y ) / TILE][(int)(m_d->next_x + (350 * (((data->p_angle >= 0 && data->p_angle <= M_PI))? 1 : -1))) / TILE] == '1'))
 		{
-			printf("in\n");
 			if (data->p_angle >= 0 && data->p_angle <= M_PI)
 				m_d->next_x = (((int)data->player_x / TILE) * TILE) + (TILE - 350);
 			else
@@ -146,6 +162,9 @@ void	map_refresh(data_t *data, moves_t *m_d)
 	{
 		data->player_y = m_d->next_y;
 		data->player_x = m_d->next_x;
+		data->map_x = data->player_x / TILE;
+		data->map_y = data->player_y / TILE;
+
 	}	
 }
 // x: 21233.997993 y: 8959.691772

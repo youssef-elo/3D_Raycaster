@@ -87,6 +87,8 @@ typedef struct raycaster_s{
 typedef struct data_s{
 	double player_x;
 	double player_y;
+	int		map_x;
+	int		map_y;
 	double p_angle;
 	double dir_x;
 	double dir_y;
@@ -133,6 +135,8 @@ typedef struct moves_s{
     int update;
     double next_y;
     double next_x;
+	int map_next_x;
+	int map_next_y;
     double speed;
 }   moves_t;
 

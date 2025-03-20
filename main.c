@@ -111,6 +111,8 @@ void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
 	d->ceiling = rgb(p_data->sky[0], p_data->sky[1], p_data->sky[2], 255);
 	d->floor = rgb(p_data->floor[0], p_data->floor[1], p_data->floor[2], 255);
 	find_player(d);
+	d->map_x = d->player_x / TILE;
+	d->map_y = d->player_y / TILE;
 	d->dir_x = cos(d->p_angle);
 	d->dir_y = sin(d->p_angle);
 	d->offset.n_offset = d->mlx_data->north->width / TILE;
