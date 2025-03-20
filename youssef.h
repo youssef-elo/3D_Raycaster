@@ -135,8 +135,6 @@ typedef struct moves_s{
     int update;
     double next_y;
     double next_x;
-	int map_next_x;
-	int map_next_y;
     double speed;
 }   moves_t;
 
