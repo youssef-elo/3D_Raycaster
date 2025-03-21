@@ -40,7 +40,7 @@ void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 }
 
 
-uint32_t apply_fog(uint32_t original_color, float distance) {
+uint32_t apply_fog(data_t *data, uint32_t original_color, double distance) {
     // 1. Extract RGB components
     uint8_t a = (original_color >> 24) & 0xFF;
     uint8_t b = (original_color >> 16) & 0xFF;
@@ -54,8 +54,12 @@ uint32_t apply_fog(uint32_t original_color, float distance) {
     uint8_t fog_b = (fog_color >> 8)  & 0xFF;
 
     // 3. Calculate fog intensity (0.0 = no fog, 1.0 = full fog)
-    float fog_intensity = (distance - FOG_START) / (MAX_VIEW - FOG_START);
-    fog_intensity = fog_intensity < 0.0f ? 0.0f : (fog_intensity > 1.0f ? 1.0f : fog_intensity);
+    double fog_intensity = (distance - data->fog_start) / (data->fog_max - data->fog_start);
+	if (fog_intensity < 0.0f)
+		fog_intensity = 0.0;
+	if (fog_intensity > 1.0f)
+		fog_intensity = 1.0f;
+	
 
     // 4. Lerp between original color and fog color
     r = r * (1 - fog_intensity) + fog_r * fog_intensity;
@@ -79,13 +83,13 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 	{
 		if (v.v_i >= 0 && v.v_i < HEIGHT_3D && v.tex_i < (double)HEIGHT_3D)
 		{
-			double fog_intensity = 1.0 - ((d_3d->hor - 280) / (MAX_VIEW - 280));
-			if (fog_intensity > 1.0) fog_intensity = 1.0; // Clamp max
-			if (fog_intensity < 0.0) fog_intensity = 0.0;
+			// double fog_intensity = 1.0 - ((d_3d->hor - 280) / (MAX_VIEW - 280));
+			// if (fog_intensity > 1.0) fog_intensity = 1.0; // Clamp max
+			// if (fog_intensity < 0.0) fog_intensity = 0.0;
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
 
-			v.col = apply_fog(v.col, d_3d->hor);
+			v.col = apply_fog(data, v.col, d_3d->hor);
 			
 			if (line->x0 >= 0
 				&& line->x0 < (int)data->mlx_data->view_3d->width && v.v_i >= 0
@@ -143,7 +147,7 @@ void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
 
-			v.col = apply_fog(v.col, d_3d->ver);
+			v.col = apply_fog(data, v.col, d_3d->ver);
 			data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
 			data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
 			data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;

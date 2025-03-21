@@ -27,8 +27,12 @@
 
 #define WIDTH_3D 2040
 #define HEIGHT_3D 1280
-#define MAX_VIEW TILE * 17
-#define FOG_START 8960
+
+#define MAX_VIEW TILE * 10
+#define FOG_START TILE * 3
+
+#define MAX_VIEW_FLASH TILE * 18
+#define FOG_START_FLASH TILE * 8
 
 #define RIGHT 1
 #define LEFT 0
@@ -66,6 +70,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *empty;
 	mlx_image_t *wall;
 	mlx_image_t *rays_image;
+	mlx_image_t *mini_map;
 	mlx_image_t *north;
 	mlx_image_t *south;
 	mlx_image_t *east;
@@ -90,6 +95,8 @@ typedef struct data_s{
 	int		map_x;
 	int		map_y;
 	double p_angle;
+	int	 fog_start;
+	int	 fog_max;
 	double dir_x;
 	double dir_y;
 	int width;
@@ -107,16 +114,12 @@ typedef struct data_s{
 
 typedef struct view_3d_s{
 	int	w_height;
-	// int half_window;
 	int s_y;
 	int e_y;
 	int wall_half;
-	// double scaler;
 	double hor;
 	double ver;
-	// double fov_half;
 	double r_angle;
-	// double angle_i;
 	double hor_x;
 	double hor_y;
 	double ver_x;
@@ -182,5 +185,21 @@ void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 void	draw_ceiling(data_t *d, int x0, int y0);
 void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d);
 void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d);
+void	move_right(data_t *data, moves_t *m_d);
+void	move_left(data_t *data, moves_t *m_d);
+void	move_up(data_t *data, moves_t *m_d);
+void	move_down(data_t *data, moves_t *m_d);
+
+
+void end_game(data_t *d, char *message);
+void free_parsing(map_context_h *p_data);
+void find_player(data_t *data);
+void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data);
+void pre_compute(data_t *data);
+void update_position(data_t *data, char c, int i, int j);
+void start_mlx(data_t *d, map_context_h *p_data);
+
+
+void ft_draw_map(data_t *data);
 #endif
 
