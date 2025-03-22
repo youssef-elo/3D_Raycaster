@@ -1,4 +1,4 @@
-SRC_FILES := $(wildcard *.c)
+SRC_FILES := $(wildcard mandatory/*.c)
 GNL_FILES := $(wildcard get_next_line/*.c)
 
 FILES := $(SRC_FILES) $(GNL_FILES)
