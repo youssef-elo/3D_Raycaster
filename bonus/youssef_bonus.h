@@ -1,5 +1,5 @@
-#ifndef YOUSSEF_BONUS_H
- # define YOUSSEF_BONUS_H
+#ifndef YOUSSEF_H
+ # define YOUSSEF_H
 
 #include "../MLX/include/MLX42/MLX42.h"
 #include <math.h>
@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "hamza.h"
+#include "hamza_bonus.h"
 #include <strings.h>
 #include <time.h>
 #include <sys/time.h>
@@ -70,6 +70,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *empty;
 	mlx_image_t *wall;
 	mlx_image_t *rays_image;
+	mlx_image_t *mini_map;
 	mlx_image_t *north;
 	mlx_image_t *south;
 	mlx_image_t *east;
@@ -102,7 +103,7 @@ typedef struct data_s{
 	int height;
 	char **map;
 	float *cos;
-	constant_t con;
+	constant_t consts;
 	offset_t offset;
 	uint32_t ceiling;
 	uint32_t floor;

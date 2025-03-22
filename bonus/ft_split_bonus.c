@@ -1,6 +1,6 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char  *s, unsigned int start, size_t len)
 {
 	size_t	y;
 	char	*array;
@@ -48,7 +48,7 @@ int	ft_count_words( char *s1, int c)
 	return (res);
 }
 
-char	**ft_fill(char **array, char *s, char c, int count)
+static char	**ft_fill(char **array,  char *s, char c, int count)
 {
 	int	x;
 	int	y;
@@ -77,7 +77,7 @@ char	**ft_fill(char **array, char *s, char c, int count)
 	return (array);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char  *s, char c)
 {
 	char	**array;
 	int		count;

@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	move_angle(data_t *data, moves_t *moves)
 {
@@ -22,6 +22,7 @@ void	move_angle(data_t *data, moves_t *moves)
 
 void	player_movement(data_t *data, moves_t *m_d)
 {
+	
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_W))
 	{
 		m_d->next_x = data->player_x + (data->dir_x * m_d->speed);

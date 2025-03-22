@@ -39,43 +39,10 @@ void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	}
 }
 
-
-uint32_t apply_fog(data_t *data, uint32_t original_color, double distance, int i) 
-{
-
-    uint8_t a = (original_color >> 24) & 0xFF;
-    uint8_t b = (original_color >> 16) & 0xFF;
-    uint8_t g = (original_color >> 8)  & 0xFF;
-    uint8_t r = original_color & 0xFF;
-
-	uint32_t fog_color =  0x000000FF ;
-    uint8_t fog_r = (fog_color >> 24) & 0xFF;
-    uint8_t fog_g = (fog_color >> 16) & 0xFF;
-    uint8_t fog_b = (fog_color >> 8)  & 0xFF;
-
-double fog_intensity;
-	// if (data->fog_start == FOG_START_FLASH && (i <NUMBER_OF_RAYS / 4  || i > ( 3 * ( NUMBER_OF_RAYS / 4))))
-    // 	fog_intensity = (distance - FOG_START) / (MAX_VIEW - FOG_START);
-	// else 
-     fog_intensity = (distance - data->fog_start) / (data->fog_max - data->fog_start);
-	if (fog_intensity < 0.0f)
-		fog_intensity = 0.0;
-	if (fog_intensity > 1.0f)
-		fog_intensity = 1.0f;
-	
-
-    r = r * (1 - fog_intensity) + fog_r * fog_intensity;
-    g = g * (1 - fog_intensity) + fog_g * fog_intensity;
-    b = b * (1 - fog_intensity) + fog_b * fog_intensity;
-
-    return r | (g << 8) | (b << 16) | (a << 24);
-}
-
-
 void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 {
 	wall_3d_t	v;
-	int width;
+	int			width;
 
 	pre_hor(data, line, d_3d, &v);
 	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
@@ -84,24 +51,12 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 	{
 		if (v.v_i >= 0 && v.v_i < HEIGHT_3D && v.tex_i < (double)HEIGHT_3D)
 		{
-			// double fog_intensity = 1.0 - ((d_3d->hor - 280) / (MAX_VIEW - 280));
-			// if (fog_intensity > 1.0) fog_intensity = 1.0; // Clamp max
-			// if (fog_intensity < 0.0) fog_intensity = 0.0;
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
-
-			v.col = apply_fog(data, v.col, d_3d->hor, line->x0);
-			
-			if (line->x0 >= 0
-				&& line->x0 < (int)data->mlx_data->view_3d->width && v.v_i >= 0
-				&& v.v_i < (int)data->mlx_data->view_3d->height)
-			{
-				// v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
-				data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
-				data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
-				data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
-				data->mlx_data->view_3d->pixels[v.i + 0] = (v.col) & 0xFF;
-			}
+			data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
+			data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
+			data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
+			data->mlx_data->view_3d->pixels[v.i + 0] = (v.col) & 0xFF;
 		}
 		v.tex_i += v.step;
 		v.v_i++;
@@ -134,26 +89,19 @@ void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 {
 	wall_3d_t	v;
-	int width;
+	int			width;
 
 	pre_ver(data, line, d_3d, &v);
-	// if (line->x0 >= 0 && line->x0 < (int)data->mlx_data->view_3d->width)
-	// 	return ;
 	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
 	width = data->mlx_data->view_3d->width * 4;
 	while (v.v_i < line->y1 && v.v_i < HEIGHT_3D -1)
 	{
-		// if (v.tex_i < (double)HEIGHT_3D)
-		// {
-			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
-			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
-
-			v.col = apply_fog(data, v.col, d_3d->ver, line->x0);
-			data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
-			data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
-			data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
-			data->mlx_data->view_3d->pixels[v.i + 0] = (v.col) & 0xFF;
-		// }
+		v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
+		v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
+		data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
+		data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
+		data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
+		data->mlx_data->view_3d->pixels[v.i + 0] = (v.col) & 0xFF;
 		v.tex_i += v.step;
 		v.v_i++;
 		v.i += width;
