@@ -83,7 +83,7 @@ double get_delta_time()
     double delta = (current_time - last_time) / 1000.0;
     last_time = current_time;
 
-    return delta;  // Time per frame in seconds
+    return delta;  
 }
 
 

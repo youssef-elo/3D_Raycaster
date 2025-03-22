@@ -29,7 +29,7 @@
 #define HEIGHT_3D 1280
 
 #define MAX_VIEW TILE * 10
-#define FOG_START TILE * 3
+#define FOG_START TILE * 5
 
 #define MAX_VIEW_FLASH TILE * 20
 #define FOG_START_FLASH TILE * 4
@@ -198,7 +198,7 @@ void pre_compute(data_t *data);
 void update_position(data_t *data, char c, int i, int j);
 void start_mlx(data_t *d, map_context_h *p_data);
 
-
+void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i);
 void ft_draw_map(data_t *data);
 #endif
 
