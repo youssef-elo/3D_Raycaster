@@ -1,7 +1,7 @@
-NO textures/matrix.xpm
-SO textures/matrix.xpm
-WE textures/matrix.xpm
-EA textures/matrix.xpm
+NO textures/image.xpm
+SO textures/image.xpm
+WE textures/image.xpm
+EA textures/image.xpm
 
 F 0,0,0
 C 0,0,0

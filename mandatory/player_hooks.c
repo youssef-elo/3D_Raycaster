@@ -52,16 +52,26 @@ void	map_refresh(data_t *data, moves_t *m_d)
 {
 	int	map_x;
 	int	map_y;
+	double pre_y;
 
+	pre_y = data->player_y;
 	map_x = (int)(m_d->next_x) / TILE;
 	map_y = (int)(m_d->next_y) / TILE;
-	if (data->map[map_y][map_x] != '1' && data->map[map_y][map_x] != ' ')
+	if ( data->map[map_y][data->map_x] == '0')
 	{
 		data->player_y = m_d->next_y;
+		data->map_y = map_y;
+	}
+	if (data->map[data->map_y][map_x] == '0')
+	{
 		data->player_x = m_d->next_x;
 		data->map_x = map_x;
-		data->map_y = map_y;
-	}	
+	}
+	if (data->map[data->map_y][data->map_x] == '1')
+	{
+		data->player_y = pre_y;
+		data->map_y = pre_y / TILE;
+	}
 }
 
 void	hook_handler(void *param)

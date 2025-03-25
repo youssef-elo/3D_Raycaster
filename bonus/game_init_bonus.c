@@ -79,5 +79,5 @@ void pre_compute(data_t *data)
 		i++;
 	}
 	data->fog_start = FOG_START;
-	data->fog_max = MAX_VIEW;	
+	data->fog_m = MAX_VIEW;	
 }

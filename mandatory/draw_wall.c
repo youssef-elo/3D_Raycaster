@@ -53,6 +53,8 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 		{
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
+			if (data->ceiling == 255 && data->floor == 255)
+				v.col = apply_fog(data, v.col, d_3d->hor);
 			data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
 			data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
 			data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;
@@ -98,6 +100,8 @@ void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 	{
 		v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 		v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
+		if (data->ceiling == 255 && data->floor == 255)
+			v.col = apply_fog(data, v.col, d_3d->ver);
 		data->mlx_data->view_3d->pixels[v.i + 3] = (v.col >> 24) & 0xFF;
 		data->mlx_data->view_3d->pixels[v.i + 2] = (v.col >> 16) & 0xFF;
 		data->mlx_data->view_3d->pixels[v.i + 1] = (v.col >> 8) & 0xFF;

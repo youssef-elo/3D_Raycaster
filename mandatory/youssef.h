@@ -29,7 +29,7 @@
 #define HEIGHT_3D 1280
 
 #define MAX_VIEW TILE * 10
-#define FOG_START TILE * 5
+#define FOG_START 0
 
 #define MAX_VIEW_FLASH TILE * 20
 #define FOG_START_FLASH TILE * 4
@@ -95,7 +95,7 @@ typedef struct data_s{
 	int		map_y;
 	double p_angle;
 	int	 fog_start;
-	int	 fog_max;
+	int	 fog_m;
 	double dir_x;
 	double dir_y;
 	int width;
@@ -200,5 +200,7 @@ void start_mlx(data_t *d, map_context_h *p_data);
 
 void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i);
 void ft_draw_map(data_t *data);
+uint32_t apply_fog(data_t *data, uint32_t original_color, double distance);
+void flashlight(struct mlx_key_data keydata, void *param);
 #endif
 

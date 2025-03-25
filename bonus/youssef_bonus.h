@@ -23,13 +23,15 @@
 #define SPEED 4
 
 // 8 21
+#define MINI_HEIGHT 7 * TILE_SIZE
+#define MINI_WIDTH 7 * TILE_SIZE
 #define TILE 1280
 
 #define WIDTH_3D 2040
 #define HEIGHT_3D 1280
 
 #define MAX_VIEW TILE * 10
-#define FOG_START 0 
+#define FOG_START 0
 
 #define MAX_VIEW_FLASH TILE * 20
 #define FOG_START_FLASH TILE * 4
@@ -96,7 +98,7 @@ typedef struct data_s{
 	int		map_y;
 	double p_angle;
 	int	 fog_start;
-	int	 fog_max;
+	int	 fog_m;
 	double dir_x;
 	double dir_y;
 	int width;

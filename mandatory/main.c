@@ -12,6 +12,7 @@ int	main(int argc, char **argv)
 	pre_compute(&data);
 	free_parsing(&p_data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d, 0, 0);
+	mlx_key_hook(data.mlx_data->mlx, flashlight, &data);
 	mlx_loop_hook(mlx_data.mlx, hook_handler, &data);
 	mlx_loop_hook(mlx_data.mlx, draw_3d, &data);
 	mlx_loop(mlx_data.mlx);

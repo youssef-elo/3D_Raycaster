@@ -23,9 +23,10 @@ MLX=MLX/build/libmlx42.a
 OFILES= $(FILES:.c=.o)
 B_OFILES= $(B_FILES:.c=.o)
 
+bonus : $(BONUS)
+
 all : $(NAME)
 
-bonus : $(BONUS)
 
 $(NAME) : $(OFILES)
 	cc $(FLAGS) $(OFILES) -o $(NAME) $(MLX) $(MlX_FLAGS) 

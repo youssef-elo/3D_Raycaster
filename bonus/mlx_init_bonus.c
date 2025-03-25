@@ -8,7 +8,7 @@ void load_images(data_t *d, map_context_h *p_data)
 	d->mlx_data->view_3d = mlx_new_image(d->mlx_data->mlx, WIDTH_3D, HEIGHT_3D);
 	if (!d->mlx_data->view_3d)
 		end_game(d, "Error\nCant load images\n");
-	d->mlx_data->mini_map = mlx_new_image(d->mlx_data->mlx, 6 * TILE_SIZE, 6 * TILE_SIZE);
+	d->mlx_data->mini_map = mlx_new_image(d->mlx_data->mlx, MINI_WIDTH, MINI_HEIGHT);
 	if (!d->mlx_data->mini_map)
 		end_game(d, "Error\nCant load images\n");
 	tmp = mlx_load_png(p_data->south);

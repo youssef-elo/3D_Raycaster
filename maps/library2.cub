@@ -1,7 +1,7 @@
-NO textures/bricks.png
-SO textures/bricks.png
-WE textures/bricks.png
-EA textures/bricks.png
+NO textures/image2.png
+SO textures/image3.png
+WE textures/image4.png
+EA textures/image5.png
 F 0,0,0
 C 0,0,0
 1111111111111111111111111

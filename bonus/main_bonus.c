@@ -11,12 +11,12 @@ void flashlight(struct mlx_key_data keydata, void *param)
 		if (data->fog_start == FOG_START)
 		{
 			data->fog_start = FOG_START_FLASH;
-			data->fog_max = MAX_VIEW_FLASH;
+			data->fog_m = MAX_VIEW_FLASH;
 		}
 		else
 		{
 			data->fog_start = FOG_START;
-			data->fog_max = MAX_VIEW;
+			data->fog_m = MAX_VIEW;
 		}
 	}
 }

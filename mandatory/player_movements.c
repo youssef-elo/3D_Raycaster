@@ -18,8 +18,8 @@ void	move_up(data_t *data, moves_t *m_d)
 	check = -350;
 	if ((data->p_angle <= (M_PI / 2)) || (data->p_angle >= (3 * (M_PI / 2))))
 		check = 350;
-	if (data->map[data->map_y][(int)m_d->next_x / TILE] == '1'
-		|| (data->map[data->map_y][(int)(m_d->next_x + check) / TILE] == '1'))
+	if (data->map[(int)m_d->next_y / TILE][(int)m_d->next_x / TILE] == '1'
+		|| (data->map[(int)m_d->next_y / TILE][(int)(m_d->next_x + check) / TILE] == '1'))
 	{
 		if (check == 350)
 			m_d->next_x = (data->map_x * TILE) + (TILE - 350);
