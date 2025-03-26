@@ -44,6 +44,13 @@
 #define HEIGHT 8 * TILE
 #define BPP sizeof(int32_t)
 
+typedef struct matrix_s
+{
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+}				matrix_t;
 
 typedef struct offset_s
 {
@@ -176,7 +183,7 @@ void end_game(data_t *d, char *message);
 // 2D view
 int *shoot_rays(data_t *data);
 void draw_minimap(data_t *data);
-void minimap(data_t *data, mlx_data_t *mlx_data);
+// void minimap(data_t *data, mlx_data_t *mlx_data);
 void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
 void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data);
 void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data);
@@ -203,6 +210,6 @@ void start_mlx(data_t *d, map_context_h *p_data);
 void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i);
 
 
-void ft_draw_map(data_t *data);
+void minimap_3d(data_t *data);
 #endif
 

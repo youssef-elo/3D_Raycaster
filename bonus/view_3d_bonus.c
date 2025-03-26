@@ -121,5 +121,5 @@ void	draw_3d(void *param)
 		textured_line(data, &d_3d, &line, i);
 		i++;
 	}
-	ft_draw_map(data);
+	minimap_3d(data);
 }
