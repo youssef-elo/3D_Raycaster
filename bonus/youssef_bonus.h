@@ -46,10 +46,10 @@
 
 typedef struct matrix_s
 {
-	int x1;
-	int y1;
-	int x2;
-	int y2;
+	double x1;
+	double y1;
+	double x2;
+	double y2;
 }				matrix_t;
 
 typedef struct offset_s
@@ -161,7 +161,6 @@ typedef struct wall_3d_s
 	uint32_t col;
 	mlx_image_t *tx;
 } wall_3d_t;
-
 
 
 char	*ft_itoa(int n);

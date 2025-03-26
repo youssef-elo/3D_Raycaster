@@ -34,6 +34,7 @@ int	main(int argc, char **argv){
 	draw_3d(&data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d,  0, 0);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.mini_map,  0, HEIGHT_3D - data.mlx_data->mini_map->height);
+	minimap_3d(&data);
 	mlx_key_hook(data.mlx_data->mlx, flashlight, &data);
 	mlx_loop_hook(mlx_data.mlx, hook_handler, &data);
 	mlx_loop_hook(mlx_data.mlx, draw_3d, &data);

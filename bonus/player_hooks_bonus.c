@@ -9,6 +9,8 @@ void	move_angle(data_t *data, moves_t *moves)
 			data->p_angle += (2 * M_PI);
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
+	minimap_3d(data);
+
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
@@ -17,6 +19,8 @@ void	move_angle(data_t *data, moves_t *moves)
 			data->p_angle -= (2 * M_PI);
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
+	minimap_3d(data);
+
 	}
 }
 
@@ -62,16 +66,22 @@ void	map_refresh(data_t *data, moves_t *m_d)
 	{
 		data->player_y = m_d->next_y;
 		data->map_y = map_y;
+	minimap_3d(data);
+
 	}
 	if (data->map[data->map_y][map_x] == '0')
 	{
 		data->player_x = m_d->next_x;
 		data->map_x = map_x;
+	minimap_3d(data);
+
 	}
 	if (data->map[data->map_y][data->map_x] == '1')
 	{
 		data->player_y = pre_y;
 		data->map_y = pre_y / TILE;
+	minimap_3d(data);
+
 	}	
 }
 
