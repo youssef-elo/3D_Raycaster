@@ -1,6 +1,5 @@
 #include "cub3d_bonus.h"
 
-
 void flashlight(struct mlx_key_data keydata, void *param)
 {
 	data_t *data;
@@ -31,6 +30,7 @@ int	main(int argc, char **argv){
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);
 	free_parsing(&p_data);
+	draw_filled_disk(data.mlx_data->mini_map, data.mlx_data->mini_map->width / 2, data.mlx_data->mini_map->height / 2, 104);
 	draw_3d(&data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d,  0, 0);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.mini_map,  0, HEIGHT_3D - data.mlx_data->mini_map->height);

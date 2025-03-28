@@ -3,9 +3,9 @@
 void	update_position(data_t *data, char c, int i, int j)
 {
 	if (c == 'N')
-		data->p_angle = M_PI / 2;
+		data->p_angle = M_PI_2;
 	if (c == 'S')
-		data->p_angle = 3 * (M_PI / 2);
+		data->p_angle = 3 * (M_PI_2);
 	if (c == 'E')
 		data->p_angle = 0;
 	if (c == 'W')

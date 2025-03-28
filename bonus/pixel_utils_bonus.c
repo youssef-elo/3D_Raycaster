@@ -36,7 +36,7 @@ void	draw_filled_disk(mlx_image_t *img, int xc, int yc, int r)
 	int			y_max;
 
 	x = xc - r;
-	color = rgb(255, 0, 0, 255);
+	color = rgb(3, 22, 2, 255);
 	while (x <= xc + r)
 	{
 		y_max = sqrt(r * r - (x - xc) * (x - xc));
