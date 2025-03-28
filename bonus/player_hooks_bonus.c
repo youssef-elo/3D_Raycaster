@@ -4,7 +4,7 @@ void	move_angle(data_t *data, moves_t *moves)
 {
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_RIGHT))
 	{
-		data->p_angle -= 0.05f;
+		data->p_angle -= 0.07f;
 		if (data->p_angle < 0)
 			data->p_angle += (2 * M_PI);
 		data->dir_x = cos(data->p_angle);
@@ -14,7 +14,7 @@ void	move_angle(data_t *data, moves_t *moves)
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
-		data->p_angle += 0.05f;
+		data->p_angle += 0.07f;
 		if (data->p_angle > ((double)2 * M_PI))
 			data->p_angle -= (2 * M_PI);
 		data->dir_x = cos(data->p_angle);
@@ -26,7 +26,8 @@ void	move_angle(data_t *data, moves_t *moves)
 
 void	player_movement(data_t *data, moves_t *m_d)
 {
-	
+	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_SPACE))
+	printf("%f\n", data->p_angle);	
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_W))
 	{
 		m_d->next_x = data->player_x + (data->dir_x * m_d->speed);

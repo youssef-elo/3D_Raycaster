@@ -23,8 +23,8 @@
 #define SPEED 4
 
 // 8 21
-#define MINI_HEIGHT 7 * TILE_SIZE
-#define MINI_WIDTH 7 * TILE_SIZE
+#define MINI_HEIGHT 8 * TILE_SIZE
+#define MINI_WIDTH 8 * TILE_SIZE
 #define TILE 1280
 
 #define WIDTH_3D 2040
