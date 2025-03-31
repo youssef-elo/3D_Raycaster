@@ -86,8 +86,6 @@ double get_delta_time()
     return delta;  
 }
 
-
-
 void	draw_3d(void *param)
 {
 	int			i;
@@ -106,6 +104,7 @@ void	draw_3d(void *param)
 	}
 	str = ft_itoa(1.0/ get_delta_time());
 	pre  = mlx_put_string(data->mlx_data->mlx, str, 30, 20);
+	// printf("%s\n", str);
 	free(str);
 	// printf("%f\n", 1.0/ get_delta_time());
 	d_3d.r_angle = (data->p_angle - data->con.fov_half);

@@ -25,7 +25,7 @@ void	move_angle(data_t *data, moves_t *moves)
 void	player_movement(data_t *data, moves_t *m_d)
 {
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_SPACE))
-	printf("%f\n", data->p_angle);	
+		printf("%f\n", data->p_angle);	
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_W))
 	{
 		m_d->next_x = data->player_x + (data->dir_x * m_d->speed);
@@ -57,7 +57,9 @@ void	map_refresh(data_t *data, moves_t *m_d)
 	int	map_x;
 	int	map_y;
 	double pre_y;
+	int changed;
 
+	changed = 0;
 	pre_y = data->player_y;
 	map_x = (int)(m_d->next_x) / TILE;
 	map_y = (int)(m_d->next_y) / TILE;
@@ -65,18 +67,22 @@ void	map_refresh(data_t *data, moves_t *m_d)
 	{
 		data->player_y = m_d->next_y;
 		data->map_y = map_y;
+		changed = 1;
 	}
 	if (data->map[data->map_y][map_x] == '0')
 	{
 		data->player_x = m_d->next_x;
 		data->map_x = map_x;
+		changed = 1;
 	}
 	if (data->map[data->map_y][data->map_x] == '1')
 	{
 		data->player_y = pre_y;
 		data->map_y = pre_y / TILE;
+		changed = 1;
 	}
-	minimap_3d(data);
+	if ( changed)
+		minimap_3d(data);
 }
 
 void	hook_handler(void *param)

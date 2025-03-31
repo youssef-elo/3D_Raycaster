@@ -84,6 +84,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *south;
 	mlx_image_t *east;
 	mlx_image_t *west;
+	mlx_image_t *gun[50];
 } mlx_data_t;
 
 typedef struct raycaster_s{
