@@ -23,23 +23,34 @@ void flashlight(struct mlx_key_data keydata, void *param)
 void load_gun(data_t *data)
 {
 	int i;
-	int j = 0;
+	int j;
+	char str[30];
+	int x;
+	int y;
+	int n;
+
 	mlx_texture_t *tex;
 
 
 	i = 1;
-	j = 0;
-	char str[30];
-	while(i <= 21)
+	j = 1;
+	n = 3;
+	// x = (WIDTH_3D  - data->mlx_data->gun[0]->width)  /2;
+	// y = (HEIGHT_3D  - data->mlx_data->gun[0]->height) / 2 ;
+
+	data->mlx_data->gun = malloc(sizeof(mlx_image_t *) * 74);
+	for ( int i =0; i < 74; i++, j+=3)
 	{
-		sprintf(str, "render/00%d.png", i);
-		// printf("%s\n", str);
+		if ( j > 9)
+            n = 2;
+        if (j > 99) 
+            n = 1;
+		sprintf(str, "render/%.*s%d.png",n , "000", j);
 		tex = mlx_load_png(str);
-		data->mlx_data->gun[j] = mlx_texture_to_image(data->mlx_data->mlx, tex);
-		i == 0 ? printf("%p\n", data->mlx_data->gun[j]):0;
+		data->mlx_data->gun[i] = mlx_texture_to_image(data->mlx_data->mlx, tex);
 		mlx_delete_texture(tex);
-		i += 2;
-		j++;
+		mlx_image_to_window(data->mlx_data->mlx, data->mlx_data->gun[i], 0, 0);
+		data->mlx_data->gun[i]->instances->enabled = false;
 	}
 }
 
@@ -50,28 +61,30 @@ void load_gun(data_t *data)
 
 void	gun_animation(void *param)
 {
-	static double accum = 0.0;
-	static int current_frame = -1;
-	data_t *data;
-	static int last;
+	static int i;
+	static int first;
+	static mlx_image_t *pre;
 
-	data = (data_t *)param;
 
-	mlx_t *mlx = ((mlx_t *)param);
-	double dt = mlx_get_time() - accum; 
-
-	if (dt > 0.1)
-	{
-		current_frame = (current_frame + 1) % 11;
-printf("%d\n", current_frame);
-		// Remove previous frame from render queue
-		// if (last != -1)
-		// 	data->mlx_data->gun[(current_frame - 1) % 11]->instances[last].enabled = false;
-
-		// Draw new frame
-		last = mlx_image_to_window(mlx, data->mlx_data->gun[current_frame], 0, 0);
-		accum = mlx_get_time();
-	}
+	// if (first == 0 && i < 74)
+	// {
+	// 	if (i != 0)
+	// 		gun[i - 1]->instances[0].enabled = false;
+	// 	pre = gun[i]; 
+	// 	i++;
+	// 	if ( i == 74)puts("out");
+	// }
+	// else
+	// {
+	// 	first = 1;
+		if (i == 74)
+			i = 0;
+		// printf("%d\n", (i - 1) % 74);
+		if (pre)
+		pre->instances[0].enabled = false;
+		((data_t *)param)->mlx_data->gun[i]->instances[0].enabled = true;
+		pre = ((data_t *)param)->mlx_data->gun[i];
+		i++;
 }
 
 int	main(int argc, char **argv){
