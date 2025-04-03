@@ -85,6 +85,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *east;
 	mlx_image_t *west;
 	mlx_image_t **gun;
+	mlx_image_t **reload;
 } mlx_data_t;
 
 typedef struct raycaster_s{
@@ -112,7 +113,9 @@ typedef struct data_s{
 	int width;
 	int height;
 	char **map;
+	int walking;
 	float *cos;
+	int reload;
 	constant_t con;
 	offset_t offset;
 	uint32_t ceiling;
@@ -208,7 +211,7 @@ void pre_compute(data_t *data);
 void update_position(data_t *data, char c, int i, int j);
 void start_mlx(data_t *d, map_context_h *p_data);
 void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i);
-
+void	gun_animation(void *param);
 
 void minimap_3d(data_t *data);
 #endif

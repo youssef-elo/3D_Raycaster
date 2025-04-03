@@ -18,11 +18,15 @@ void flashlight(struct mlx_key_data keydata, void *param)
 			data->fog_m = MAX_VIEW;
 		}
 	}
+	if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
+	{
+		data->reload = 1;
+	}
 }
 
 void load_gun(data_t *data)
 {
-	int i;
+	// int i;
 	int j;
 	char str[30];
 	int x;
@@ -32,14 +36,12 @@ void load_gun(data_t *data)
 	mlx_texture_t *tex;
 
 
-	i = 1;
+	// i = 1;
 	j = 1;
 	n = 3;
-	// x = (WIDTH_3D  - data->mlx_data->gun[0]->width)  /2;
-	// y = (HEIGHT_3D  - data->mlx_data->gun[0]->height) / 2 ;
-
-	data->mlx_data->gun = malloc(sizeof(mlx_image_t *) * 74);
-	for ( int i =0; i < 74; i++, j+=3)
+	data->walking = 1;
+	data->mlx_data->gun = malloc(sizeof(mlx_image_t *) * 44);
+	for ( int i = 0; i < 44; i++, j+=5)
 	{
 		if ( j > 9)
             n = 2;
@@ -49,8 +51,50 @@ void load_gun(data_t *data)
 		tex = mlx_load_png(str);
 		data->mlx_data->gun[i] = mlx_texture_to_image(data->mlx_data->mlx, tex);
 		mlx_delete_texture(tex);
-		mlx_image_to_window(data->mlx_data->mlx, data->mlx_data->gun[i], 0, 0);
+		if (i == 0)
+		{
+			x = (WIDTH_3D / 2) - 350;
+			y = HEIGHT_3D  - data->mlx_data->gun[0]->height ;
+		}
+		mlx_image_to_window(data->mlx_data->mlx, data->mlx_data->gun[i], x, y);
 		data->mlx_data->gun[i]->instances->enabled = false;
+	}
+	gun_animation(data);
+}
+void load_gun_reload(data_t *data)
+{
+	// int i;
+	int j;
+	char str[30];
+	int x;
+	int y;
+	int n;
+
+	mlx_texture_t *tex;
+
+
+	// i = 1;
+	j = 1;
+	n = 3;
+	data->walking = 1;
+	data->mlx_data->reload = malloc(sizeof(mlx_image_t *) * 44);
+	for ( int i = 0; i < 44; i++, j+=5)
+	{
+		if ( j > 9)
+            n = 2;
+        if (j > 99) 
+            n = 1;
+		sprintf(str, "reload/%.*s%d.png",n , "000", j);
+		tex = mlx_load_png(str);
+		data->mlx_data->reload[i] = mlx_texture_to_image(data->mlx_data->mlx, tex);
+		mlx_delete_texture(tex);
+		if (i == 0)
+		{
+			x = (WIDTH_3D / 2) - 600;
+			y = HEIGHT_3D  - data->mlx_data->reload[0]->height ;
+		}
+		mlx_image_to_window(data->mlx_data->mlx, data->mlx_data->reload[i], x, y);
+		data->mlx_data->reload[i]->instances->enabled = false;
 	}
 }
 
@@ -63,28 +107,51 @@ void	gun_animation(void *param)
 {
 	static int i;
 	static int first;
-	static mlx_image_t *pre;
+	static mlx_image_t *pre_gun;
+	static int r;
+	static double last_time;
+	double current_time;
 
-
-	// if (first == 0 && i < 74)
-	// {
-	// 	if (i != 0)
-	// 		gun[i - 1]->instances[0].enabled = false;
-	// 	pre = gun[i]; 
-	// 	i++;
-	// 	if ( i == 74)puts("out");
-	// }
-	// else
-	// {
-	// 	first = 1;
-		if (i == 74)
-			i = 0;
-		// printf("%d\n", (i - 1) % 74);
-		if (pre)
-		pre->instances[0].enabled = false;
-		((data_t *)param)->mlx_data->gun[i]->instances[0].enabled = true;
-		pre = ((data_t *)param)->mlx_data->gun[i];
-		i++;
+	data_t *data;
+	data = (data_t *)param;
+	if (!first)
+	{
+		last_time = mlx_get_time();
+		first = 1;
+	}
+	current_time = mlx_get_time();
+	
+	// printf("%d\n", data->walking);
+	if (current_time - last_time >= 0.02f)
+	{
+		if (data->walking && !data->reload)
+		{
+			if (i == 44)
+				i = 0;
+			if (pre_gun)
+				pre_gun->instances[0].enabled = false;
+			((data_t *)param)->mlx_data->gun[i]->instances[0].enabled = true;
+			pre_gun = ((data_t *)param)->mlx_data->gun[i];
+			i++;
+		}
+		if (data->reload)
+		{
+			pre_gun->instances[0].enabled = false;
+			if (r != 0)
+				data->mlx_data->reload[r - 1]->instances[0].enabled = false;
+			data->mlx_data->reload[r]->instances[0].enabled = true;
+			r++;
+			if (r == 44)
+			{
+				data->reload = 0;
+				data->mlx_data->reload[r - 1]->instances[0].enabled = false;
+				r = 0;
+				pre_gun->instances[0].enabled = true;
+				i = 0;
+			}
+		}
+		last_time = mlx_get_time();
+	}
 }
 
 int	main(int argc, char **argv){
@@ -98,11 +165,12 @@ int	main(int argc, char **argv){
 	pre_compute(&data);
 	free_parsing(&p_data);
 	draw_filled_disk(data.mlx_data->mini_map, data.mlx_data->mini_map->width / 2, data.mlx_data->mini_map->height / 2, 104);
-	draw_3d(&data);
+	// draw_3d(&data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.view_3d,  0, 0);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.mini_map,  0, HEIGHT_3D - data.mlx_data->mini_map->height);
 	minimap_3d(&data);
 	load_gun(&data);
+	load_gun_reload(&data);
 	mlx_key_hook(data.mlx_data->mlx, flashlight, &data);
 	mlx_loop_hook(mlx_data.mlx, hook_handler, &data);
 	mlx_loop_hook(mlx_data.mlx, draw_3d, &data);

@@ -24,31 +24,45 @@ void	move_angle(data_t *data, moves_t *moves)
 
 void	player_movement(data_t *data, moves_t *m_d)
 {
+	// data->walking = 0;
+	int moving = 0;
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_SPACE))
 		printf("%f\n", data->p_angle);	
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_W))
 	{
 		m_d->next_x = data->player_x + (data->dir_x * m_d->speed);
 		m_d->next_y = data->player_y - (data->dir_y * m_d->speed);
+		moving = 1;
+		data->walking = 1;
 		move_up(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_S))
 	{
 		m_d->next_x = data->player_x - (data->dir_x * m_d->speed);
 		m_d->next_y = data->player_y + (data->dir_y * m_d->speed);
+		data->walking = 1;
+		moving = 1;
 		move_down(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_A))
 	{
 		m_d->next_x = data->player_x - (data->dir_y * m_d->speed);
 		m_d->next_y = data->player_y - (data->dir_x * m_d->speed);
+		data->walking = 1;
+		moving = 1;
 		move_left(data, m_d);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_D))
 	{
 		m_d->next_x = data->player_x + (data->dir_y * m_d->speed);
 		m_d->next_y = data->player_y + (data->dir_x * m_d->speed);
+		data->walking = 1;
+		moving = 1;
 		move_right(data, m_d);
+	}
+	if (!moving)
+	{
+		data->walking = 0;
 	}
 }
 

@@ -95,6 +95,11 @@ void	draw_3d(void *param)
 	char *str;
 	static mlx_image_t *pre;
 
+// static int i_gun;
+// 	static int first;
+// 	static mlx_image_t *pre_gun;
+
+
 	data = (data_t *)param;
 
 	i = 0;
@@ -120,4 +125,11 @@ void	draw_3d(void *param)
 		textured_line(data, &d_3d, &line, i);
 		i++;
 	}
+	// if (i_gun == 74)
+	// 	i_gun = 0;
+	// if (pre_gun)
+	// 	pre_gun->instances[0].enabled = false;
+	// ((data_t *)param)->mlx_data->gun[i_gun]->instances[0].enabled = true;
+	// pre_gun = ((data_t *)param)->mlx_data->gun[i_gun];
+	// i_gun++;
 }

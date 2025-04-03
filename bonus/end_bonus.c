@@ -19,6 +19,12 @@ void end_game(data_t *d, char *message)
 	while(i < d->height)
 		free(d->map[i++]);
 	free(d->map);
+	i = 0;
+	while(i < 44)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->gun[i++]);
+	i = 0;
+	while(i < 44)
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->reload[i++]);
 	printf("%s", message);
 	exit(0);
 }
