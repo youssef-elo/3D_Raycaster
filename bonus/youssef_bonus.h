@@ -18,8 +18,11 @@
 #define GUN_W 877
 #define GUN_H 580
 
-#define RELOAD_W 1394
-#define RELOAD_H 736
+#define RELOAD_W 898
+#define RELOAD_H 570
+
+#define FIRE_W 1394
+#define FIRE_H 736
 
 #define PI 3.141592653589793
 #define FOV 1.1519
