@@ -15,14 +15,16 @@
 #define CUBE3D 1
 
 
+
 #define GUN_W 877
 #define GUN_H 580
 
-#define RELOAD_W 898
-#define RELOAD_H 570
+#define FIRE_W 898
+#define FIRE_H 570
 
-#define FIRE_W 1394
-#define FIRE_H 736
+#define RELOAD_W 1394
+#define RELOAD_H 736
+
 
 #define PI 3.141592653589793
 #define FOV 1.1519
@@ -38,6 +40,8 @@
 
 #define WIDTH_3D 2040
 #define HEIGHT_3D 1280
+
+#define ROTATION_FACTOR M_PI_2 / WIDTH_3D
 
 #define MAX_VIEW TILE * 10
 #define FOG_START 0
@@ -86,6 +90,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *view_3d;
 	mlx_image_t *gun_view;
 	mlx_image_t *reload_view;
+	mlx_image_t *fire_view;
 	mlx_image_t *floor_ceiling;
 	mlx_image_t *empty;
 	mlx_image_t *wall;
@@ -96,6 +101,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *east;
 	mlx_texture_t *gun_sheet;
 	mlx_texture_t *reload_sheet;
+	mlx_texture_t *fire_sheet;
 	mlx_image_t *west;
 } mlx_data_t;
 
@@ -124,8 +130,9 @@ typedef struct data_s{
 	int width;
 	int height;
 	char **map;
-	int walking;
 	float *cos;
+	int walking;
+	int firing;
 	int reload;
 	constant_t con;
 	offset_t offset;

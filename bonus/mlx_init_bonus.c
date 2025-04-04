@@ -9,6 +9,10 @@ void load_images(data_t *d, map_context_h *p_data)
 	if (!d->mlx_data->gun_view)
 		end_game(d, "Error\nCant load images\n");
 
+	d->mlx_data->fire_view = mlx_new_image(d->mlx_data->mlx, FIRE_W, FIRE_H);
+	if (!d->mlx_data->fire_view)
+		end_game(d, "Error\nCant load images\n");
+
 	d->mlx_data->reload_view = mlx_new_image(d->mlx_data->mlx, RELOAD_W, RELOAD_H);
 	if (!d->mlx_data->reload_view)
 		end_game(d, "Error\nCant load images\n");
