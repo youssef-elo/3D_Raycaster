@@ -15,6 +15,12 @@
 #define CUBE3D 1
 
 
+#define GUN_W 877
+#define GUN_H 580
+
+#define RELOAD_W 1394
+#define RELOAD_H 736
+
 #define PI 3.141592653589793
 #define FOV 1.1519
 #define NUMBER_OF_RAYS 2040
@@ -74,7 +80,9 @@ typedef struct constant_s
 typedef struct mlx_data_s{
 	mlx_t *mlx;
 	mlx_image_t *view;
-	mlx_image_t *view_3d; 
+	mlx_image_t *view_3d;
+	mlx_image_t *gun_view;
+	mlx_image_t *reload_view;
 	mlx_image_t *floor_ceiling;
 	mlx_image_t *empty;
 	mlx_image_t *wall;
@@ -83,9 +91,9 @@ typedef struct mlx_data_s{
 	mlx_image_t *north;
 	mlx_image_t *south;
 	mlx_image_t *east;
+	mlx_texture_t *gun_sheet;
+	mlx_texture_t *reload_sheet;
 	mlx_image_t *west;
-	mlx_image_t **gun;
-	mlx_image_t **reload;
 } mlx_data_t;
 
 typedef struct raycaster_s{

@@ -5,6 +5,14 @@ void load_images(data_t *d, map_context_h *p_data)
 {
 	mlx_texture_t *tmp;
 
+	d->mlx_data->gun_view = mlx_new_image(d->mlx_data->mlx, GUN_W, GUN_H);
+	if (!d->mlx_data->gun_view)
+		end_game(d, "Error\nCant load images\n");
+
+	d->mlx_data->reload_view = mlx_new_image(d->mlx_data->mlx, RELOAD_W, RELOAD_H);
+	if (!d->mlx_data->reload_view)
+		end_game(d, "Error\nCant load images\n");
+
 	d->mlx_data->view_3d = mlx_new_image(d->mlx_data->mlx, WIDTH_3D, HEIGHT_3D);
 	if (!d->mlx_data->view_3d)
 		end_game(d, "Error\nCant load images\n");
