@@ -177,8 +177,8 @@ void	gun_animation(void *param)
 		first = 1;
 	}
 	current_time = mlx_get_time();
-	if (current_time - last_time >= 0.0001f && !data->reload)
-	{
+	// if (current_time - last_time >= 0.00001f && !data->reload)
+	// {
 		if (data->firing || (!data->firing && f != 0))
 		{
 			puts("fire");
@@ -189,23 +189,22 @@ void	gun_animation(void *param)
 			}
 			fire_frame(data, f % 6, f / 6);
 			f++;
-			if (f == 30)
+			if (f == 23)
 			{
 				// data->firing = 0;
 				f = 0;
 				data->mlx_data->gun_view->instances[0].enabled = true;
 				data->mlx_data->fire_view->instances[0].enabled = false;
 				i = 0;
-			last_time = mlx_get_time();
+				last_time = mlx_get_time();
 			}
 			last_time = mlx_get_time();
 		}
-		
-	}
+	// }
 	current_time = mlx_get_time();
 	if (current_time - last_time >= 0.035f)
 	{
-			puts("in?");
+		// printf("w %d\t r %d\tf %d\n", data->walking, data->reload, data->firing);
 		if (data->walking && !data->reload && (!data->firing && f == 0))
 		{
 			if (i == 44)
@@ -253,6 +252,8 @@ void rotate_mouse(double xpos, double ypos, void* param)
 	data->dir_x = cos(data->p_angle);
 	data->dir_y = sin(data->p_angle);
 	mlx_set_mouse_pos(data->mlx_data->mlx, WIDTH_3D / 2, HEIGHT_3D / 2);
+	minimap_3d(data);
+
 }
 
 void	open_fire(mouse_key_t butt, action_t act, modifier_key_t mods, void* p)
@@ -261,7 +262,10 @@ void	open_fire(mouse_key_t butt, action_t act, modifier_key_t mods, void* p)
 
 	data = (data_t *)p;
 	if (butt == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS)
-		data->firing = 1;
+	{
+		if (!data->reload)
+			data->firing = 1;
+	}
 	if (butt == MLX_MOUSE_BUTTON_LEFT && act == MLX_RELEASE)
 	{
 		data->firing = 0;

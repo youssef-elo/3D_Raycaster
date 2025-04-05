@@ -41,7 +41,7 @@
 #define WIDTH_3D 2040
 #define HEIGHT_3D 1280
 
-#define ROTATION_FACTOR M_PI_2 / WIDTH_3D
+#define ROTATION_FACTOR M_PI_4 / WIDTH_3D
 
 #define MAX_VIEW TILE * 10
 #define FOG_START 0
