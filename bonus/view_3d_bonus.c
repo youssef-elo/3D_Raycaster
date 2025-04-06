@@ -29,7 +29,7 @@ void	draw_floor_3d(data_t *d, line_t *line)
 	int	view_i;
 
 	view_i = line->y1;
-	while (view_i < HEIGHT_3D -1)
+	while (view_i < HEIGHT -1)
 	{
 		if (line->x0 >= 0 && line->x0 < (int)d->mlx_data->view_3d->width
 	

@@ -69,9 +69,9 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 	pre_hor(data, line, d_3d, &v);
 	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
 	width = data->mlx_data->view_3d->width * 4;
-	while (v.v_i < line->y1 && v.v_i < HEIGHT_3D -1)
+	while (v.v_i < line->y1 && v.v_i < HEIGHT -1)
 	{
-		if (v.v_i >= 0 && v.v_i < HEIGHT_3D && v.tex_i < (double)HEIGHT_3D)
+		if (v.v_i >= 0 && v.v_i < HEIGHT && v.tex_i < (double)HEIGHT)
 		{
 			v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 			v.col = ((uint32_t *)v.tx->pixels)[v.col_i];
@@ -118,7 +118,7 @@ void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
 	pre_ver(data, line, d_3d, &v);
 	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
 	width = data->mlx_data->view_3d->width * 4;
-	while (v.v_i < line->y1 && v.v_i < HEIGHT_3D -1)
+	while (v.v_i < line->y1 && v.v_i < HEIGHT -1)
 	{
 		v.col_i = (((int)(v.tex_i)) * v.tx->width) + v.tex_x;
 		v.col = ((uint32_t *)v.tx->pixels)[v.col_i];

@@ -67,10 +67,10 @@ void pre_compute(data_t *data)
 
 	i = 0;
 	data->con.angle_i = FOV / NUMBER_OF_RAYS;
-	data->con.p = (WIDTH_3D / 2) / tan(FOV / 2);
+	data->con.p = (WIDTH / 2) / tan(FOV / 2);
 	data->con.scaler = data->con.p * TILE;
 	data->con.fov_half = FOV / 2;
-	data->con.half_window = HEIGHT_3D / 2;
+	data->con.half_window = HEIGHT / 2;
 	data->cos = malloc( sizeof(double) * NUMBER_OF_RAYS);
 	while(i < NUMBER_OF_RAYS)
 	{

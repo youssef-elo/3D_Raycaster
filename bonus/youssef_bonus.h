@@ -34,14 +34,14 @@
 #define SPEED 4
 
 // 8 21
-#define MINI_HEIGHT 210
-#define MINI_WIDTH 250
+#define M_HEIGHT 210
+#define M_WIDTH 250
 #define TILE 1280
 
-#define WIDTH_3D 2040
-#define HEIGHT_3D 1280
+#define WIDTH 2040
+#define HEIGHT 1280
 
-#define ROTATION_FACTOR M_PI_4 / WIDTH_3D
+#define ROTATION_FACTOR M_PI_4 / WIDTH
 
 #define MAX_VIEW TILE * 10
 #define FOG_START 0
@@ -53,8 +53,8 @@
 #define LEFT 0
 
 
-#define WIDTH 29 * TILE
-#define HEIGHT 8 * TILE
+// #define WIDTH 29 * TILE
+// #define HEIGHT 8 * TILE
 #define BPP sizeof(int32_t)
 
 typedef struct matrix_s
@@ -89,6 +89,7 @@ typedef struct mlx_data_s{
 	mlx_image_t *view;
 	mlx_image_t *view_3d;
 	mlx_image_t *gun_view;
+	mlx_image_t *muzzle;
 	mlx_image_t *reload_view;
 	mlx_image_t *fire_view;
 	mlx_image_t *floor_ceiling;
@@ -221,15 +222,25 @@ void	move_up(data_t *data, moves_t *m_d);
 void	move_down(data_t *data, moves_t *m_d);
 
 
-void end_game(data_t *d, char *message);
-void free_parsing(map_context_h *p_data);
-void find_player(data_t *data);
-void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data);
-void pre_compute(data_t *data);
-void update_position(data_t *data, char c, int i, int j);
-void start_mlx(data_t *d, map_context_h *p_data);
+void	end_game(data_t *d, char *message);
+void	free_parsing(map_context_h *p_data);
+void	find_player(data_t *data);
+void	link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data);
+void	pre_compute(data_t *data);
+void	update_position(data_t *data, char c, int i, int j);
+void	start_mlx(data_t *d, map_context_h *p_data);
 void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i);
 void	gun_animation(void *param);
+void	reload_frame(data_t *data, int x, int y);
+void	gun_frame(data_t *data, int x, int y);
+void	fire_frame(data_t *data, int x, int y);
+void	gun_animation(void *param);
+void	open_fire(mouse_key_t butt, action_t act, modifier_key_t mods, void* p);
+void	rotate_mouse(double xpos, double ypos, void* param);
+void	flashlight(struct mlx_key_data keydata, void *param);
+
+void put_images(data_t *d);
+void set_hooks(data_t *data);
 
 void minimap_3d(data_t *data);
 #endif

@@ -25,8 +25,8 @@
 // 8 21
 #define TILE 1280
 
-#define WIDTH_3D 2040
-#define HEIGHT_3D 1280
+#define WIDTH 2040
+#define HEIGHT 1280
 
 #define MAX_VIEW TILE * 10
 #define FOG_START 0
@@ -38,8 +38,6 @@
 #define LEFT 0
 
 
-#define WIDTH 29 * TILE
-#define HEIGHT 8 * TILE
 #define BPP sizeof(int32_t)
 
 

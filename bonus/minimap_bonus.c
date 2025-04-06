@@ -25,12 +25,12 @@ void	minimap_3d(data_t *data)
 	matrix.y1 = sin(-(angle_new));
 	matrix.x2 = -matrix.y1;
 	matrix.y2 = matrix.x1;
-	center_x = MINI_WIDTH / 2;
-	center_y = MINI_HEIGHT / 2;
-	while(i < MINI_HEIGHT)
+	center_x = M_WIDTH / 2;
+	center_y = M_HEIGHT / 2;
+	while(i < M_HEIGHT)
 	{
 		j = 0;
-		while(j < MINI_WIDTH)
+		while(j < M_WIDTH)
 		{
 			dy = i - center_y;
 			dx = j - center_x;
@@ -51,7 +51,7 @@ void	minimap_3d(data_t *data)
 		}
 		i++;
 	}
-    draw_filled_disk(data->mlx_data->mini_map, MINI_WIDTH / 2, MINI_HEIGHT / 2, 7);
+    draw_filled_disk(data->mlx_data->mini_map, M_WIDTH / 2, M_HEIGHT / 2, 7);
 
 }
 
@@ -89,15 +89,15 @@ void	minimap_3d(data_t *data)
 //     mini_map.player_x = (int)((data->player_x / 32));
 //     mini_map.player_y = (int)((data->player_y / 32));
 
-//     x = mini_map.player_x - (int)(MINI_WIDTH / 2);
-//     y = mini_map.player_y - (int)(MINI_WIDTH / 2);
+//     x = mini_map.player_x - (int)(M_WIDTH / 2);
+//     y = mini_map.player_y - (int)(M_WIDTH / 2);
 	
 // 	center_x = data->mlx_data->mini_map->width / 2;
 // 	center_y = data->mlx_data->mini_map->height / 2;
-//     while (i < MINI_HEIGHT)
+//     while (i < M_HEIGHT)
 //     {
 // 		j = 0;
-//         while (j < MINI_WIDTH)
+//         while (j < M_WIDTH)
 //         {
 // 			dx = j - center_x;
 // 			dy = i - center_y;
@@ -116,9 +116,9 @@ void	minimap_3d(data_t *data)
 //             x++;
 // 			j++;
 //         }
-//         x = mini_map.player_x - (int)(MINI_WIDTH / 2);
+//         x = mini_map.player_x - (int)(M_WIDTH / 2);
 //         y++;
 // 		i++;
 //     }
-//     draw_filled_disk(data->mlx_data->mini_map, MINI_WIDTH / 2, MINI_HEIGHT / 2, 7);
+//     draw_filled_disk(data->mlx_data->mini_map, M_WIDTH / 2, M_HEIGHT / 2, 7);
 // }
