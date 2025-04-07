@@ -194,7 +194,7 @@ void	ft_check_line(char *line, map_context_h *map)
 	x = 0;
 	while (line[x])
 	{
-		if (line[x] != '1' && line[x] != '0' && line[x] != 'N' && line[x] != 'W' && line[x] != 'E' && line[x] != 'S' && line[x] != ' ' && line[x] != '\n')
+		if (line[x] != '1' && line[x] != '0' && line[x] != 'N' && line[x] != 'W' && line[x] != 'E' && line[x] != 'S' && line[x] != 'D' && line[x] != ' ' && line[x] != '\n')
 			ft_display_error("Error", map);
 		x++;
 	}
@@ -381,9 +381,11 @@ void ft_check_first_Last_line(map_context_h *map)
 {
 	int x;
 	int y;
+	int i;
 
 	x = 0;
 	y = 0;
+	i = 0;
 
 	while (map->map[x])
 		x++;
@@ -400,6 +402,12 @@ void ft_check_first_Last_line(map_context_h *map)
 		if (map->map[x][y] != '1' && map->map[x][y] != ' ')
 			ft_display_error("Error", map);
 		y++;
+	}
+	while (i <= x)
+	{
+		if ((map->map[i][0] != '1' && map->map[i][0] != ' ')  || (map->map[i][ft_strlen(map->map[0] )- 1] != ' ' && map->map[i][ft_strlen(map->map[0])-1] != '1'))
+			ft_display_error("Error", map);
+		i++;
 	}
 		
 }
@@ -460,6 +468,28 @@ void ft_valid_path(map_context_h *map)
 	}
 	
 }
+void ft_valid_door(map_context_h *map)
+{
+	int x = 0;
+	int y = 0;
+	while (map->map[x])
+	{
+		while (map->map[x][y])
+		{
+			if(map->map[x][y] == 'D')
+			{
+				if(map->map[x][y - 1] != '1' || map->map[x][y + 1] != '1'){
+					if(map->map[x - 1][y] != '1' || map->map[x + 1][y] != '1')
+					ft_display_error("Error", map);
+				}
+			}
+			y++;
+		}
+		x++;
+		y = 0;
+	}
+	
+}
 
 void ft_double_array(map_context_h *map)
 {
@@ -473,6 +503,7 @@ void ft_double_array(map_context_h *map)
 		ft_display_error("Error", map);
 	ft_adjust_map_size(map);
 	ft_valid_path(map);
+	ft_valid_door(map);
 }
 
 
