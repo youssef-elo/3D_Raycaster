@@ -8,6 +8,8 @@ void	rotate_mouse(double xpos, double ypos, void *param)
 
 	data = (data_t *)param;
 	dx = WIDTH / 2 - xpos;
+	if (fabs(dx) < 40)
+		return ;
 	angle = dx * ROTATION_FACTOR;
 	data->p_angle += angle;
 	if (data->p_angle > ((double)2 * M_PI))
@@ -54,4 +56,37 @@ void	flashlight(struct mlx_key_data keydata, void *param)
 	}
 	if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
 		data->reload = 1;
+	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
+	{
+		if ((data->p_angle >= M_PI_4) && data->p_angle < (3 * M_PI_4))
+		{
+			if (data->map[data->map_y - 1][data->map_x] == 'O')
+				data->map[data->map_y - 1][data->map_x] = 'D';
+			else if (data->map[data->map_y - 1][data->map_x] == 'D')
+				data->map[data->map_y - 1][data->map_x] = 'O';
+		}
+		if ((data->p_angle >= (5 * M_PI_4)) && data->p_angle < (7 * M_PI_4))
+		{
+			if (data->map[data->map_y + 1][data->map_x] == 'O')
+				data->map[data->map_y + 1][data->map_x] = 'D';
+			else if (data->map[data->map_y + 1][data->map_x] == 'D')
+				data->map[data->map_y + 1][data->map_x] = 'O';
+		}
+		if (data->p_angle >= (3 * M_PI_4) && data->p_angle < (5 * M_PI_4))
+		{
+			if (data->map[data->map_y][data->map_x - 1] == 'O')
+				data->map[data->map_y][data->map_x - 1] = 'D';
+			else if (data->map[data->map_y][data->map_x - 1] == 'D')
+				data->map[data->map_y][data->map_x - 1] = 'O';
+		}
+		if ((data->p_angle >= 0 && data->p_angle < M_PI_4)
+			|| (data->p_angle >= (7 * M_PI_4)))
+		{
+			if (data->map[data->map_y][data->map_x + 1] == 'O')
+				data->map[data->map_y][data->map_x + 1] = 'D';
+			else if (data->map[data->map_y][data->map_x + 1] == 'D')
+				data->map[data->map_y][data->map_x + 1] = 'O';
+		}
+		
+	}
 }

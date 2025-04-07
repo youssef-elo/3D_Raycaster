@@ -95,28 +95,17 @@ void	draw_3d(void *param)
 	char *str;
 	static mlx_image_t *pre;
 
-// static int i_gun;
-// 	static int first;
-// 	static mlx_image_t *pre_gun;
-
-
 	data = (data_t *)param;
-
 	i = 0;
 	if (pre)
-	{
-		mlx_delete_image(data->mlx_data->mlx, pre);
-	}
+		mlx_delete_image(data->mlx_data->mlx, pre); // to be removed possible leaks mafya mangadha 
 	str = ft_itoa(1.0/ get_delta_time());
 	pre  = mlx_put_string(data->mlx_data->mlx, str, 30, 20);
-	// printf("%s\n", str);
 	free(str);
-	// printf("%f\n", 1.0/ get_delta_time());
 	d_3d.r_angle = (data->p_angle - data->con.fov_half);
 	while (i < NUMBER_OF_RAYS)
 	{
 		d_3d.ver_ray = 0;
-		// d_3d.r_angle = (data->p_angle - data->con.fov_half) + (i * data->con.angle_i);
 		d_3d.r_angle += data->con.angle_i;
 		d_3d.hor = shoot_horizontal(data, d_3d.r_angle, &d_3d);
 		d_3d.ver = shoot_vertical(data, d_3d.r_angle, &d_3d);
@@ -125,11 +114,4 @@ void	draw_3d(void *param)
 		textured_line(data, &d_3d, &line, i);
 		i++;
 	}
-	// if (i_gun == 74)
-	// 	i_gun = 0;
-	// if (pre_gun)
-	// 	pre_gun->instances[0].enabled = false;
-	// ((data_t *)param)->mlx_data->gun[i_gun]->instances[0].enabled = true;
-	// pre_gun = ((data_t *)param)->mlx_data->gun[i_gun];
-	// i_gun++;
 }

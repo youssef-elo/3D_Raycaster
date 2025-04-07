@@ -52,6 +52,7 @@ void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
 	d->dir_x = cos(d->p_angle);
 	d->dir_y = sin(d->p_angle);
 	d->offset.n_offset = d->mlx_data->north->width / TILE;
+	d->offset.d_offset = d->mlx_data->door->width / TILE;
 	d->offset.s_offset = d->mlx_data->south->width / TILE;
 	d->offset.e_offset = d->mlx_data->east->width / TILE;
 	d->offset.w_offset = d->mlx_data->west->width / TILE;

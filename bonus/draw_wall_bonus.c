@@ -22,11 +22,21 @@ void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	if ((data->player_y - d_3d->hor_y) > 0)
 	{
 		v->tx = data->mlx_data->north;
+		if (d_3d->door_h)
+		{
+			v->tx = data->mlx_data->door;
+			v->tex_x = (((int)d_3d->hor_x % TILE)) * data->offset.d_offset;
+		}
 		v->tex_x = (((int)d_3d->hor_x % TILE)) * data->offset.n_offset;
 	}
 	if ((data->player_y - d_3d->hor_y) <= 0)
 	{
 		v->tx = data->mlx_data->south;
+		if (d_3d->door_h)
+		{
+			v->tx = data->mlx_data->door;
+			v->tex_x = (TILE - ((int)d_3d->hor_x % TILE)) * data->offset.d_offset;
+		}
 		v->tex_x = (TILE - ((int)d_3d->hor_x % TILE)) * data->offset.s_offset;
 	}
 	v->v_i = line->y0;
@@ -95,11 +105,21 @@ void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	if (d_3d->ver_ray && (data->player_x - d_3d->ver_x) > 0)
 	{
 		v->tx = data->mlx_data->west;
+		if (d_3d->door_v)
+		{
+			v->tx = data->mlx_data->door;
+			v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.d_offset;
+		}
 		v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.w_offset;
 	}
 	if (d_3d->ver_ray && (data->player_x - d_3d->ver_x) <= 0)
 	{
 		v->tx = data->mlx_data->east;
+		if (d_3d->door_v)
+		{
+			v->tx = data->mlx_data->door;
+			v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.d_offset;
+		}
 		v->tex_x = (((int)d_3d->ver_y % TILE)) * data->offset.e_offset;
 	}
 	v->step = (double)v->tx->height / (double)d_3d->w_height;

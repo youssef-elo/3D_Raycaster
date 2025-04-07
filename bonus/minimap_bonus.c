@@ -46,6 +46,10 @@ void	minimap_3d(data_t *data)
 					put_pixel(data->mlx_data->mini_map, j, i, rgb(108,108,108, 255));
 				else if (data->map[map_y][map_x] == '0')
 					put_pixel(data->mlx_data->mini_map, j, i, rgb(211,211,211, 255));
+				else if (data->map[map_y][map_x] == 'D')
+					put_pixel(data->mlx_data->mini_map, j, i, rgb(255,0,0, 255));
+				else if (data->map[map_y][map_x] == 'O')
+					put_pixel(data->mlx_data->mini_map, j, i, rgb(150,0,0, 255));
 			}
 			j++;
 		}

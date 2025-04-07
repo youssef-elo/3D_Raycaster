@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data)
+void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3d)
 {
 	ray_d->direction_x = cos(angle);
 	ray_d->direction_y = sin(angle);
@@ -16,13 +16,14 @@ void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data)
 		ray_d->offset = -1;
 		ray_d->hit_y = (int)(data->player_y / TILE) * TILE;
 	}
+	d_3d->door_h = 0;
 }
 
 double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 {
 	raycaster_t	r_d;
 
-	pre_horizontal(&r_d, angle, d);
+	pre_horizontal(&r_d, angle, d, d_3d);
 	while (1)
 	{
 		r_d.scaling_factor = (d->player_y - r_d.hit_y) / r_d.direction_y;
@@ -32,10 +33,12 @@ double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 		if (r_d.hit_x < TILE
 			|| r_d.hit_x > ((d->width * TILE) - TILE))
 			return (OUT_OF_RANGE);
-		if (d->map[r_d.map_y][r_d.map_x] == '1')
+		if (d->map[r_d.map_y][r_d.map_x] == '1' || d->map[r_d.map_y][r_d.map_x] == 'D')
 		{
 			d_3d->hor_x = r_d.hit_x;
 			d_3d->hor_y = r_d.hit_y;
+			if (d->map[r_d.map_y][r_d.map_x] == 'D')
+				d_3d->door_h = 1;
 			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
 					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
 		}
@@ -47,7 +50,7 @@ double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 	return (OUT_OF_RANGE);
 }
 
-void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data)
+void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3d)
 {
 	ray_d->direction_x = cos(angle);
 	ray_d->direction_y = sin(angle);
@@ -63,13 +66,14 @@ void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data)
 		ray_d->offset = 1;
 		ray_d->hit_x = ((int)(data->player_x / TILE) + 1) * TILE;
 	}
+	d_3d->door_v = 0;
 }
 
 double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
 {
 	raycaster_t	r_d;
 
-	pre_vertical(&r_d, angle, d);
+	pre_vertical(&r_d, angle, d, d_3d);
 	while (1)
 	{
 		r_d.scaling_factor = (d->player_x - r_d.hit_x) / r_d.direction_x;
@@ -78,10 +82,12 @@ double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
 			return (OUT_OF_RANGE);
 		r_d.map_y = r_d.hit_y / TILE;
 		r_d.map_x = (r_d.hit_x + r_d.offset) / TILE;
-		if (d->map[r_d.map_y][r_d.map_x] == '1')
+		if (d->map[r_d.map_y][r_d.map_x] == '1' || d->map[r_d.map_y][r_d.map_x] == 'D')
 		{
 			d_3d->ver_x = r_d.hit_x;
 			d_3d->ver_y = r_d.hit_y;
+			if (d->map[r_d.map_y][r_d.map_x] == 'D')
+				d_3d->door_v = 1;
 			return (sqrt((r_d.hit_x - d->player_x) * (r_d.hit_x - d->player_x)
 					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
 		}

@@ -45,18 +45,18 @@ void	load_gun_images(data_t *d, mlx_texture_t *tmp)
 			RELOAD_W, RELOAD_H);
 	if (!d->mlx_data->reload_view)
 		end_game(d, "Error\nCant load images\n");
-	tmp = mlx_load_png("fire/muzzle.png");
+	tmp = mlx_load_png("b_assets/muzzle.png");
 	if (!tmp)
 		end_game(d, "Error\nCant load images\n");
 	d->mlx_data->muzzle = mlx_texture_to_image(d->mlx_data->mlx, tmp);
 	mlx_delete_texture(tmp);
-	d->mlx_data->gun_sheet = mlx_load_png("render/gunsheet.png");
+	d->mlx_data->gun_sheet = mlx_load_png("b_assets/gunsheet.png");
 	if (!d->mlx_data->gun_sheet)
 		end_game(d, "Error\nCant load images\n");
-	d->mlx_data->reload_sheet = mlx_load_png("reload/reloadsheet.png");
+	d->mlx_data->reload_sheet = mlx_load_png("b_assets/reloadsheet.png");
 	if (!d->mlx_data->reload_sheet)
 		end_game(d, "Error\nCant load images\n");
-	d->mlx_data->fire_sheet = mlx_load_png("fire/firesheet.png");
+	d->mlx_data->fire_sheet = mlx_load_png("b_assets/firesheet.png");
 	if (!d->mlx_data->fire_sheet)
 		end_game(d, "Error\nCant load images\n");
 }
@@ -88,17 +88,27 @@ void	load_game_images(data_t *d, map_context_h *p_data, mlx_texture_t *tmp)
 	if (!tmp)
 		end_game(d, "Error\nCant load images\n");
 	d->mlx_data->north = mlx_texture_to_image(d->mlx_data->mlx, tmp);
+	mlx_delete_texture(tmp);
 }
 
 void	start_mlx(data_t *d, map_context_h *p_data)
 {
+	mlx_texture_t *tmp;
+
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)
 		end_game(d, "Error\nCant establish connection with the mlx library\n");
+	tmp = mlx_load_png("b_assets/door.png");
+	if (!tmp)
+		end_game(d, "Error\nCant load images\n");
+	d->mlx_data->door = mlx_texture_to_image(d->mlx_data->mlx, tmp); 
+	mlx_delete_texture(tmp);
 	load_game_images(d, p_data, NULL);
 	load_gun_images(d, NULL);
+	//check all images if they failed above i only check the textures the images are not checked
 	mlx_resize_image(d->mlx_data->south, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->north, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->east, HEIGHT, HEIGHT);
+	mlx_resize_image(d->mlx_data->door, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->west, HEIGHT, HEIGHT);
 }
