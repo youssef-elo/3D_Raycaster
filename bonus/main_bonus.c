@@ -10,9 +10,6 @@ int	main(int argc, char **argv){
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);
 	free_parsing(&p_data);
-	data.map[18][1] = 'D';
-	data.map[18][17] = 'D';
-	data.map[17][10] = 'D';
 	put_images(&data);
 	set_hooks(&data);
 	mlx_loop(mlx_data.mlx);
