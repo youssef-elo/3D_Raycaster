@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   view_3d_bonus.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 18:21:18 by yel-ouaz          #+#    #+#             */
+/*   Updated: 2025/04/08 18:21:19 by yel-ouaz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d_bonus.h"
 
 void	draw_ceiling_3d(t_data *data, t_line *line)
@@ -32,7 +44,6 @@ void	draw_floor_3d(t_data *d, t_line *line)
 	while (view_i < HEIGHT -1)
 	{
 		if (line->x0 >= 0 && line->x0 < (int)d->mlx_data->view_3d->width
-	
 			&& view_i >= 0
 			&& view_i < (int)d->mlx_data->view_3d->height)
 		{
@@ -70,34 +81,6 @@ void	textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i)
 	if (d_3d->ver_ray == 1)
 		draw_wall_ver(d, line, d_3d);
 	draw_floor_3d(d, line);
-}
-
-
-double get_delta_time()
-{
-    static double last_time = 0;
-    struct timeval time;
-    gettimeofday(&time, NULL);
-    double current_time = (time.tv_sec * 1000.0) + (time.tv_usec / 1000.0);
-    
-    double delta = (current_time - last_time) / 1000.0;
-    last_time = current_time;
-
-    return delta;  
-}
-
-void	put_fps(t_data *data)
-{
-	char *str;
-
-	if (data->mlx_data->fps)
-	{
-		mlx_delete_image(data->mlx_data->mlx, data->mlx_data->fps);
-		data->mlx_data->fps = NULL;
-	}
-	str = ft_itoa(1.0/ get_delta_time());
-	data->mlx_data->fps = mlx_put_string(data->mlx_data->mlx, str, 30, 20);
-	free(str);
 }
 
 void	draw_3d(void *param)

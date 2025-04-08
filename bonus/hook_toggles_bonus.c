@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook_toggles_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 18:20:50 by yel-ouaz          #+#    #+#             */
+/*   Updated: 2025/04/08 18:20:51 by yel-ouaz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d_bonus.h"
 
 void	rotate_mouse(double xpos, double ypos, void *param)
@@ -23,7 +35,7 @@ void	rotate_mouse(double xpos, double ypos, void *param)
 	minimap_3d(data);
 }
 
-void	open_fire(mouse_key_t butt, action_t act, modifier_key_t mods, void *p)
+void	fire(mouse_key_t butt, action_t act, modifier_key_t mods, void *p)
 {
 	t_data	*data;
 

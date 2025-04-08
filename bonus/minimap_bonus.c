@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_bonus.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 18:20:55 by yel-ouaz          #+#    #+#             */
+/*   Updated: 2025/04/08 18:20:56 by yel-ouaz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d_bonus.h"
 
-void	minimap_pixel(int j, int i, matrix_t *matrix, t_data *data)
+void	minimap_pixel(int j, int i, t_matrix *matrix, t_data *data)
 {
 	int	map_x;
 	int	map_y;
@@ -22,7 +34,7 @@ void	minimap_pixel(int j, int i, matrix_t *matrix, t_data *data)
 		put_pixel(data->mlx_data->mini_map, j, i, rgb(150, 0, 0, 255));
 }
 
-void	pre_minimap(t_data *data, matrix_t *matrix)
+void	pre_minimap(t_data *data, t_matrix *matrix)
 {
 	double	angle_new;
 
@@ -39,7 +51,7 @@ void	minimap_3d(t_data *data)
 {
 	int			i;
 	int			j;
-	matrix_t	matrix;
+	t_matrix	matrix;
 
 	i = 0;
 	j = 0;
