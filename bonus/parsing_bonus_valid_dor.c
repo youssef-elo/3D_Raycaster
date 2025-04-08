@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus_bonus.c                                 :+:      :+:    :+:   */
+/*   parsing_bonus_valid_dor.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 18:20:52 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Created: 2025/04/08 21:23:51 by hchadili          #+#    #+#             */
+/*   Updated: 2025/04/08 21:26:16 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-int	main(int argc, char **argv)
+void	ft_valid_door(t_map_context_h *map)
 {
-	t_data			data;
-	t_mlx_data		mlx_data;
-	t_map_context_h	p_data;
+	int	x;
+	int	y;
 
-	parsing(argc, argv, &p_data);
-	ft_bzero(&data, sizeof(t_data));
-	link_parsing(&data, &p_data, &mlx_data);
-	pre_compute(&data);
-	free_parsing(&p_data);
-	put_images(&data);
-	set_hooks(&data);
-	mlx_loop(mlx_data.mlx);
+	((1) && (x = 0, y = 0));
+	while (map->map[x])
+	{
+		while (map->map[x][y])
+		{
+			if (map->map[x][y] == 'D')
+			{
+				if (map->map[x][y - 1] != '1' || map->map[x][y + 1] != '1')
+				{
+					if (map->map[x - 1][y] != '1' || map->map[x + 1][y] != '1')
+						ft_display_error("Error", map);
+				}
+			}
+			y++;
+		}
+		x++;
+		y = 0;
+	}
 }

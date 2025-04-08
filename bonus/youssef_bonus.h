@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   youssef_bonus.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 21:27:35 by hchadili          #+#    #+#             */
+/*   Updated: 2025/04/08 21:27:36 by hchadili         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef YOUSSEF_BONUS_H
 # define YOUSSEF_BONUS_H
 
@@ -192,7 +204,7 @@ uint32_t	rgb(int r, int g, int b, int a);
 void		map_refresh(t_data *d, t_moves *m);
 void		end_game(t_data *d, char *message);
 void		end_game(t_data *d, char *message);
-void		free_parsing(map_context_h *p_data);
+void		free_parsing(t_map_context_h *p_data);
 int			new_line_check(char *str, int *len);
 void		move_up(t_data *data, t_moves *m_d);
 void		gun_frame(t_data *data, int x, int y);
@@ -203,7 +215,7 @@ void		fire_frame(t_data *data, int x, int y);
 void		draw_ceiling(t_data *d, int x0, int y0);
 void		reload_frame(t_data *data, int x, int y);
 void		player_movement(t_data *data, t_moves *m_d);
-void		start_mlx(t_data *d, map_context_h *p_data);
+void		start_mlx(t_data *d, t_map_context_h *p_data);
 uint32_t	apply_fog(t_data *d, uint32_t o_color, double dis);
 void		update_position(t_data *data, char c, int i, int j);
 void		rotate_mouse(double xpos, double ypos, void *param);
@@ -217,7 +229,7 @@ double		shoot_vertical(t_data *data, double angle, t_view_3d *d_3d);
 void		re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
 void		textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i);
 double		shoot_horizontal(t_data *d, double ray_angle, t_view_3d *d_3d);
-void		link_parsing(t_data *d, map_context_h *p_data, t_mlx_data *m_data);
+void		link_parsing(t_data *d, t_map_context_h *p_data, t_mlx_data *m_data);
 void		fire(mouse_key_t butt, action_t act, modifier_key_t mods, void *p);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:57 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:20:58 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:27:22 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	load_gun_images(t_data *d, mlx_texture_t *tmp)
 		end_game(d, "Error\nCant load images\n");
 }
 
-void	load_game_images(t_data *d, map_context_h *p_data, mlx_texture_t *tmp)
+void	load_game_images(t_data *d, t_map_context_h *p_data, mlx_texture_t *tmp)
 {
 	d->mlx_data->view_3d = mlx_new_image(d->mlx_data->mlx, WIDTH, HEIGHT);
 	if (!d->mlx_data->view_3d)
@@ -83,7 +83,8 @@ void	load_game_images(t_data *d, map_context_h *p_data, mlx_texture_t *tmp)
 	mlx_delete_texture(tmp);
 }
 
-void	load_game_images_2(t_data *d, map_context_h *p_data, mlx_texture_t *tmp)
+void	load_game_images_2(t_data *d,
+	t_map_context_h *p_data, mlx_texture_t *tmp)
 {
 	tmp = mlx_load_png("b_assets/door.png");
 	if (!tmp)
@@ -97,7 +98,7 @@ void	load_game_images_2(t_data *d, map_context_h *p_data, mlx_texture_t *tmp)
 	mlx_delete_texture(tmp);
 }
 
-void	start_mlx(t_data *d, map_context_h *p_data)
+void	start_mlx(t_data *d, t_map_context_h *p_data)
 {
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)

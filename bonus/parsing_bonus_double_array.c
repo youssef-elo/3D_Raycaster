@@ -6,38 +6,15 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:53:35 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 20:39:03 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:24:28 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void ft_valid_door(map_context_h *map)
+void	ft_adjust_map_size(t_map_context_h *map)
 {
-	int x = 0;
-	int y = 0;
-	while (map->map[x])
-	{
-		while (map->map[x][y])
-		{
-			if(map->map[x][y] == 'D')
-			{
-				if(map->map[x][y - 1] != '1' || map->map[x][y + 1] != '1'){
-					if(map->map[x - 1][y] != '1' || map->map[x + 1][y] != '1')
-					ft_display_error("Error", map);
-				}
-			}
-			y++;
-		}
-		x++;
-		y = 0;
-	}
-	
-}
-
-void	ft_adjust_map_size(map_context_h *map)
-{
-	var_size_h	var;
+	t_var_size_h	var;
 
 	((1) && (var.x = 0, var.max = 0, var.y = 0, var.i = 0));
 	while (map->map[var.i])
@@ -64,40 +41,36 @@ void	ft_adjust_map_size(map_context_h *map)
 	}
 }
 
-void	ft_check_first_last_line(map_context_h *map)
+void	ft_check_first_last_line(t_map_context_h *map)
 {
 	int	x;
 	int	y;
 	int	i;
 
-	x = 0;
-	y = 0;
-	i = 0;
+	((1) && (x = 0, y = -1, i = -1));
 	while (map->map[x])
 		x++;
-	while (map->map[0][y])
+	while (map->map[0][++y])
 	{
 		if (map->map[0][y] != '1' && map->map[0][y] != ' ')
 			ft_display_error("Error", map);
-		y++;
 	}
-	y = 0;
-	x--;
-	while (map->map[x][y])
+	((1) && (y = -1, x--));
+	while (map->map[x][++y])
 	{
 		if (map->map[x][y] != '1' && map->map[x][y] != ' ')
 			ft_display_error("Error", map);
-		y++;
 	}
-	while (i <= x)
+	while (++i <= x)
 	{
-		if ((map->map[i][0] != '1' && map->map[i][0] != ' ')  || (map->map[i][ft_strlen(map->map[0] )- 1] != ' ' && map->map[i][ft_strlen(map->map[0])-1] != '1'))
+		if ((map->map[i][0] != '1' && map->map[i][0] != ' ')
+			|| (map->map[i][ft_strlen(map->map[0]) - 1] != ' '
+			&& map->map[i][ft_strlen(map->map[0]) - 1] != '1'))
 			ft_display_error("Error", map);
-		i++;
 	}
 }
 
-void	ft_check_player(map_context_h *map)
+void	ft_check_player(t_map_context_h *map)
 {
 	int	x;
 	int	y;
@@ -122,7 +95,7 @@ void	ft_check_player(map_context_h *map)
 		ft_display_error("Error", map);
 }
 
-void	ft_valid_path(map_context_h *map)
+void	ft_valid_path(t_map_context_h *map)
 {
 	int	x;
 	int	y;
@@ -151,7 +124,7 @@ void	ft_valid_path(map_context_h *map)
 	}
 }
 
-void	ft_double_array(map_context_h *map)
+void	ft_double_array(t_map_context_h *map)
 {
 	map->map = ft_split(map->array, 10);
 	if (!map->map)

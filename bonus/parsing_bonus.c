@@ -6,19 +6,19 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:38:50 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 20:38:51 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:12:45 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void parsing(int argc, char **argv, map_context_h *map)
+void	parsing(int argc, char **argv, t_map_context_h *map)
 {
-	int fd;
-	char *line;
+	int		fd;
+	char	*line;
 
 	ft_set_map(map);
-	if(argc != 2)
+	if (argc != 2)
 		ft_display_error("Error\nRequired arguments : ./cub3d map_name", map);
 	ft_look_cub(argv[1], map);
 	fd = open(argv[1], O_RDONLY);
@@ -27,9 +27,9 @@ void parsing(int argc, char **argv, map_context_h *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if(*line != '\n' && map->count < 6)
+		if (*line != '\n' && map->count < 6)
 			ft_read_file(line, map);
-		else if(map->count == 6)
+		else if (map->count == 6)
 			ft_read_map(map, line);
 		free(line);
 		line = get_next_line(fd);

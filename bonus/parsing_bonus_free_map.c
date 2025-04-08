@@ -6,13 +6,13 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:50:52 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 20:39:12 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	ft_free_map(map_context_h *map)
+void	ft_free_map(t_map_context_h *map)
 {
 	int	x;
 
@@ -32,7 +32,7 @@ void	ft_free_map(map_context_h *map)
 	free(map->map);
 }
 
-void	ft_set_map(map_context_h *map)
+void	ft_set_map(t_map_context_h *map)
 {
 	map->array = NULL;
 	map->west = NULL;

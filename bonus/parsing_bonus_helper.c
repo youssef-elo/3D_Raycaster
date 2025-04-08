@@ -6,7 +6,7 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:05:59 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 20:39:16 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_get_string(int num)
 	return (array);
 }
 
-void	ft_look_cub(char *s, map_context_h *map)
+void	ft_look_cub(char *s, t_map_context_h *map)
 {
 	int		x;
 	int		y;

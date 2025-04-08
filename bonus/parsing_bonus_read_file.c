@@ -6,13 +6,13 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:27:36 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 20:39:21 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	ft_fill_struct(map_context_h *map, char **str, int s)
+void	ft_fill_struct(t_map_context_h *map, char **str, int s)
 {
 	if (s == 0)
 		map->north = ft_strdup_n(str[1], 1, map);
@@ -28,7 +28,7 @@ void	ft_fill_struct(map_context_h *map, char **str, int s)
 		map->sky_s = ft_strdup_n(str[1], 1, map);
 }
 
-void	ft_read_file(char *line, map_context_h *map)
+void	ft_read_file(char *line, t_map_context_h *map)
 {
 	char			**str;
 	static int		check[6] = {0, 0, 0, 0, 0, 0};
