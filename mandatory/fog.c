@@ -2,9 +2,9 @@
 
 void	flashlight(struct mlx_key_data keydata, void *param)
 {
-	data_t	*data;
+	t_data	*data;
 
-	data = (data_t *)param;
+	data = (t_data *)param;
 	if (keydata.key == MLX_KEY_F && keydata.action == MLX_PRESS)
 	{
 		if (data->fog_m == MAX_VIEW)
@@ -20,7 +20,7 @@ void	flashlight(struct mlx_key_data keydata, void *param)
 	}
 }
 
-uint32_t	apply_fog(data_t *d, uint32_t original_color, double distance)
+uint32_t	apply_fog(t_data *d, uint32_t original_color, double distance)
 {
 	uint8_t		r;
 	uint8_t		g;

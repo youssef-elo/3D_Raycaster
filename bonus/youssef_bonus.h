@@ -11,6 +11,9 @@
 #include <strings.h>
 #include <time.h>
 #include <sys/time.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <limits.h>
 
 #define CUBE3D 1
 
@@ -36,6 +39,9 @@
 // 8 21
 #define M_HEIGHT 210
 #define M_WIDTH 250
+#define M_H_HEIGHT 105
+#define M_H_WIDTH 125
+
 #define TILE 1280
 
 #define WIDTH 2040
@@ -53,16 +59,29 @@
 #define LEFT 0
 
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+
+
+
 // #define WIDTH 29 * TILE
 // #define HEIGHT 8 * TILE
 #define BPP sizeof(int32_t)
 
 typedef struct matrix_s
 {
-	double x1;
-	double y1;
-	double x2;
-	double y2;
+	double	x1;
+	double	y1;
+	double	x2;
+	double	y2;
+	int		i;
+	int		j;
+	int		rx;
+	int		ry;
+	int		dx;
+	int		dy;
 }				matrix_t;
 
 typedef struct offset_s
@@ -72,7 +91,7 @@ typedef struct offset_s
 	double w_offset;
 	double n_offset;
 	double d_offset;
-}	offset_t;
+}	t_offset;
 
 
 typedef struct constant_s
@@ -82,20 +101,15 @@ typedef struct constant_s
 	double fov_half;
 	double angle_i;
 	int half_window;
-} constant_t;
+} t_constant;
 
 typedef struct mlx_data_s{
 	mlx_t *mlx;
-	mlx_image_t *view;
 	mlx_image_t *view_3d;
 	mlx_image_t *gun_view;
 	mlx_image_t *muzzle;
 	mlx_image_t *reload_view;
 	mlx_image_t *fire_view;
-	mlx_image_t *floor_ceiling;
-	mlx_image_t *empty;
-	mlx_image_t *wall;
-	mlx_image_t *rays_image;
 	mlx_image_t *mini_map;
 	mlx_image_t *north;
 	mlx_image_t *south;
@@ -105,7 +119,8 @@ typedef struct mlx_data_s{
 	mlx_texture_t *fire_sheet;
 	mlx_image_t *west;
 	mlx_image_t *door;
-} mlx_data_t;
+	mlx_image_t *fps;
+} t_mlx_data;
 
 typedef struct raycaster_s{
 	double hit_x;
@@ -117,7 +132,7 @@ typedef struct raycaster_s{
 	int map_x;
 	int step;
 	int offset;
-}	raycaster_t;
+}	t_raycaster;
 
 typedef struct data_s{
 	double player_x;
@@ -136,14 +151,14 @@ typedef struct data_s{
 	int walking;
 	int firing;
 	int reload;
-	constant_t con;
-	offset_t offset;
+	t_constant con;
+	t_offset offset;
 	uint32_t ceiling;
 	uint32_t floor;
 	uint32_t v_color;
 	uint32_t h_color;
-	mlx_data_t *mlx_data;
-} data_t;
+	t_mlx_data *mlx_data;
+} t_data;
 
 typedef struct view_3d_s{
 	int	w_height;
@@ -160,21 +175,21 @@ typedef struct view_3d_s{
 	int ver_ray;
 	int door_v;
 	int door_h;
-}	view_3d_t;
+}	t_view_3d;
 
 
 typedef struct line_s{
 	int x0;
 	int y0;
 	int y1;
-}	line_t;
+}	t_line;
 
 typedef struct moves_s{
-    int update;
-    double next_y;
-    double next_x;
-    double speed;
-}   moves_t;
+    int		update;
+    double	next_y;
+    double	next_x;
+    double	speed;
+}			t_moves;
 
 typedef struct wall_3d_s
 {
@@ -186,65 +201,54 @@ typedef struct wall_3d_s
 	int col_i;
 	uint32_t col;
 	mlx_image_t *tx;
-} wall_3d_t;
+} t_wall_3d;
 
 
-char	*ft_itoa(int n);
-// void draw_3d(data_t *data);
-double shoot_horizontal(data_t *d, double ray_angle, view_3d_t *d_3d);
-double shoot_vertical(data_t *data, double angle, view_3d_t *d_3d);
-double shoot_horizontal_2d(data_t *d, double angle, double *h_x, double *h_y);
-double shoot_vertical_2d(data_t *data, double angle, double *v_x, double *v_y);
-void hook_handler(void *param);
-void draw_3d(void *data);
-void minimap(data_t *data, mlx_data_t *mlx_data);
-void put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
-void draw_filled_disk(mlx_image_t *img, int xc, int yc, int r);
-uint32_t rgb(int r, int g, int b, int a);
-
-void end_game(data_t *d, char *message);
-
-
-// 2D view
-int *shoot_rays(data_t *data);
-void draw_minimap(data_t *data);
-// void minimap(data_t *data, mlx_data_t *mlx_data);
-void	draw_line_2(mlx_image_t *img, int x0, int y0, int x1, int y1, int color);
-void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3d);
-void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3d);
-
-//3D view
-void	map_refresh(data_t *d, moves_t *m);
-void	re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
-void	draw_ceiling(data_t *d, int x0, int y0);
-void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d);
-void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d);
-void	move_right(data_t *data, moves_t *m_d);
-void	move_left(data_t *data, moves_t *m_d);
-void	move_up(data_t *data, moves_t *m_d);
-void	move_down(data_t *data, moves_t *m_d);
-
-
-void	end_game(data_t *d, char *message);
-void	free_parsing(map_context_h *p_data);
-void	find_player(data_t *data);
-void	link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data);
-void	pre_compute(data_t *data);
-void	update_position(data_t *data, char c, int i, int j);
-void	start_mlx(data_t *d, map_context_h *p_data);
-void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i);
-void	gun_animation(void *param);
-void	reload_frame(data_t *data, int x, int y);
-void	gun_frame(data_t *data, int x, int y);
-void	fire_frame(data_t *data, int x, int y);
-void	gun_animation(void *param);
-void	open_fire(mouse_key_t butt, action_t act, modifier_key_t mods, void* p);
-void	rotate_mouse(double xpos, double ypos, void* param);
-void	flashlight(struct mlx_key_data keydata, void *param);
-
-void put_images(data_t *d);
-void set_hooks(data_t *data);
-
-void minimap_3d(data_t *data);
+char		*ft_itoa(int n);
+double		shoot_horizontal(t_data *d, double ray_angle, t_view_3d *d_3d);
+double		shoot_vertical(t_data *data, double angle, t_view_3d *d_3d);
+void		hook_handler(void *param);
+void		draw_3d(void *data);
+uint32_t	apply_fog(t_data *d, uint32_t o_color, double dis);
+void		put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void		draw_filled_disk(mlx_image_t *img, int xc, int yc, int r);
+uint32_t	rgb(int r, int g, int b, int a);
+void		end_game(t_data *d, char *message);
+void		vertical_movement(t_data *data, t_moves *m_d, int *moving);
+char		*get_next_line(int fd);
+char		*ft_strdup(char *s1, int b);
+int			ft_strlen(char *str);
+char		*ft_strjoin(char *s1, char *s2);
+void		ft_bzero(void *s, size_t n);
+int			new_line_check(char *str, int *len);
+void		map_refresh(t_data *d, t_moves *m);
+void		re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void		draw_ceiling(t_data *d, int x0, int y0);
+void		draw_wall_hor(t_data *data, t_line *line, t_view_3d *d_3d);
+void		draw_wall_ver(t_data *data, t_line *line, t_view_3d *d_3d);
+void		move_right(t_data *data, t_moves *m_d);
+void		move_left(t_data *data, t_moves *m_d);
+void		move_up(t_data *data, t_moves *m_d);
+void		move_down(t_data *data, t_moves *m_d);
+void		player_movement(t_data *data, t_moves *m_d);
+void		end_game(t_data *d, char *message);
+void		free_parsing(map_context_h *p_data);
+void		find_player(t_data *data);
+void		link_parsing(t_data *d, map_context_h *p_data, t_mlx_data *mlx_data);
+void		pre_compute(t_data *data);
+void		update_position(t_data *data, char c, int i, int j);
+void		start_mlx(t_data *d, map_context_h *p_data);
+void		textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i);
+void		gun_animation(void *param);
+void		reload_frame(t_data *data, int x, int y);
+void		gun_frame(t_data *data, int x, int y);
+void		fire_frame(t_data *data, int x, int y);
+void		gun_animation(void *param);
+void		open_fire(mouse_key_t butt, action_t act, modifier_key_t mods, void* p);
+void		rotate_mouse(double xpos, double ypos, void* param);
+void		flashlight(struct mlx_key_data keydata, void *param);
+void		put_images(t_data *d);
+void		set_hooks(t_data *data);
+void		minimap_3d(t_data *data);
 #endif
 

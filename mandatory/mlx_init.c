@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	load_images(data_t *d, map_context_h *p_data)
+void	load_images(t_data *d, map_context_h *p_data)
 {
 	mlx_texture_t	*tmp;
 
@@ -29,7 +29,7 @@ void	load_images(data_t *d, map_context_h *p_data)
 	mlx_delete_texture(tmp);
 }
 
-void	start_mlx(data_t *d, map_context_h *p_data)
+void	start_mlx(t_data *d, map_context_h *p_data)
 {
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)

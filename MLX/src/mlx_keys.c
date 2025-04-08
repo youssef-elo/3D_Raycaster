@@ -18,7 +18,7 @@ static void mlx_key_callback(GLFWwindow* window, int32_t key, int32_t scancode, 
 {
 	const mlx_t* mlx = glfwGetWindowUserPointer(window);
 	const mlx_key_t key_hook = ((mlx_ctx_t*)mlx->context)->key_hook;
-	const mlx_key_data_t callback_data = {
+	const mlx_key_t_data callback_data = {
 		key,
 		action,
 		scancode,

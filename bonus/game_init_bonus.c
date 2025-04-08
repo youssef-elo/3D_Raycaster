@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-void update_position(data_t *data, char c, int i, int j)
+void	update_position(t_data *data, char c, int i, int j)
 {
 	if (c == 'N')
 		data->p_angle = M_PI_2;
@@ -14,12 +14,13 @@ void update_position(data_t *data, char c, int i, int j)
 	data->player_x = (j * TILE) + (TILE / 2);
 }
 
-void find_player(data_t *data)
+void	find_player(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (data->map[i])
 	{
 		j = 0;
@@ -39,7 +40,7 @@ void find_player(data_t *data)
 	data->height = i;
 }
 
-void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
+void	link_parsing(t_data *d, map_context_h *p_data, t_mlx_data *mlx_data)
 {
 	d->map = p_data->map;
 	d->mlx_data = mlx_data;
@@ -58,27 +59,24 @@ void link_parsing(data_t *d, map_context_h *p_data, mlx_data_t *mlx_data)
 	d->offset.w_offset = d->mlx_data->west->width / TILE;
 }
 
-
-void pre_compute(data_t *data)
+void	pre_compute(t_data *d)
 {
-	int i;
-	double r_angle;
-	double fov_half;
-	double angle_i;
+	int		i;
+	double	r_angle;
 
 	i = 0;
-	data->con.angle_i = FOV / NUMBER_OF_RAYS;
-	data->con.p = (WIDTH / 2) / tan(FOV / 2);
-	data->con.scaler = data->con.p * TILE;
-	data->con.fov_half = FOV / 2;
-	data->con.half_window = HEIGHT / 2;
-	data->cos = malloc( sizeof(double) * NUMBER_OF_RAYS);
-	while(i < NUMBER_OF_RAYS)
+	d->con.angle_i = FOV / NUMBER_OF_RAYS;
+	d->con.p = (WIDTH / 2) / tan(FOV / 2);
+	d->con.scaler = d->con.p * TILE;
+	d->con.fov_half = FOV / 2;
+	d->con.half_window = HEIGHT / 2;
+	d->cos = malloc(sizeof(double) * NUMBER_OF_RAYS);
+	while (i < NUMBER_OF_RAYS)
 	{
-		r_angle = (data->p_angle - data->con.fov_half) + (i * data->con.angle_i);
-		data->cos[i] = cos(r_angle - data->p_angle);
+		r_angle = (d->p_angle - d->con.fov_half) + (i * d->con.angle_i);
+		d->cos[i] = cos(r_angle - d->p_angle);
 		i++;
 	}
-	data->fog_start = FOG_START;
-	data->fog_m = MAX_VIEW;	
+	d->fog_start = FOG_START;
+	d->fog_m = MAX_VIEW;
 }

@@ -493,11 +493,6 @@ void ft_valid_door(map_context_h *map)
 
 void ft_double_array(map_context_h *map)
 {
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
 	map->map = ft_split(map->array, 10);
 	if (!map->map)
 		ft_display_error("Error", map);
@@ -509,11 +504,11 @@ void ft_double_array(map_context_h *map)
 
 void parsing(int argc, char **argv, map_context_h *map)
 {
-	int i;
+	// int i;
 	int fd;
 	char *line;
 
-	i = 0;
+	// i = 0;
 	ft_set_map(map);
 	if(argc != 2)
 		ft_display_error("Error\nRequired arguments : ./cub3d map_name", map);
@@ -522,7 +517,6 @@ void parsing(int argc, char **argv, map_context_h *map)
 	if (fd == -1)
 		ft_display_error("Error\ncant open file", map);
 	line = get_next_line(fd);
-	int k = 0;
 	while (line)
 	{
 		if(*line != '\n' && map->count < 6)

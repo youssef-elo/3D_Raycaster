@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data)
+void	pre_horizontal(t_raycaster *ray_d, double angle, t_data *data)
 {
 	ray_d->direction_x = cos(angle);
 	ray_d->direction_y = sin(angle);
@@ -18,9 +18,9 @@ void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data)
 	}
 }
 
-double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
+double	shoot_horizontal(t_data *d, double angle, t_view_3d *d_3d)
 {
-	raycaster_t	r_d;
+	t_raycaster	r_d;
 
 	pre_horizontal(&r_d, angle, d);
 	while (1)
@@ -47,7 +47,7 @@ double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 	return (OUT_OF_RANGE);
 }
 
-void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data)
+void	pre_vertical(t_raycaster *ray_d, double angle, t_data *data)
 {
 	ray_d->direction_x = cos(angle);
 	ray_d->direction_y = sin(angle);
@@ -65,9 +65,9 @@ void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data)
 	}
 }
 
-double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
+double	shoot_vertical(t_data *d, double angle, t_view_3d *d_3d)
 {
-	raycaster_t	r_d;
+	t_raycaster	r_d;
 
 	pre_vertical(&r_d, angle, d);
 	while (1)

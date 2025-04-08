@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3d)
+void	pre_hor_r(t_raycaster *ray_d, double angle, t_data *d, t_view_3d *d_3d)
 {
 	ray_d->direction_x = cos(angle);
 	ray_d->direction_y = sin(angle);
@@ -8,32 +8,31 @@ void	pre_horizontal(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d
 	{
 		ray_d->step = TILE;
 		ray_d->offset = 1;
-		ray_d->hit_y = ((int)(data->player_y / TILE) + 1) * TILE;
+		ray_d->hit_y = ((int)(d->player_y / TILE) + 1) * TILE;
 	}
 	else
 	{
 		ray_d->step = -TILE;
 		ray_d->offset = -1;
-		ray_d->hit_y = (int)(data->player_y / TILE) * TILE;
+		ray_d->hit_y = (int)(d->player_y / TILE) * TILE;
 	}
 	d_3d->door_h = 0;
 }
 
-double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
+double	shoot_horizontal(t_data *d, double angle, t_view_3d *d_3d)
 {
-	raycaster_t	r_d;
+	t_raycaster	r_d;
 
-	pre_horizontal(&r_d, angle, d, d_3d);
+	pre_hor_r(&r_d, angle, d, d_3d);
 	while (1)
 	{
 		r_d.scaling_factor = (d->player_y - r_d.hit_y) / r_d.direction_y;
 		r_d.hit_x = d->player_x + (r_d.scaling_factor * r_d.direction_x);
 		r_d.map_y = (r_d.hit_y + r_d. offset) / TILE;
 		r_d.map_x = r_d.hit_x / TILE;
-		if (r_d.hit_x < TILE
-			|| r_d.hit_x > ((d->width * TILE) - TILE))
+		if (r_d.hit_x < TILE || r_d.hit_x > ((d->width * TILE) - TILE))
 			return (OUT_OF_RANGE);
-		if (d->map[r_d.map_y][r_d.map_x] == '1' || d->map[r_d.map_y][r_d.map_x] == 'D')
+		if (strchr("1D", d->map[r_d.map_y][r_d.map_x]))
 		{
 			d_3d->hor_x = r_d.hit_x;
 			d_3d->hor_y = r_d.hit_y;
@@ -43,14 +42,13 @@ double	shoot_horizontal(data_t *d, double angle, view_3d_t *d_3d)
 					+ (r_d.hit_y - d->player_y) * (r_d.hit_y - d->player_y)));
 		}
 		r_d.hit_y += r_d.step;
-		if (r_d.hit_y < TILE
-			|| r_d.hit_y > ((d->height * TILE) - TILE))
+		if (r_d.hit_y < TILE || r_d.hit_y > ((d->height * TILE) - TILE))
 			return (OUT_OF_RANGE);
 	}
 	return (OUT_OF_RANGE);
 }
 
-void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3d)
+void	pre_ver_r(t_raycaster *ray_d, double angle, t_data *d, t_view_3d *d_3d)
 {
 	ray_d->direction_x = cos(angle);
 	ray_d->direction_y = sin(angle);
@@ -58,22 +56,22 @@ void	pre_vertical(raycaster_t *ray_d, double angle, data_t *data, view_3d_t *d_3
 	{
 		ray_d->step = -TILE;
 		ray_d->offset = -1;
-		ray_d->hit_x = (int)(data->player_x / TILE) * TILE;
+		ray_d->hit_x = (int)(d->player_x / TILE) * TILE;
 	}
 	else
 	{
 		ray_d->step = TILE;
 		ray_d->offset = 1;
-		ray_d->hit_x = ((int)(data->player_x / TILE) + 1) * TILE;
+		ray_d->hit_x = ((int)(d->player_x / TILE) + 1) * TILE;
 	}
 	d_3d->door_v = 0;
 }
 
-double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
+double	shoot_vertical(t_data *d, double angle, t_view_3d *d_3d)
 {
-	raycaster_t	r_d;
+	t_raycaster	r_d;
 
-	pre_vertical(&r_d, angle, d, d_3d);
+	pre_ver_r(&r_d, angle, d, d_3d);
 	while (1)
 	{
 		r_d.scaling_factor = (d->player_x - r_d.hit_x) / r_d.direction_x;
@@ -82,7 +80,7 @@ double	shoot_vertical(data_t *d, double angle, view_3d_t *d_3d)
 			return (OUT_OF_RANGE);
 		r_d.map_y = r_d.hit_y / TILE;
 		r_d.map_x = (r_d.hit_x + r_d.offset) / TILE;
-		if (d->map[r_d.map_y][r_d.map_x] == '1' || d->map[r_d.map_y][r_d.map_x] == 'D')
+		if (strchr("1D", d->map[r_d.map_y][r_d.map_x]))
 		{
 			d_3d->ver_x = r_d.hit_x;
 			d_3d->ver_y = r_d.hit_y;

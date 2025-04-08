@@ -106,7 +106,7 @@ typedef struct mlx_key_data
 	action_t	action;
 	int32_t		os_key;
 	modifier_key_t	modifier;
-}	mlx_key_data_t;
+}	mlx_key_t_data;
 
 
 /**
@@ -115,7 +115,7 @@ typedef struct mlx_key_data
  * @param[in] keydata The callback data, contains info on key, action, ...
  * @param[in] param Additional parameter to pass to the function.
  */
-typedef void (*mlx_keyfunc)(mlx_key_data_t keydata, void* param);
+typedef void (*mlx_keyfunc)(mlx_key_t_data keydata, void* param);
 
 /**
  * This function sets the key callback, which is called when a key is pressed
@@ -160,7 +160,7 @@ Here are some simple examples on how to implement each one of the hooks in a sim
 #define WIDTH 720
 #define HEIGHT 480
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+void my_keyhook(mlx_key_t_data keydata, void* param)
 {
 	// If we PRESS the 'J' key, print "Hello".
 	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)

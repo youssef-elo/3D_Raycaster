@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-void	put_images(data_t *d)
+void	put_images(t_data *d)
 {
 	draw_filled_disk(d->mlx_data->mini_map, d->mlx_data->mini_map->width / 2,
 		d->mlx_data->mini_map->height / 2, 104);
@@ -18,22 +18,7 @@ void	put_images(data_t *d)
 		(WIDTH / 2) - 350, HEIGHT - FIRE_H);
 }
 
-void	set_hooks(data_t *data)
-{
-	mlx_set_cursor_mode(data->mlx_data->mlx, MLX_MOUSE_DISABLED);
-	mlx_set_mouse_pos(data->mlx_data->mlx, WIDTH / 2, HEIGHT / 2);
-	mlx_key_hook(data->mlx_data->mlx, flashlight, data);
-	mlx_cursor_hook(data->mlx_data->mlx, rotate_mouse, data);
-	mlx_mouse_hook(data->mlx_data->mlx, open_fire, data);
-	mlx_loop_hook(data->mlx_data->mlx, hook_handler, data);
-	mlx_loop_hook(data->mlx_data->mlx, draw_3d, data);
-	mlx_loop_hook(data->mlx_data->mlx, gun_animation, data);
-	data->firing = 0;
-	minimap_3d(data);
-	gun_frame(data, 0, 0);
-}
-
-void	load_gun_images(data_t *d, mlx_texture_t *tmp)
+void	load_gun_images(t_data *d, mlx_texture_t *tmp)
 {
 	d->mlx_data->gun_view = mlx_new_image(d->mlx_data->mlx, GUN_W, GUN_H);
 	if (!d->mlx_data->gun_view)
@@ -61,7 +46,7 @@ void	load_gun_images(data_t *d, mlx_texture_t *tmp)
 		end_game(d, "Error\nCant load images\n");
 }
 
-void	load_game_images(data_t *d, map_context_h *p_data, mlx_texture_t *tmp)
+void	load_game_images(t_data *d, map_context_h *p_data, mlx_texture_t *tmp)
 {
 	d->mlx_data->view_3d = mlx_new_image(d->mlx_data->mlx, WIDTH, HEIGHT);
 	if (!d->mlx_data->view_3d)
@@ -84,6 +69,15 @@ void	load_game_images(data_t *d, map_context_h *p_data, mlx_texture_t *tmp)
 		end_game(d, "Error\nCant load images\n");
 	d->mlx_data->west = mlx_texture_to_image(d->mlx_data->mlx, tmp);
 	mlx_delete_texture(tmp);
+}
+
+void	load_game_images_2(t_data *d, map_context_h *p_data, mlx_texture_t *tmp)
+{
+	tmp = mlx_load_png("b_assets/door.png");
+	if (!tmp)
+		end_game(d, "Error\nCant load images\n");
+	d->mlx_data->door = mlx_texture_to_image(d->mlx_data->mlx, tmp);
+	mlx_delete_texture(tmp);
 	tmp = mlx_load_png(p_data->north);
 	if (!tmp)
 		end_game(d, "Error\nCant load images\n");
@@ -91,21 +85,22 @@ void	load_game_images(data_t *d, map_context_h *p_data, mlx_texture_t *tmp)
 	mlx_delete_texture(tmp);
 }
 
-void	start_mlx(data_t *d, map_context_h *p_data)
+void	start_mlx(t_data *d, map_context_h *p_data)
 {
-	mlx_texture_t *tmp;
-
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)
 		end_game(d, "Error\nCant establish connection with the mlx library\n");
-	tmp = mlx_load_png("b_assets/door.png");
-	if (!tmp)
-		end_game(d, "Error\nCant load images\n");
-	d->mlx_data->door = mlx_texture_to_image(d->mlx_data->mlx, tmp); 
-	mlx_delete_texture(tmp);
 	load_game_images(d, p_data, NULL);
+	load_game_images_2(d, p_data, NULL);
 	load_gun_images(d, NULL);
-	//check all images if they failed above i only check the textures the images are not checked
+	if (!d->mlx_data->view_3d || !d->mlx_data->door
+		|| !d->mlx_data->gun_view || !d->mlx_data->muzzle
+		|| !d->mlx_data->reload_view || !d->mlx_data->fire_view
+		|| !d->mlx_data->mini_map || !d->mlx_data->north
+		|| !d->mlx_data->south || !d->mlx_data->east
+		|| !d->mlx_data->gun_sheet || !d->mlx_data->reload_sheet
+		|| !d->mlx_data->fire_sheet || !d->mlx_data->west)
+		end_game(d, "Error\nCant load images\n");
 	mlx_resize_image(d->mlx_data->south, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->north, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->east, HEIGHT, HEIGHT);

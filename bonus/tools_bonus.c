@@ -1,6 +1,5 @@
 #include "cub3d_bonus.h"
 
-
 int	ft_counter(int n)
 {
 	int	count;

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	end_game(data_t *d, char *message)
+void	end_game(t_data *d, char *message)
 {
 	int	i;
 

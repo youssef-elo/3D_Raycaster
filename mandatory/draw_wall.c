@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	draw_ceiling(data_t *d, int x0, int y0)
+void	draw_ceiling(t_data *d, int x0, int y0)
 {
 	int	ceiling;
 	int	index;
@@ -17,7 +17,7 @@ void	draw_ceiling(data_t *d, int x0, int y0)
 	}
 }
 
-void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
+void	pre_hor(t_data *data, t_line *line, t_view_3d *d_3d, t_wall_3d *v)
 {
 	if ((data->player_y - d_3d->hor_y) > 0)
 	{
@@ -39,9 +39,9 @@ void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	}
 }
 
-void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
+void	draw_wall_hor(t_data *data, t_line *line, t_view_3d *d_3d)
 {
-	wall_3d_t	v;
+	t_wall_3d	v;
 	int			width;
 
 	pre_hor(data, line, d_3d, &v);
@@ -66,7 +66,7 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 	}
 }
 
-void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
+void	pre_ver(t_data *data, t_line *line, t_view_3d *d_3d, t_wall_3d *v)
 {
 	v->tex_i = 0;
 	v->v_i = line->y0;
@@ -88,9 +88,9 @@ void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	}
 }
 
-void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
+void	draw_wall_ver(t_data *data, t_line *line, t_view_3d *d_3d)
 {
-	wall_3d_t	v;
+	t_wall_3d	v;
 	int			width;
 
 	pre_ver(data, line, d_3d, &v);

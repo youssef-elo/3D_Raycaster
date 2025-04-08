@@ -15,7 +15,7 @@ double	get_delta_time(void)
 	return (delta);
 }
 
-void	display_fps(data_t *data)
+void	display_fps(t_data *data)
 {
 	char				*str;
 	static mlx_image_t	*pre;
@@ -30,12 +30,12 @@ void	display_fps(data_t *data)
 void	draw_3d(void *param)
 {
 	int			i;
-	line_t		line;
-	view_3d_t	d_3d;
-	data_t		*data;
+	t_line		line;
+	t_view_3d	d_3d;
+	t_data		*data;
 
 	i = 0;
-	data = (data_t *)param;
+	data = (t_data *)param;
 	d_3d.r_angle = (data->p_angle - data->con.fov_half);
 	while (i < NUMBER_OF_RAYS)
 	{

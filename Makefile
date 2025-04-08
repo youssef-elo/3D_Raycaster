@@ -9,8 +9,8 @@ NAME=cub3d
 BONUS=cub3d_bonus
 
 
-# FLAGS= -Wall -Wextra -Werror 
-FLAGS= -fsanitize=address -g
+FLAGS= -Wall -Wextra -Werror 
+# FLAGS= -fsanitize=address -g
 opti =  -funroll-loops -O3 -ffast-math -mavx2
 MlX_FLAGS= -Iinclude -ldl -lglfw -pthread -lm
 
@@ -26,6 +26,7 @@ B_OFILES= $(B_FILES:.c=.o)
 bonus : $(BONUS)
 
 all : $(NAME)
+
 
 $(NAME) : $(OFILES)
 	cc $(FLAGS) $(OFILES) -o $(NAME) $(MLX) $(MlX_FLAGS) 

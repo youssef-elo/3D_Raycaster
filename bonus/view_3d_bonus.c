@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-void	draw_ceiling_3d(data_t *data, line_t *line)
+void	draw_ceiling_3d(t_data *data, t_line *line)
 {
 	int			index;
 	int			ceiling;
@@ -23,7 +23,7 @@ void	draw_ceiling_3d(data_t *data, line_t *line)
 	}
 }
 
-void	draw_floor_3d(data_t *d, line_t *line)
+void	draw_floor_3d(t_data *d, t_line *line)
 {
 	int	index;
 	int	view_i;
@@ -46,7 +46,7 @@ void	draw_floor_3d(data_t *d, line_t *line)
 	}
 }
 
-void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i)
+void	textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i)
 {
 	int	tmp;
 
@@ -86,22 +86,30 @@ double get_delta_time()
     return delta;  
 }
 
+void	put_fps(t_data *data)
+{
+	char *str;
+
+	if (data->mlx_data->fps)
+	{
+		mlx_delete_image(data->mlx_data->mlx, data->mlx_data->fps);
+		data->mlx_data->fps = NULL;
+	}
+	str = ft_itoa(1.0/ get_delta_time());
+	data->mlx_data->fps = mlx_put_string(data->mlx_data->mlx, str, 30, 20);
+	free(str);
+}
+
 void	draw_3d(void *param)
 {
 	int			i;
-	line_t		line;
-	view_3d_t	d_3d;
-	data_t *data;
-	char *str;
-	static mlx_image_t *pre;
+	t_line		line;
+	t_view_3d	d_3d;
+	t_data		*data;
 
-	data = (data_t *)param;
 	i = 0;
-	if (pre)
-		mlx_delete_image(data->mlx_data->mlx, pre); // to be removed possible leaks mafya mangadha 
-	str = ft_itoa(1.0/ get_delta_time());
-	pre  = mlx_put_string(data->mlx_data->mlx, str, 30, 20);
-	free(str);
+	data = (t_data *)param;
+	put_fps(data);
 	d_3d.r_angle = (data->p_angle - data->con.fov_half);
 	while (i < NUMBER_OF_RAYS)
 	{

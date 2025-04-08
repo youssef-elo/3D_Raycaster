@@ -39,7 +39,7 @@ For more exact input detection such as checking if the key was pressed with `Alt
 Keep in mind that using a keyhook results in a slower feedback compared to using a generic hook but grants you more control in key detection.
 
 ```c
-void	key_hook(mlx_key_data_t keydata, void* param)
+void	key_hook(mlx_key_t_data keydata, void* param)
 {
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE && keydata.modifier == MLX_CONTROL)
 		puts("Gotta grab it all!");

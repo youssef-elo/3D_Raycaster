@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	draw_ceiling_3d(data_t *data, line_t *line)
+void	draw_ceiling_3d(t_data *data, t_line *line)
 {
 	int			index;
 	int			ceiling;
@@ -23,7 +23,7 @@ void	draw_ceiling_3d(data_t *data, line_t *line)
 	}
 }
 
-void	draw_floor_3d(data_t *d, line_t *line)
+void	draw_floor_3d(t_data *d, t_line *line)
 {
 	int	index;
 	int	view_i;
@@ -44,7 +44,7 @@ void	draw_floor_3d(data_t *d, line_t *line)
 	}
 }
 
-void	textured_line(data_t *d, view_3d_t *d_3d, line_t *line, int i)
+void	textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i)
 {
 	int	tmp;
 

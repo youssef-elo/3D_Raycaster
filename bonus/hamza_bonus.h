@@ -1,7 +1,6 @@
 #ifndef HAMZA_BONUS_H
 #define HAMZA_BONUS_H
 #include "youssef_bonus.h"
-#include "../get_next_line/get_next_line.h"
 #include <fcntl.h>
 
 #define TILE_SIZE 40

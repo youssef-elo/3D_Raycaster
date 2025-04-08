@@ -2,12 +2,12 @@
 
 int	main(int argc, char **argv)
 {
-	data_t			data;
-	mlx_data_t		mlx_data;
+	t_data			data;
+	t_mlx_data		mlx_data;
 	map_context_h	p_data;
 
 	parsing(argc, argv, &p_data);
-	ft_bzero(&data, sizeof(data_t));
+	ft_bzero(&data, sizeof(t_data));
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);
 	free_parsing(&p_data);

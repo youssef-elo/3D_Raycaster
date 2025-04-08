@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-void	draw_ceiling(data_t *d, int x0, int y0)
+void	draw_ceiling(t_data *d, int x0, int y0)
 {
 	int	ceiling;
 	int	index;
@@ -17,27 +17,24 @@ void	draw_ceiling(data_t *d, int x0, int y0)
 	}
 }
 
-void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
+void	pre_hor(t_data *d, t_line *line, t_view_3d *d_3d, t_wall_3d *v)
 {
-	if ((data->player_y - d_3d->hor_y) > 0)
+	if ((d->player_y - d_3d->hor_y) > 0)
 	{
-		v->tx = data->mlx_data->north;
+		v->tx = d->mlx_data->north;
+		v->tex_x = (((int)d_3d->hor_x % TILE)) * d->offset.n_offset;
 		if (d_3d->door_h)
-		{
-			v->tx = data->mlx_data->door;
-			v->tex_x = (((int)d_3d->hor_x % TILE)) * data->offset.d_offset;
-		}
-		v->tex_x = (((int)d_3d->hor_x % TILE)) * data->offset.n_offset;
+			v->tx = d->mlx_data->door;
 	}
-	if ((data->player_y - d_3d->hor_y) <= 0)
+	if ((d->player_y - d_3d->hor_y) <= 0)
 	{
-		v->tx = data->mlx_data->south;
+		v->tx = d->mlx_data->south;
 		if (d_3d->door_h)
 		{
-			v->tx = data->mlx_data->door;
-			v->tex_x = (TILE - ((int)d_3d->hor_x % TILE)) * data->offset.d_offset;
+			v->tx = d->mlx_data->door;
+			v->tex_x = (TILE - ((int)d_3d->hor_x % TILE)) * d->offset.d_offset;
 		}
-		v->tex_x = (TILE - ((int)d_3d->hor_x % TILE)) * data->offset.s_offset;
+		v->tex_x = (TILE - ((int)d_3d->hor_x % TILE)) * d->offset.s_offset;
 	}
 	v->v_i = line->y0;
 	v->tex_i = 0;
@@ -49,34 +46,14 @@ void	pre_hor(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	}
 }
 
-
-uint32_t apply_fog(data_t *data, uint32_t original_color, double distance) 
+void	draw_wall_hor(t_data *data, t_line *line, t_view_3d *d_3d)
 {
-    uint8_t r; 
-    uint8_t g; 
-    uint8_t b; 
-	double fog_intensity;
-
-    r = original_color & 0xFF;
-    g = (original_color >> 8)  & 0xFF;
-    b = (original_color >> 16) & 0xFF;
-    fog_intensity = (distance - data->fog_start) / (data->fog_m - data->fog_start);
-	if (fog_intensity < 0.0f)
-		fog_intensity = 0.0;
-	if (fog_intensity > 1.0f)
-		fog_intensity = 1.0f;
-    r = r * (1 - fog_intensity);
-    g = g * (1 - fog_intensity);
-    b = b * (1 - fog_intensity);
-    return r | (g << 8) | (b << 16) | (255 << 24);
-}
-
-void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
-{
-	wall_3d_t	v;
+	t_wall_3d	v;
 	int			width;
 
 	pre_hor(data, line, d_3d, &v);
+	if (d_3d->door_h && (data->player_y - d_3d->hor_y) > 0)
+		v.tex_x = (((int)d_3d->hor_x % TILE)) * data->offset.d_offset;
 	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
 	width = data->mlx_data->view_3d->width * 4;
 	while (v.v_i < line->y1 && v.v_i < HEIGHT -1)
@@ -98,29 +75,26 @@ void	draw_wall_hor(data_t *data, line_t *line, view_3d_t *d_3d)
 	}
 }
 
-void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
+void	pre_ver(t_data *d, t_line *line, t_view_3d *d_3d, t_wall_3d *v)
 {
 	v->tex_i = 0;
 	v->v_i = line->y0;
-	if (d_3d->ver_ray && (data->player_x - d_3d->ver_x) > 0)
+	if (d_3d->ver_ray && (d->player_x - d_3d->ver_x) > 0)
 	{
-		v->tx = data->mlx_data->west;
+		v->tx = d->mlx_data->west;
 		if (d_3d->door_v)
-		{
-			v->tx = data->mlx_data->door;
-			v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.d_offset;
-		}
-		v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.w_offset;
+			v->tx = d->mlx_data->door;
+		v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * d->offset.w_offset;
 	}
-	if (d_3d->ver_ray && (data->player_x - d_3d->ver_x) <= 0)
+	if (d_3d->ver_ray && (d->player_x - d_3d->ver_x) <= 0)
 	{
-		v->tx = data->mlx_data->east;
+		v->tx = d->mlx_data->east;
 		if (d_3d->door_v)
 		{
-			v->tx = data->mlx_data->door;
-			v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.d_offset;
+			v->tx = d->mlx_data->door;
+			v->tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * d->offset.d_offset;
 		}
-		v->tex_x = (((int)d_3d->ver_y % TILE)) * data->offset.e_offset;
+		v->tex_x = (((int)d_3d->ver_y % TILE)) * d->offset.e_offset;
 	}
 	v->step = (double)v->tx->height / (double)d_3d->w_height;
 	if (v->v_i < 0)
@@ -130,12 +104,14 @@ void	pre_ver(data_t *data, line_t *line, view_3d_t *d_3d, wall_3d_t *v)
 	}
 }
 
-void	draw_wall_ver(data_t *data, line_t *line, view_3d_t *d_3d)
+void	draw_wall_ver(t_data *data, t_line *line, t_view_3d *d_3d)
 {
-	wall_3d_t	v;
-	int width;
+	t_wall_3d	v;
+	int			width;
 
 	pre_ver(data, line, d_3d, &v);
+	if (d_3d->door_v && (data->player_x - d_3d->ver_x) > 0)
+		v.tex_x = (TILE - ((int)d_3d->ver_y % TILE)) * data->offset.d_offset;
 	v.i = (v.v_i * data->mlx_data->view_3d->width + line->x0) * 4;
 	width = data->mlx_data->view_3d->width * 4;
 	while (v.v_i < line->y1 && v.v_i < HEIGHT -1)
