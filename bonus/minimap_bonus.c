@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:55 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:20:56 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:07:35 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	minimap_pixel(int j, int i, t_matrix *matrix, t_data *data)
 	else if (data->map[map_y][map_x] == '0')
 		put_pixel(data->mlx_data->mini_map, j, i, rgb(211, 211, 211, 255));
 	else if (data->map[map_y][map_x] == 'D')
-		put_pixel(data->mlx_data->mini_map, j, i, rgb(255, 0, 0, 255));
+		put_pixel(data->mlx_data->mini_map, j, i, rgb(103, 73, 40, 255));
 	else if (data->map[map_y][map_x] == 'O')
-		put_pixel(data->mlx_data->mini_map, j, i, rgb(150, 0, 0, 255));
+		put_pixel(data->mlx_data->mini_map, j, i, rgb(179, 158, 106, 255));
 }
 
 void	pre_minimap(t_data *data, t_matrix *matrix)
