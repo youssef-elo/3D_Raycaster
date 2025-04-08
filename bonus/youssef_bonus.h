@@ -176,6 +176,7 @@ char		*ft_itoa(int n);
 void		draw_3d(void *data);
 int			ft_strlen(char *str);
 void		put_images(t_data *d);
+void		put_fps(t_data *data);
 char		*get_next_line(int fd);
 void		set_hooks(t_data *data);
 void		minimap_3d(t_data *data);
