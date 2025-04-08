@@ -6,13 +6,13 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:00:58 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 20:05:19 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_check_for_error(char *str, map_context_h *map)
+void	ft_check_for_error(char *str, t_map_context_h *map)
 {
 	int	x;
 	int	cont;
@@ -33,7 +33,7 @@ void	ft_check_for_error(char *str, map_context_h *map)
 		ft_display_error("Error", map);
 }
 
-void	ft_fill_color_array(map_context_h *map, char **array, int i)
+void	ft_fill_color_array(t_map_context_h *map, char **array, int i)
 {
 	int	x;
 
@@ -56,7 +56,7 @@ void	ft_fill_color_array(map_context_h *map, char **array, int i)
 	}
 }
 
-void	ft_convert_color(map_context_h *map, char *str, int i)
+void	ft_convert_color(t_map_context_h *map, char *str, int i)
 {
 	char	**array;
 	int		x;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:38 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:22:39 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	load_images(t_data *d, map_context_h *p_data)
+void	load_images(t_data *d, t_map_context_h *p_data)
 {
 	mlx_texture_t	*tmp;
 
@@ -41,7 +41,7 @@ void	load_images(t_data *d, map_context_h *p_data)
 	mlx_delete_texture(tmp);
 }
 
-void	start_mlx(t_data *d, map_context_h *p_data)
+void	start_mlx(t_data *d, t_map_context_h *p_data)
 {
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)

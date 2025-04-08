@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:36 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:22:37 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data			data;
 	t_mlx_data		mlx_data;
-	map_context_h	p_data;
+	t_map_context_h	p_data;
 
 	parsing(argc, argv, &p_data);
 	ft_bzero(&data, sizeof(t_data));

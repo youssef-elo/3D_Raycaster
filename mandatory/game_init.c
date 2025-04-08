@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:26 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:22:27 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	find_player(t_data *data)
 	data->height = i;
 }
 
-void	link_parsing(t_data *d, map_context_h *p_data, t_mlx_data *mlx_data)
+void	link_parsing(t_data *d, t_map_context_h *p_data, t_mlx_data *mlx_data)
 {
 	d->map = p_data->map;
 	d->mlx_data = mlx_data;

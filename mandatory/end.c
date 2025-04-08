@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:16 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:22:17 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	end_game(t_data *d, char *message)
 	exit(0);
 }
 
-void	free_parsing(map_context_h *p_data)
+void	free_parsing(t_map_context_h *p_data)
 {
 	free(p_data->array);
 	free(p_data->south);

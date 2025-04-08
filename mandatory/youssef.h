@@ -155,12 +155,12 @@ void		end_game(t_data *d, char *message);
 void		map_refresh(t_data *d, t_moves *m);
 void		move_up(t_data *data, t_moves *m_d);
 int			new_line_check(char *str, int *len);
-void		free_parsing(map_context_h *p_data);
+void		free_parsing(t_map_context_h *p_data);
 void		move_left(t_data *data, t_moves *m_d);
 void		move_down(t_data *data, t_moves *m_d);
 void		move_right(t_data *data, t_moves *m_d);
 void		draw_ceiling(t_data *d, int x0, int y0);
-void		start_mlx(t_data *d, map_context_h *p_data);
+void		start_mlx(t_data *d, t_map_context_h *p_data);
 void		update_position(t_data *data, char c, int i, int j);
 void		flashlight(struct mlx_key_data keydata, void *param);
 void		put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
@@ -172,6 +172,6 @@ void		textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i);
 double		shoot_horizontal(t_data *d, double ray_angle, t_view_3d *d_3d);
 double		shoot_vertical(t_data *data, double angle, t_view_3d *d_3d);
 uint32_t	apply_fog(t_data *data, uint32_t original_color, double distance);
-void		link_parsing(t_data *d, map_context_h *p_data, t_mlx_data *m_data);
+void		link_parsing(t_data *d, t_map_context_h *p_data, t_mlx_data *m_data);
 
 #endif

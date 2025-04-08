@@ -6,13 +6,13 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:48:39 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 19:50:46 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*ft_strdup_n(char *str, int a, map_context_h *map)
+char	*ft_strdup_n(char *str, int a, t_map_context_h *map)
 {
 	char	*array;
 	int		x;
@@ -37,7 +37,7 @@ char	*ft_strdup_n(char *str, int a, map_context_h *map)
 	return (array);
 }
 
-char	*ft_strjoin_n(char *s1, char *s2, map_context_h *map)
+char	*ft_strjoin_n(char *s1, char *s2, t_map_context_h *map)
 {
 	int		x;
 	int		y;

@@ -6,7 +6,7 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:25:35 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 19:27:24 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_check_space(char *str)
 	return (1);
 }
 
-void	ft_check_line(char *line, map_context_h *map)
+void	ft_check_line(char *line, t_map_context_h *map)
 {
 	int	x;
 
@@ -41,7 +41,7 @@ void	ft_check_line(char *line, map_context_h *map)
 	}
 }
 
-void	ft_read_map(map_context_h *map, char *line)
+void	ft_read_map(t_map_context_h *map, char *line)
 {
 	static int	start;
 	static int	end;

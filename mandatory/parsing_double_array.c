@@ -6,15 +6,15 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:53:35 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 19:59:41 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:06:56 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_adjust_map_size(map_context_h *map)
+void	ft_adjust_map_size(t_map_context_h *map)
 {
-	var_size_h	var;
+	t_var_size_h	var;
 
 	((1) && (var.x = 0, var.max = 0, var.y = 0, var.i = 0));
 	while (map->map[var.i])
@@ -41,7 +41,7 @@ void	ft_adjust_map_size(map_context_h *map)
 	}
 }
 
-void	ft_check_first_last_line(map_context_h *map)
+void	ft_check_first_last_line(t_map_context_h *map)
 {
 	int	x;
 	int	y;
@@ -66,7 +66,7 @@ void	ft_check_first_last_line(map_context_h *map)
 	}
 }
 
-void	ft_check_player(map_context_h *map)
+void	ft_check_player(t_map_context_h *map)
 {
 	int	x;
 	int	y;
@@ -91,7 +91,7 @@ void	ft_check_player(map_context_h *map)
 		ft_display_error("Error", map);
 }
 
-void	ft_valid_path(map_context_h *map)
+void	ft_valid_path(t_map_context_h *map)
 {
 	int	x;
 	int	y;
@@ -120,7 +120,7 @@ void	ft_valid_path(map_context_h *map)
 	}
 }
 
-void	ft_double_array(map_context_h *map)
+void	ft_double_array(t_map_context_h *map)
 {
 	map->map = ft_split(map->array, 10);
 	if (!map->map)
