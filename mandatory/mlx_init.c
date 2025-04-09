@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:38 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:11:22 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	start_mlx(t_data *d, t_map_context_h *p_data)
 	if (!d->mlx_data->mlx)
 		end_game(d, "Error\nCant establish connection with the mlx library\n");
 	load_images(d, p_data);
+	if (!d->mlx_data->south || !d->mlx_data->north
+	|| !d->mlx_data->east || !d->mlx_data->west)
+		end_game(d, "Error\nCant load images\n");
 	mlx_resize_image(d->mlx_data->south, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->north, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->east, HEIGHT, HEIGHT);

@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:51:05 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/09 14:51:06 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:09:26 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,7 @@ typedef struct constant_s
 
 typedef struct mlx_data_s{
 	mlx_t		*mlx;
-	mlx_image_t	*view;
 	mlx_image_t	*view_3d;
-	mlx_image_t	*floor_ceiling;
-	mlx_image_t	*empty;
-	mlx_image_t	*wall;
-	mlx_image_t	*rays_image;
 	mlx_image_t	*north;
 	mlx_image_t	*south;
 	mlx_image_t	*east;
