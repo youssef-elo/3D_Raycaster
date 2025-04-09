@@ -6,13 +6,12 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:01:57 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/09 15:01:58 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:04:49 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_BONUS_H
-#define CUB3D_BONUS_H
-
+# define CUB3D_BONUS_H
 
 # include "../MLX/include/MLX42/MLX42.h"
 # include <math.h>
@@ -54,8 +53,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-
-
 
 typedef struct map_context_s
 {
@@ -297,8 +294,7 @@ void		parsing(int argc, char **argv, t_map_context_h *parsing_data);
 void		textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i);
 double		shoot_horizontal(t_data *d, double ray_angle, t_view_3d *d_3d);
 void		ft_fill_color_array(t_map_context_h *map, char **array, int i);
+void		link_parsing(t_data *d, t_map_context_h *p_data, t_mlx_data *m_d);
 void		fire(mouse_key_t butt, action_t act, modifier_key_t mods, void *p);
-void		link_parsing(t_data *d, t_map_context_h *p_data, t_mlx_data *m_data);
-
 
 #endif
