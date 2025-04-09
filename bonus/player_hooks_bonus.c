@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:21:04 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:21:05 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:15:04 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,10 @@ void	map_refresh_2(t_data *d, t_moves *m_d, int *changed, int map_x)
 void	map_refresh(t_data *data, t_moves *m_d)
 {
 	int	map_x;
-	int	map_y;
 	int	changed;
 
 	changed = 0;
 	map_x = (int)(m_d->next_x) / TILE;
-	map_y = (int)(m_d->next_y) / TILE;
 	map_refresh_2(data, m_d, &changed, map_x);
 	if (changed)
 		minimap_3d(data);
