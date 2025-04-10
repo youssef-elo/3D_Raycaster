@@ -6,7 +6,7 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:27:36 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:53:59 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_read_file(char *line, t_map_context_h *map)
 			ft_display_error("Error", map);
 	}
 	s = ft_strcmp(identifier, *str);
-	if (check[s] == 0 && s != -1 && map->count < 6)
+	if (s != -1 && check[s] == 0  && map->count < 6)
 	{
 		ft_fill_struct(map, str, s);
 		map->count++;

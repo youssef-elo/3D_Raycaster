@@ -6,7 +6,7 @@
 /*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:48:39 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:44:13 by hchadili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup_n(char *str, int a, t_map_context_h *map)
 	int		size;
 
 	x = 0;
+	if (!str)
+		return (0);
 	size = ft_strlen(str) + 1;
 	array = malloc(size);
 	if (!array)
