@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:26 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:05:46 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	link_parsing(t_data *d, t_map_context_h *p_data, t_mlx_data *mlx_data)
 {
 	d->map = p_data->map;
 	d->mlx_data = mlx_data;
+	find_player(d);
 	start_mlx(d, p_data);
 	d->ceiling = rgb(p_data->sky[0], p_data->sky[1], p_data->sky[2], 255);
 	d->floor = rgb(p_data->floor[0], p_data->floor[1], p_data->floor[2], 255);
-	find_player(d);
 	d->map_x = d->player_x / TILE;
 	d->map_y = d->player_y / TILE;
 	d->dir_x = cos(d->p_angle);
