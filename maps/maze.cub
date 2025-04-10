@@ -1,11 +1,12 @@
-SO textures/jerda1.png                    
+
 NO textures/jerda1.png
 WE textures/jerda1.png
 EA textures///jerda1.png
+SO textures/jerda1.png                    
 
 F 0,0,0
 C 0,0,0
 
 111111111111111111
-100E001          1
+1E0011
 111111111111111111
