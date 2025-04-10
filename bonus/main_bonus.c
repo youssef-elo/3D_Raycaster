@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus_bonus.c                                 :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:52 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 13:57:31 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:45:07 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 	t_map_context_h	p_data;
 
 	parsing(argc, argv, &p_data);
+	ft_bzero(&mlx_data, sizeof(mlx_data));
 	ft_bzero(&data, sizeof(t_data));
 	link_parsing(&data, &p_data, &mlx_data);
 	pre_compute(&data);

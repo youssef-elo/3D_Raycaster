@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:22 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 14:10:39 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:48:55 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	delete_images(t_data *d)
 	if (d->mlx_data->muzzle)
 		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->muzzle);
 	if (d->mlx_data->fps)
-		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->muzzle);
+		mlx_delete_image(d->mlx_data->mlx, d->mlx_data->fps);
 	delete_textures(d);
 }
 
@@ -61,7 +61,8 @@ void	end_game(t_data *d, char *message)
 	int	i;
 
 	delete_images(d);
-	free(d->cos);
+	if (d->cos)
+		free(d->cos);
 	i = 0;
 	while (i < d->height)
 		free(d->map[i++]);

@@ -5,7 +5,7 @@ directory/////files.png is accepted and opens the image
 
 NO textures/jerda1.png
 SO  textures/jerda1.png
-WE  textures/jerda1.png
+WE  textures/jerda1.ppng
 EA	textures/bricks.png
 F 0,0,0
 C 0,0,0

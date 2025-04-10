@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:01:57 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 12:45:59 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:37:32 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,7 @@ void		vertical_movement(t_data *data, t_moves *m_d, int *moving);
 void		draw_wall_ver(t_data *data, t_line *line, t_view_3d *d_3d);
 double		shoot_vertical(t_data *data, double angle, t_view_3d *d_3d);
 void		re_put_pixel(mlx_image_t *img, int x, int y, uint32_t color);
+void		parsing_end(t_data *data, char *str, t_map_context_h *p_data);
 void		parsing(int argc, char **argv, t_map_context_h *parsing_data);
 void		textured_line(t_data *d, t_view_3d *d_3d, t_line *line, int i);
 double		shoot_horizontal(t_data *d, double ray_angle, t_view_3d *d_3d);
