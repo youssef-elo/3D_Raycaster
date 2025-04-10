@@ -1,0 +1,237 @@
+directory/////files.png is accepted and opens the image
+
+
+./cub3d maps/maze.cub      
+
+NO textures/jerda1.png
+SO  textures/jerda1.png
+WE  textures/jerda1.png
+EA	textures/bricks.png
+F 0,0,0
+C 0,0,0
+
+         //spaces hna o dayr tabs bin no o smya blast espace
+
+11111111111111111111
+10000010000000000001
+10111101111111111011
+10100000000000001001
+10101111111111101011
+10101000000000101001
+10101011111110101111
+10101010000010100001
+10101010111110111101
+10101010100010000101
+10101010101111111101
+10101010100000000001
+10101011111111111111
+10101000000000000001
+10101111111011111101
+1N000000001000000001
+11111111101011111111
+10000000000000000001
+10111111111111111011
+10000000000000000001
+11111111111111111111
+
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==970298==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000004cfd0a bp 0x000000000000 sp 0x7ffe7601aa00 T0)
+==970298==The signal is caused by a READ memory access.
+==970298==Hint: address points to the zero page.
+    #0 0x4cfd0a in ft_strlen /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/gnl_utils.c:20:2
+    #1 0x4d3563 in ft_strdup_n /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_helpful_func.c:22:9
+    #2 0x4d3de5 in ft_fill_struct /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_read_file.c:24:15
+    #3 0x4d3ff3 in ft_read_file /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_read_file.c:49:3
+    #4 0x4d1c1a in parsing /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing.c:31:4
+    #5 0x4d128d in main /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/main.c:21:2
+    #6 0x7f4825023d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #7 0x7f4825023e3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #8 0x41f4e4 in _start (/home/yel-ouaz/Desktop/FUCK_GIT/cub3d+0x41f4e4)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/gnl_utils.c:20:2 in ft_strlen
+==970298==ABORTING
+
+
+
+
+
+
+
+spaces f awal star 
+
+➜  FUCK_GIT git:(main) ✗ ./cub3d maps/maze.cub
+
+=================================================================
+==971233==ERROR: AddressSanitizer: global-buffer-overflow on address 0x000000dff43c at pc 0x0000004d40d2 bp 0x7ffc94528d00 sp 0x7ffc94528cf8
+READ of size 4 at 0x000000dff43c thread T0
+    #0 0x4d40d1 in ft_read_file /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_read_file.c:47:6
+    #1 0x4d1c1a in parsing /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing.c:31:4
+    #2 0x4d128d in main /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/main.c:21:2
+    #3 0x7fe67e94fd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #4 0x7fe67e94fe3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #5 0x41f4e4 in _start (/home/yel-ouaz/Desktop/FUCK_GIT/cub3d+0x41f4e4)
+
+0x000000dff43c is located 4 bytes to the left of global variable 'check' defined in 'mandatory/parsing_read_file.c:34:14' (0xdff440) of size 24
+0x000000dff43c is located 49 bytes to the right of global variable 'garbage' defined in 'mandatory/gnl.c:116:14' (0xdff3e0) of size 43
+SUMMARY: AddressSanitizer: global-buffer-overflow /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_read_file.c:47:6 in ft_read_file
+Shadow bytes around the buggy address:
+  0x0000801b7e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0000801b7e80: 00 03 f9 f9 f9 f9 f9[f9]00 00 00 f9 f9 f9 f9 f9
+  0x0000801b7e90: 01 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+  0x0000801b7ea0: 00 f9 f9 f9 f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9
+  0x0000801b7eb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7ec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==971233==ABORTING
+➜  FUCK_GIT git:(main) ✗ ./cub3d maps/maze.cub
+=================================================================
+==971297==ERROR: AddressSanitizer: global-buffer-overflow on address 0x000000dff43c at pc 0x0000004d40d2 bp 0x7fff6c2697a0 sp 0x7fff6c269798
+READ of size 4 at 0x000000dff43c thread T0
+    #0 0x4d40d1 in ft_read_file /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_read_file.c:47:6
+    #1 0x4d1c1a in parsing /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing.c:31:4
+    #2 0x4d128d in main /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/main.c:21:2
+    #3 0x7f5b8ce0ad8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #4 0x7f5b8ce0ae3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #5 0x41f4e4 in _start (/home/yel-ouaz/Desktop/FUCK_GIT/cub3d+0x41f4e4)
+
+0x000000dff43c is located 4 bytes to the left of global variable 'check' defined in 'mandatory/parsing_read_file.c:34:14' (0xdff440) of size 24
+0x000000dff43c is located 49 bytes to the right of global variable 'garbage' defined in 'mandatory/gnl.c:116:14' (0xdff3e0) of size 43
+SUMMARY: AddressSanitizer: global-buffer-overflow /home/yel-ouaz/Desktop/FUCK_GIT/mandatory/parsing_read_file.c:47:6 in ft_read_file
+Shadow bytes around the buggy address:
+  0x0000801b7e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7e70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0000801b7e80: 00 03 f9 f9 f9 f9 f9[f9]00 00 00 f9 f9 f9 f9 f9
+  0x0000801b7e90: 01 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+  0x0000801b7ea0: 00 f9 f9 f9 f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9
+  0x0000801b7eb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7ec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000801b7ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==971297==ABORTING
+
+
+NO
+NO textures/jerda1.png
+SO textures/jerda1.png
+WE textures/jerda1.png
+EA textures/jerda1.png
+F 0,0,0
+C 0,0,0
+
+
+
+11111111111111111111
+10000010000000000001
+10111101111111111011
+10100000000000001001
+10101111111111101011
+10101000000000101001
+10101011111110101111
+10101010000010100001
+10101010111110111101
+10101010100010000101
+10101010101111111101
+10101010100000000001
+10101011111111111111
+10101000000000000001
+1D101111111011111101
+1N000000001000000001
+11111111101011111111
+10000000000000000001
+10111111111111111011
+10000000000000000001
+11111111111111111111
+
+
+
+
+
+
+
+
+
+*****************************************
+bonus 7ta lmadatory
+
+./cub3d_bonus  maps/maze.cub
+[1]    977810 segmentation fault (cor
+
+NO
+NO textures/jerda1.png
+SO textures/jerda1.png
+WE textures/jerda1.png
+EA textures/jerda1.png
+F 0,0,0
+C 0,0,0
+
+
+
+11111111111111111111
+10000010000000000001
+10111101111111111011
+10100000000000001001
+10101111111111101011
+10101000000000101001
+10101011111110101111
+10101010000010100001
+10101010111110111101
+10101010100010000101
+10101010101111111101
+10101010100000000001
+10101011111111111111
+10101000000000000001
+1D101111111011111101
+1N000000001000000001
+11111111101011111111
+10000000000000000001
+10111111111111111011
+10000000000000000001
+11111111111111111111

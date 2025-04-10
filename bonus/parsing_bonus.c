@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:38:50 by hchadili          #+#    #+#             */
-/*   Updated: 2025/04/08 21:12:45 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:29:16 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	parsing(int argc, char **argv, t_map_context_h *map)
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	ft_convert_color(map, map->floor_s, 1);
 	ft_convert_color(map, map->sky_s, 0);
 	ft_double_array(map);

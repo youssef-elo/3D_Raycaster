@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:01:57 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/09 15:04:49 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:45:59 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ char		*ft_get_string(int num);
 long		ft_atoi(const char *str);
 int			size_of_line(char **str);
 void		minimap_3d(t_data *data);
+void					cross_close(void *param);
 void		hook_handler(void *param);
 int			ft_check_space(char *str);
 void		find_player(t_data *data);

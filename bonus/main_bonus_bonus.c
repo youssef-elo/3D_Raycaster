@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:52 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:57:31 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ int	main(int argc, char **argv)
 	free_parsing(&p_data);
 	put_images(&data);
 	set_hooks(&data);
+	printf("Press F for flashlight(if the ceiling and floor are black)\n");
+	printf("Press R for gun reload animation\nMouse left button to fire\n");
+	printf("WASD for walking\nMouse or arrow keys for turning\n");
 	mlx_loop(mlx_data.mlx);
 }

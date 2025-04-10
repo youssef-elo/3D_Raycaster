@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchadili <hchadili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:22 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 21:05:57 by hchadili         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:10:39 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	delete_images(t_data *d)
 	delete_textures(d);
 }
 
+void	cross_close(void *param)
+{
+	end_game(param, "Cross clicked\n");
+}
+
 void	end_game(t_data *d, char *message)
 {
 	int	i;
@@ -61,6 +66,8 @@ void	end_game(t_data *d, char *message)
 	while (i < d->height)
 		free(d->map[i++]);
 	free(d->map);
+	if (d->mlx_data->mlx)
+		mlx_terminate(d->mlx_data->mlx);
 	printf("%s", message);
 	exit(0);
 }

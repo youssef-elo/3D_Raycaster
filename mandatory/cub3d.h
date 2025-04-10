@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:51:05 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/09 15:09:26 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:48:29 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void		draw_3d(void *data);
 int			ft_strlen(char *str);
 char		*get_next_line(int fd);
 char		*ft_get_string(int num);
+void		cross_close(void *param);
 long		ft_atoi(const char *str);
 int			size_of_line(char **str);
 void		pre_compute(t_data *data);

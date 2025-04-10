@@ -7,7 +7,7 @@ NAME=cub3d
 BONUS=cub3d_bonus
 
 FLAGS= -Wall -Wextra -Werror 
-# FLAGS= -fsanitize=address -g
+FLAGS+= -fsanitize=address -g
 opti = -funroll-loops -O3 -ffast-math -mavx2
 
 MlX_FLAGS= -Iinclude -ldl -lglfw -pthread -lm
@@ -32,10 +32,10 @@ $(NAME) : $(OFILES)
 $(BONUS) : $(B_OFILES)
 	cc $(FLAGS) $(B_OFILES) -o $(BONUS) $(MLX) $(MlX_FLAGS) 
 
-%.o: %.c $(INCLUDES) Makefile
+%.o: %.c $(INCLUDES)
 	$(CC) $(FLAGS) $< -c -o $@ $(opti)
 
-%bonus.o: %bonus.c $(B_INCLUDES) Makefile
+%bonus.o: %bonus.c $(B_INCLUDES)
 	$(CC) $(FLAGS) $< -c -o $@ $(opti)
 
 clean :
