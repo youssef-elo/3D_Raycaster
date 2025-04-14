@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:57 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 17:49:34 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:05:56 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,6 @@ void	parsing_end(t_data *data, char *str, t_map_context_h *p_data)
 {
 	free_parsing(p_data);
 	end_game(data, str);
-}
-
-void	put_images(t_data *d)
-{
-	draw_filled_disk(d->mlx_data->mini_map, d->mlx_data->mini_map->width / 2,
-		d->mlx_data->mini_map->height / 2, 104);
-	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->view_3d, 0, 0);
-	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->mini_map,
-		0, HEIGHT - d->mlx_data->mini_map->height);
-	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->muzzle,
-		(WIDTH / 2) - 120, HEIGHT - FIRE_H);
-	d->mlx_data->muzzle->instances->enabled = false;
-	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->gun_view,
-		(WIDTH / 2) - 350, HEIGHT - GUN_H);
-	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->reload_view,
-		(WIDTH / 2) - 600, HEIGHT - RELOAD_H);
-	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->fire_view,
-		(WIDTH / 2) - 350, HEIGHT - FIRE_H);
 }
 
 void	load_gun_images(t_data *d, mlx_texture_t *tmp, t_map_context_h *p_data)
@@ -108,7 +90,7 @@ void	start_mlx(t_data *d, t_map_context_h *p_data)
 {
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)
-		parsing_end(d, "Error\nCant establish connection with the mlx library\n", p_data);
+		parsing_end(d, "Error\nMLX init fail\n", p_data);
 	load_game_images(d, p_data, NULL);
 	load_game_images_2(d, p_data, NULL);
 	load_gun_images(d, NULL, p_data);

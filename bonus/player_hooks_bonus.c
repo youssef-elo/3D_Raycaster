@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:21:04 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/13 15:59:03 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:02:39 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	vertical_movement(t_data *data, t_moves *m_d, int *moving)
 	}
 }
 
-void	map_refresh_2(t_data *d, t_moves *m_d, int *changed, int map_x)
+void	map_refresh_2(t_data *d, t_moves *m_d, int map_x)
 {
 	int		map_y;
 	double	pre_y;
@@ -63,19 +63,16 @@ void	map_refresh_2(t_data *d, t_moves *m_d, int *changed, int map_x)
 	{
 		d->player_y = m_d->next_y;
 		d->map_y = map_y;
-		*changed = 1;
 	}
 	if (d->map[d->map_y][map_x] == '0' || d->map[d->map_y][map_x] == 'O')
 	{
 		d->player_x = m_d->next_x;
 		d->map_x = map_x;
-		*changed = 1;
 	}
 	if (d->map[d->map_y][d->map_x] == '1' || d->map[d->map_y][d->map_x] == 'D')
 	{
 		d->player_y = pre_y;
 		d->map_y = pre_y / TILE;
-		*changed = 1;
 	}
 }
 
@@ -84,7 +81,7 @@ void	map_refresh(t_data *data, t_moves *m_d)
 	int	map_x;
 
 	map_x = (int)(m_d->next_x) / TILE;
-	map_refresh_2(data, m_d, &changed, map_x);
+	map_refresh_2(data, m_d, map_x);
 }
 
 void	hook_handler(void *param)
