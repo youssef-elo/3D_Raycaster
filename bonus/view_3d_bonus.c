@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:21:18 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:21:19 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:58:27 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,5 @@ void	draw_3d(void *param)
 		textured_line(data, &d_3d, &line, i);
 		i++;
 	}
+	minimap_3d(data);
 }

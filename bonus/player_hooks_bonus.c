@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:21:04 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/09 15:15:04 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:59:03 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	move_angle(t_data *data)
 			data->p_angle += (2 * M_PI);
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
-		minimap_3d(data);
 	}
 	if (mlx_is_key_down(data->mlx_data->mlx, MLX_KEY_LEFT))
 	{
@@ -30,7 +29,6 @@ void	move_angle(t_data *data)
 			data->p_angle -= (2 * M_PI);
 		data->dir_x = cos(data->p_angle);
 		data->dir_y = sin(data->p_angle);
-		minimap_3d(data);
 	}
 }
 
@@ -84,13 +82,9 @@ void	map_refresh_2(t_data *d, t_moves *m_d, int *changed, int map_x)
 void	map_refresh(t_data *data, t_moves *m_d)
 {
 	int	map_x;
-	int	changed;
 
-	changed = 0;
 	map_x = (int)(m_d->next_x) / TILE;
 	map_refresh_2(data, m_d, &changed, map_x);
-	if (changed)
-		minimap_3d(data);
 }
 
 void	hook_handler(void *param)

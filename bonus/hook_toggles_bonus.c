@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:50 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 14:11:23 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:33:49 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	rotate_mouse(double xpos, double ypos, void *param)
 	if (fabs(dx) < 40)
 		return ;
 	angle = dx * ROTATION_FACTOR;
+	angle = 0.05 * (angle / 0.05);
 	data->p_angle += angle;
 	if (data->p_angle > ((double)2 * M_PI))
 		data->p_angle -= (2 * M_PI);
@@ -32,7 +33,6 @@ void	rotate_mouse(double xpos, double ypos, void *param)
 	data->dir_x = cos(data->p_angle);
 	data->dir_y = sin(data->p_angle);
 	mlx_set_mouse_pos(data->mlx_data->mlx, WIDTH / 2, HEIGHT / 2);
-	minimap_3d(data);
 }
 
 void	fire(mouse_key_t butt, action_t act, modifier_key_t mods, void *p)
@@ -58,7 +58,6 @@ void	open_vertical_doors(t_data *data)
 			data->map[data->map_y - 1][data->map_x] = 'D';
 		else if (data->map[data->map_y - 1][data->map_x] == 'D')
 			data->map[data->map_y - 1][data->map_x] = 'O';
-		minimap_3d(data);
 	}
 	if ((data->p_angle >= (5 * M_PI_4)) && data->p_angle < (7 * M_PI_4))
 	{
@@ -66,7 +65,6 @@ void	open_vertical_doors(t_data *data)
 			data->map[data->map_y + 1][data->map_x] = 'D';
 		else if (data->map[data->map_y + 1][data->map_x] == 'D')
 			data->map[data->map_y + 1][data->map_x] = 'O';
-		minimap_3d(data);
 	}
 }
 
@@ -78,7 +76,6 @@ void	open_horizontal_doors(t_data *data)
 			data->map[data->map_y][data->map_x - 1] = 'D';
 		else if (data->map[data->map_y][data->map_x - 1] == 'D')
 			data->map[data->map_y][data->map_x - 1] = 'O';
-		minimap_3d(data);
 	}
 	if ((data->p_angle >= 0 && data->p_angle < M_PI_4)
 		|| (data->p_angle >= (7 * M_PI_4)))
@@ -87,7 +84,6 @@ void	open_horizontal_doors(t_data *data)
 			data->map[data->map_y][data->map_x + 1] = 'D';
 		else if (data->map[data->map_y][data->map_x + 1] == 'D')
 			data->map[data->map_y][data->map_x + 1] = 'O';
-		minimap_3d(data);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:22:38 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 18:07:10 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:01:48 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	start_mlx(t_data *d, t_map_context_h *p_data)
 {
 	d->mlx_data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!d->mlx_data->mlx)
-		parsing_end(d, "Error\nCant establish connection with the mlx library\n", p_data);
+		parsing_end(d, "Error\nMLX init fail\n", p_data);
 	load_images(d, p_data);
 	if (!d->mlx_data->south || !d->mlx_data->north
-	|| !d->mlx_data->east || !d->mlx_data->west)
+		|| !d->mlx_data->east || !d->mlx_data->west)
 		parsing_end(d, "Error\nCant load images\n", p_data);
 	mlx_resize_image(d->mlx_data->south, HEIGHT, HEIGHT);
 	mlx_resize_image(d->mlx_data->north, HEIGHT, HEIGHT);
