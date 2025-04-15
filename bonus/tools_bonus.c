@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:21:16 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/14 16:58:27 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:28:06 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_itoa(int n)
 	char	*r;
 
 	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
+		return (ft_strdup("-2147483648", 0));
 	len = ft_counter(n);
 	r = (char *)malloc((len + 1) * sizeof(char));
 	if (r == NULL)

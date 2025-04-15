@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:51:05 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 12:48:29 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:29:03 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void		hook_handler(void *param);
 void		find_player(t_data *data);
 int			ft_check_space(char *str);
 int			ft_cmpr(char *s, char *s1);
+char		*ft_strdup(char *s1, int b);
 void		ft_bzero(void *s, size_t n);
 char		**ft_split(char *s, char c);
 int			ft_strcmp(char **s, char *s1);

@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:52 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/10 16:45:07 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:25:49 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int	main(int argc, char **argv)
 	printf("Press F for flashlight(if the ceiling and floor are black)\n");
 	printf("Press R for gun reload animation\nMouse left button to fire\n");
 	printf("WASD for walking\nMouse or arrow keys for turning\n");
+	printf("Space bar to open or close doors\n");
 	mlx_loop(mlx_data.mlx);
 }
