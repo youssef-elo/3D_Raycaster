@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:40 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/08 18:20:41 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:56:43 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,21 @@ void	fire_animation(t_data *data, int *f, int *i)
 	{
 		data->mlx_data->gun_view->instances[0].enabled = false;
 		data->mlx_data->fire_view->instances[0].enabled = true;
+		data->firing = 0;
+	}
+	if (data->firing && *f)
+	{
+		*f = 0;
+		data->firing = 0;
+		data->mlx_data->muzzle->instances[0].enabled = false;
 	}
 	fire_frame(data, (*f) % 6, (*f) / 6);
 	(*f)++;
 	if (*f == 1)
 		data->mlx_data->muzzle->instances[0].enabled = true;
-	if (*f == 7)
+	if (*f == 5)
 		data->mlx_data->muzzle->instances[0].enabled = false;
-	if (*f == 23)
+	if (*f == 18)
 	{
 		*f = 0;
 		data->mlx_data->gun_view->instances[0].enabled = true;
@@ -60,24 +67,24 @@ void	gun_animation(void *param)
 	static int		r;
 	static int		f;
 	static double	last_time;
-	t_data			*data;
+	t_data			*d;
 
-	data = (t_data *)param;
+	d = (t_data *)param;
 	if (!last_time)
 		last_time = mlx_get_time();
-	if (data->firing || (!data->firing && f != 0))
-		fire_animation(data, &f, &i);
+	if (d->firing || (!d->firing && f != 0) || d->holding)
+		fire_animation(d, &f, &i);
 	if (mlx_get_time() - last_time >= 0.035f)
 	{
-		if (data->walking && !data->reload && (!data->firing && f == 0))
+		if (d->walking && !d->reload && (!d->firing && f == 0) && !d->holding)
 		{
 			if (i == 44)
 				i = 0;
-			gun_frame(data, i % 8, i / 8);
+			gun_frame(d, i % 8, i / 8);
 			i++;
 			last_time = mlx_get_time();
 		}
-		if (data->reload && (!data->firing && f == 0))
-			reload_animation(data, &i, &r, &last_time);
+		if (d->reload && (!d->firing && f == 0) && !d->holding)
+			reload_animation(d, &i, &r, &last_time);
 	}
 }

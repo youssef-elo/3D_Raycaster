@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:21:12 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/13 15:57:46 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:58:44 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@ void	set_hooks(t_data *data)
 	mlx_loop_hook(data->mlx_data->mlx, gun_animation, data);
 	mlx_close_hook(data->mlx_data->mlx, cross_close, data);
 	data->firing = 0;
+	data->reload = 0;
+	data->walking = 0;
+	data->holding = 0;
 	gun_frame(data, 0, 0);
 }

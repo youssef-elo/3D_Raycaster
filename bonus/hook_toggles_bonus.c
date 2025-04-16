@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:50 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/13 16:33:49 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:56:57 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,16 @@ void	fire(mouse_key_t butt, action_t act, modifier_key_t mods, void *p)
 	if (butt == MLX_MOUSE_BUTTON_LEFT && act == MLX_PRESS)
 	{
 		if (!data->reload)
+		{
 			data->firing = 1;
+			data->holding = 1;
+		}
 	}
 	if (butt == MLX_MOUSE_BUTTON_LEFT && act == MLX_RELEASE)
+	{
+		data->holding = 0;
 		data->firing = 0;
+	}
 }
 
 void	open_vertical_doors(t_data *data)

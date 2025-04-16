@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:01:57 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/14 16:01:26 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:42:41 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ typedef struct data_s{
 	uint32_t	ceiling;
 	uint32_t	floor;
 	uint32_t	v_color;
+	int			holding;
 	uint32_t	h_color;
 	char		**map;
 	t_constant	con;
