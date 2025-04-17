@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:05:20 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/14 16:05:21 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:34:48 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	put_images(t_data *d)
 	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->mini_map,
 		0, HEIGHT - d->mlx_data->mini_map->height);
 	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->muzzle,
-		(WIDTH / 2) - 120, HEIGHT - FIRE_H);
+		(WIDTH / 2) - 110, HEIGHT - FIRE_H + 10);
 	d->mlx_data->muzzle->instances->enabled = false;
 	mlx_image_to_window(d->mlx_data->mlx, d->mlx_data->gun_view,
 		(WIDTH / 2) - 350, HEIGHT - GUN_H);
