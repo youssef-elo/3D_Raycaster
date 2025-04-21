@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:20:40 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2025/04/16 18:56:43 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:23:22 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	gun_animation(void *param)
 		last_time = mlx_get_time();
 	if (d->firing || (!d->firing && f != 0) || d->holding)
 		fire_animation(d, &f, &i);
-	if (mlx_get_time() - last_time >= 0.035f)
+	if (mlx_get_time() - last_time >= 0.05f)
 	{
 		if (d->walking && !d->reload && (!d->firing && f == 0) && !d->holding)
 		{
