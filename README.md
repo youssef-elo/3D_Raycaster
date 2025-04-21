@@ -3,6 +3,7 @@ A raycasting engine inspired by Wolfenstein 3D
 42 School Project | C Programming & Graphics Implementation
 
 Gameplay Preview
+![Screenshot from 2025-04-21 12-48-20](https://github.com/user-attachments/assets/eb4113a8-0564-4d4d-8a85-81520d8c4d37)
 
 
 📖 Overview
@@ -64,8 +65,7 @@ make bonus
 
 ./cub3d_bonus maps/jerda.cub
 
-MAP:
-
+🗺️ MAP:
 
 The SO NO WE EA image paths are used as the texture for the wall facing the specified direction ( south north west east)
 F is the rgb color for the floor
