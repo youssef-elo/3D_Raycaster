@@ -1,4 +1,4 @@
-cub3D
+# cub3D
 A raycasting engine inspired by Wolfenstein 3D
 42 School Project | C Programming & Graphics Implementation
 
@@ -6,10 +6,10 @@ Gameplay Preview
 ![Screenshot from 2025-04-21 12-48-20](https://github.com/user-attachments/assets/eb4113a8-0564-4d4d-8a85-81520d8c4d37)
 
 
-📖 Overview
+# 📖 Overview
 A minimalist 3D game engine using raycasting technology to project a first-person perspective of a dynamically generated maze. Built from scratch in C using the MLX42 graphics library, this project demonstrates core principles of computer graphics and low-level system programming.
 
-🎮 Features
+# 🎮 Features
 Custom map system with .cub file parsing:
 
 Wall textures (png files)
@@ -20,13 +20,13 @@ Floor/ceiling colors (RGB values)
 
 Player spawn position/direction (N, E, S, W)
 
-Raycasting engine:
+# Raycasting engine:
 
 DDA (Digital Differential Analysis) algorithm for efficient wall detection
 
 Dynamic wall height calculation based on player distance
 
-Interactive controls:
+# Interactive controls:
 
 WASD movement
 
@@ -42,7 +42,7 @@ LEFT_SHIFT to sprint
 
 ESC to exit
 
-Advanced graphics:
+# Advanced graphics:
 
 Gun animation system (idle/walk/reload/fire states)
 
@@ -54,18 +54,18 @@ Minimap overlay
 
 Door interaction system
 
-🛠️ Installation
+# 🛠️ Installation
 
 clone repo
 
 cd cub3d
 make bonus
 
-🕹️ Usage
+# 🕹️ Usage
 
 ./cub3d_bonus maps/jerda.cub
 
-🗺️ MAP:
+# 🗺️ MAP:
 
 The SO NO WE EA image paths are used as the texture for the wall facing the specified direction ( south north west east)
 F is the rgb color for the floor
