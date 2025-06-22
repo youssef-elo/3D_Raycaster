@@ -7,7 +7,7 @@ Gameplay Preview
 
 
 # 📖 Overview
-A minimalist 3D game engine using raycasting technology to project a first-person perspective of a dynamically generated maze. Built from scratch in C using the MLX42 graphics library, this project demonstrates core principles of computer graphics and low-level system programming. 
+A minimalist 3D game engine using raycasting technology to project a first-person perspective of a dynamically generated maze. Built from scratch in C using the MLX42 graphics library, this project demonstrates core principles of computer graphics and low-level system programming . 
 
 # 🎮 Features
 Custom map system with .cub file parsing:
